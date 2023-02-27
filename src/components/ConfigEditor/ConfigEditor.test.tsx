@@ -74,7 +74,7 @@ describe('ConfigEditor', () => {
       });
 
     it('Should apply path value and change options if field was changed', () => {
-      const options = getOptions({ jsonData: { path: '/abc' } });
+      const options = getOptions({ jsonData: { path: '/nautilus' } });
       const wrapper = shallow<ConfigEditor>(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
       const testedComponent = getComponent(wrapper);

@@ -1,6 +1,6 @@
 {
   "author": "Volkov Labs",
-  "description": "Template for a new Grafana datasource plugin",
+  "description": "Nautilus Data Source for Grafana",
   "devDependencies": {
     "@grafana/data": "9.3.6",
     "@grafana/runtime": "9.3.6",
@@ -17,7 +17,7 @@
     "node": ">=16"
   },
   "license": "Apache-2.0",
-  "name": "volkovlabs-abc-datasource",
+  "name": "volkovlabs-nautilus-datasource",
   "scripts": {
     "build": "grafana-toolkit plugin:build --coverage",
     "dev": "grafana-toolkit plugin:dev",

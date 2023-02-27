@@ -4,14 +4,14 @@
     "grafanaDependency": ">=8.5.0",
     "plugins": []
   },
-  "id": "volkovlabs-abc-datasource",
+  "id": "volkovlabs-nautilus-datasource",
   "info": {
     "author": {
       "name": "Volkov Labs",
       "url": "https://volkovlabs.io"
     },
-    "description": "Template to create a new Grafana data source plugin",
-    "keywords": ["template"],
+    "description": "Nautilus Data Source for Grafana",
+    "keywords": ["grafana", "api"],
     "links": [
       {
         "name": "Documentation",
@@ -19,7 +19,7 @@
       },
       {
         "name": "GitHub",
-        "url": "https://github.com/volkovlabs/volkovlabs-abc-datasource"
+        "url": "https://github.com/volkovlabs/volkovlabs-nautilus-datasource"
       }
     ],
     "logos": {
@@ -36,6 +36,6 @@
     "version": "%VERSION%"
   },
   "metrics": true,
-  "name": "Abc",
+  "name": "Nautilus",
   "type": "datasource"
 }

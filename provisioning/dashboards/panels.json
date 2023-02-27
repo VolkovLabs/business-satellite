@@ -29,8 +29,8 @@
   "panels": [
     {
       "datasource": {
-        "type": "volkovlabs-abc-datasource",
-        "uid": "P06D90109C8CCE34E"
+        "type": "volkovlabs-nautilus-datasource",
+        "uid": "P06D90109C8CCE34A"
       },
       "fieldConfig": {
         "defaults": {
@@ -78,8 +78,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "volkovlabs-abc-datasource",
-            "uid": "P06D90109C8CCE34E"
+            "type": "volkovlabs-nautilus-datasource",
+            "uid": "P06D90109C8CCE34A"
           },
           "queryText": "test",
           "refId": "A"
