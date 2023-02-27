@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: Abc
+    type: volkovlabs-abc-datasource
+    access: proxy
+    uid: P06D90109C8CCE34E
+    isDefault: true
+    orgId: 1
+    version: 1
+    editable: true

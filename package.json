@@ -1,0 +1,33 @@
+{
+  "author": "Volkov Labs",
+  "description": "Template for a new Grafana datasource plugin",
+  "devDependencies": {
+    "@grafana/data": "9.3.6",
+    "@grafana/runtime": "9.3.6",
+    "@grafana/toolkit": "9.3.6",
+    "@grafana/ui": "9.3.6",
+    "@types/enzyme": "^3.10.12",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "Apache-2.0",
+  "name": "volkovlabs-abc-datasource",
+  "scripts": {
+    "build": "grafana-toolkit plugin:build --coverage",
+    "dev": "grafana-toolkit plugin:dev",
+    "levitate": "npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/runtime,@grafana/ui",
+    "sign": "grafana-toolkit plugin:sign --rootUrls http://localhost:3000/",
+    "start": "docker-compose pull && docker-compose up",
+    "stop": "docker-compose down",
+    "test": "grafana-toolkit plugin:test",
+    "upgrade": "yarn upgrade --latest",
+    "watch": "grafana-toolkit plugin:dev --watch"
+  },
+  "version": "2.3.0"
+}
