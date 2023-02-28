@@ -1,5 +1,5 @@
 import { DataFrame, dateTime } from '@grafana/data';
-import { DataSourceTestStatus, RequestTypeValue } from '../constants';
+import { DataSourceTestStatus, Messages, RequestTypeValue } from '../constants';
 import { DataSource } from './datasource';
 
 /**
@@ -7,19 +7,19 @@ import { DataSource } from './datasource';
  */
 let frames: DataFrame = [] as any;
 const response: any = {};
-let pingResult = true;
+let getHealthResult = {};
 
 /**
  * Api
  */
 const apiMock = {
-  getAnnotations: jest.fn().mockImplementation(() => Promise.resolve(response)),
-  getAnnotationsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  ping: jest.fn().mockImplementation(() => Promise.resolve(pingResult)),
+  getHealth: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
 };
 
 jest.mock('../api', () => ({
   Api: jest.fn().mockImplementation(() => apiMock),
+  getAnnotations: jest.fn().mockImplementation(() => Promise.resolve(response)),
+  getAnnotationsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
 }));
 
 /**
@@ -62,17 +62,17 @@ describe('DataSource', () => {
       const result = await dataSource.testDatasource();
       expect(result).toEqual({
         status: DataSourceTestStatus.SUCCESS,
-        message: `Connected...`,
+        message: Messages.connected,
       });
     });
 
     it('Should handle Error state', async () => {
-      pingResult = false;
+      getHealthResult = false;
 
       const result = await dataSource.testDatasource();
       expect(result).toEqual({
         status: DataSourceTestStatus.ERROR,
-        message: `Error. Can't connect.`,
+        message: Messages.connectionError,
       });
     });
   });

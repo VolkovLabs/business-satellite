@@ -20,13 +20,13 @@ services:
       # Uncomment to preserve Grafana configuration
       # - ./data:/var/lib/grafana
 
-  postgres:
-    container_name: postgres
-    image: postgres
+  timescale:
+    container_name: timescale
+    image: timescale/timescaledb:latest-pg12
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
     volumes:
-      - ./postgres:/docker-entrypoint-initdb.d
+      - ./timescale:/docker-entrypoint-initdb.d

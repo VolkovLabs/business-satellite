@@ -9,7 +9,7 @@
 
 ## Introduction
 
-The Grafana API (Grapi) Data Source is a plugin for Grafana that allows retrieving data from Grafana API, visualizing it on your dashboard and use in annotations.
+The Grafana API (Grapi) Data Source for Grafana allows retrieving data from Grafana API, visualizing it on your dashboard and use in annotations.
 
 ## Requirements
 

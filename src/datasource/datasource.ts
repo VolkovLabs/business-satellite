@@ -6,12 +6,12 @@ import {
   DataSourceInstanceSettings,
   MutableDataFrame,
 } from '@grafana/data';
-import { Api } from '../api';
-import { DataSourceTestStatus, RequestTypeValue } from '../constants';
+import { Api, getAnnotationsFrame } from '../api';
+import { DataSourceTestStatus, Messages, RequestTypeValue } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 
 /**
- * Datasource
+ * Data Source
  */
 export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
   /**
@@ -52,7 +52,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
          */
         switch (target.requestType) {
           case RequestTypeValue.ANNOTATIONS:
-            frames = await this.api.getAnnotationsFrame(target);
+            frames = await getAnnotationsFrame(this.api, target);
             break;
         }
 
@@ -78,16 +78,16 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
    */
   async testDatasource() {
     /**
-     * Check Ping and A
+     * Check Health
      */
-    const isStatusOk = await this.api.ping();
+    const isStatusOk = await this.api.getHealth();
 
     /**
      * Return
      */
     return {
       status: isStatusOk ? DataSourceTestStatus.SUCCESS : DataSourceTestStatus.ERROR,
-      message: isStatusOk ? `Connected...` : "Error. Can't connect.",
+      message: isStatusOk ? Messages.connected : Messages.connectionError,
     };
   }
 }

@@ -9,5 +9,4 @@ module.exports = {
   ...standard.jestConfig(),
   setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
   collectCoverage: true,
-  coveragePathIgnorePatterns: ['src/icons'],
 };

@@ -1,4 +1,5 @@
 import { SelectableValue } from '@grafana/data';
+import { Messages } from './messages';
 
 /**
  * Request Type Values
@@ -16,12 +17,12 @@ export enum RequestTypeValue {
 export const RequestType: SelectableValue[] = [
   {
     label: 'Annotations',
-    description: 'Returns annotations',
+    description: Messages.requestAnnotations,
     value: RequestTypeValue.ANNOTATIONS,
   },
   {
     label: 'None',
-    description: 'For internal API calls',
+    description: Messages.requestNone,
     value: RequestTypeValue.NONE,
   },
 ];
