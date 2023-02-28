@@ -1,8 +1,8 @@
 import { lastValueFrom } from 'rxjs';
 import { DataSourceInstanceSettings } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
+import { Messages } from '../constants';
 import { DataSourceOptions, Health } from '../types';
-import * as annotations from './annotations';
 
 /**
  * API
@@ -14,9 +14,9 @@ export class Api {
   constructor(public instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {}
 
   /**
-   * Ping
+   * Get Health
    */
-  async ping(): Promise<boolean> {
+  async getHealth(): Promise<boolean> {
     const response = await lastValueFrom(
       getBackendSrv().fetch({
         method: 'GET',
@@ -28,7 +28,7 @@ export class Api {
      * Check Response
      */
     if (!response || !response.data) {
-      console.error('Get Health: API Request failed', response);
+      console.error(Messages.api.getHealthFailed, response);
       return false;
     }
 
@@ -42,10 +42,4 @@ export class Api {
 
     return false;
   }
-
-  /**
-   * Annotations
-   */
-  getAnnotations = annotations.getAnnotations;
-  getAnnotationsFrame = annotations.getAnnotationsFrame;
 }

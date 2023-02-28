@@ -1,6 +1,6 @@
 {
   "author": "Volkov Labs",
-  "description": "Grapi Data Source for Grafana",
+  "description": "Grafana API (Grapi) Data Source for Grafana",
   "devDependencies": {
     "@grafana/data": "9.3.6",
     "@grafana/runtime": "9.3.6",
@@ -30,5 +30,5 @@
     "upgrade": "yarn upgrade --latest",
     "watch": "grafana-toolkit plugin:dev --watch"
   },
-  "version": "2.3.0"
+  "version": "1.0.0"
 }

@@ -38,9 +38,9 @@ describe('Api', () => {
   const api = new Api(instanceSettings);
 
   /**
-   * Ping
+   * Get Health
    */
-  describe('ping', () => {
+  describe('GetHealth', () => {
     const response = {
       status: 200,
       statusText: 'OK',
@@ -66,24 +66,24 @@ describe('Api', () => {
       },
     };
 
-    it('Should make ping request', async () => {
+    it('Should make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.ping();
+      let result = await api.getHealth();
       expect(result).toBeTruthy();
     });
 
-    it('Should handle ping failed request', async () => {
+    it('Should handle getHealth failed request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse({ ...response, data: 'failed' }));
 
-      let result = await api.ping();
+      let result = await api.getHealth();
       expect(result).toBeFalsy();
     });
 
-    it('Should handle ping request with no data', async () => {
+    it('Should handle getHealth request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse({ ...response, data: '' }));
       jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await api.ping();
+      let result = await api.getHealth();
       expect(result).toBeFalsy();
     });
   });

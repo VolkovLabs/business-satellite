@@ -1,40 +1,43 @@
 import { lastValueFrom } from 'rxjs';
-import { AnnotationEvent, FieldType, MutableDataFrame } from '@grafana/data';
+import { Annotation } from 'types/annotation';
+import { FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
-import { RequestTypeValue } from '../constants';
+import { Messages, RequestTypeValue } from '../constants';
 import { Query } from '../types';
 import { Api } from './api';
 
 /**
  * Get Annotations
  */
-export async function getAnnotations(this: Api): Promise<AnnotationEvent[]> {
+export const getAnnotations = async (api: Api): Promise<Annotation[]> => {
   const response = await lastValueFrom(
     getBackendSrv().fetch({
       method: 'GET',
-      url: `${this.instanceSettings.url}/api/annotations`,
+      url: `${api.instanceSettings.url}/api/annotations`,
       responseType: 'json',
     })
   ).catch((e) => {
-    console.error(e.statusText);
+    if (e.statusText) {
+      console.error(e.statusText);
+    }
   });
 
   /**
    * Check Response
    */
   if (!response || !response.data) {
-    console.error('Get Annotations: API Request failed', response);
+    console.error(Messages.api.getAnnotationsFailed, response);
     return [];
   }
 
-  return response.data as AnnotationEvent[];
-}
+  return response.data as Annotation[];
+};
 
 /**
  * Get Annotations Frame
  */
-export async function getAnnotationsFrame(this: Api, query: Query): Promise<MutableDataFrame[]> {
-  const annotations = await this.getAnnotations();
+export const getAnnotationsFrame = async (api: Api, query: Query): Promise<MutableDataFrame[]> => {
+  const annotations = await getAnnotations(api);
   if (!annotations.length) {
     return [];
   }
@@ -106,8 +109,18 @@ export async function getAnnotationsFrame(this: Api, query: Query): Promise<Muta
         values: annotations.map((annotation) => annotation.text),
         type: FieldType.string,
       },
+      {
+        name: 'Prev State',
+        values: annotations.map((annotation) => annotation.prevState),
+        type: FieldType.string,
+      },
+      {
+        name: 'New State',
+        values: annotations.map((annotation) => annotation.newState),
+        type: FieldType.string,
+      },
     ],
   });
 
   return [frame];
-}
+};

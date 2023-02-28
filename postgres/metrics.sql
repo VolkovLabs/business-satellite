@@ -6,3 +6,4 @@ CREATE TABLE metrics (
 );
 
 insert into metrics values(1, now(), 'test', 123);
+insert into metrics values(2, now(), 'test2', 224);

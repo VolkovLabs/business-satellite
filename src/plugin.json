@@ -51,6 +51,6 @@
       ]
     }
   ],
-  "name": "Grapi",
+  "name": "Grafana API",
   "type": "datasource"
 }

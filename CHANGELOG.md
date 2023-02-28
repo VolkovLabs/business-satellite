@@ -4,4 +4,8 @@
 
 ### Features / Enhancements
 
-- Initial release based on Volkov Labs Abc Data source template.
+- Initial release based on Volkov Labs Abc Data source template
+- Update README and configuration (#1)
+- Add Postgres for Alerting (#2)
+- Add Annotations (#3)
+- Improve Annotations (#4)
