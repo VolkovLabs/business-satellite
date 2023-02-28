@@ -5,13 +5,13 @@
     "grafanaDependency": ">=8.5.0",
     "plugins": []
   },
-  "id": "volkovlabs-nautilus-datasource",
+  "id": "volkovlabs-grapi-datasource",
   "info": {
     "author": {
       "name": "Volkov Labs",
       "url": "https://volkovlabs.io"
     },
-    "description": "Nautilus Data Source for Grafana",
+    "description": "Grafana API (Grapi) Data Source for Grafana",
     "keywords": ["grafana", "api"],
     "links": [
       {
@@ -20,7 +20,7 @@
       },
       {
         "name": "GitHub",
-        "url": "https://github.com/volkovlabs/volkovlabs-nautilus-datasource"
+        "url": "https://github.com/volkovlabs/volkovlabs-grapi-datasource"
       }
     ],
     "logos": {
@@ -51,6 +51,6 @@
       ]
     }
   ],
-  "name": "Nautilus",
+  "name": "Grapi",
   "type": "datasource"
 }
