@@ -45,11 +45,11 @@ const getOptions = ({
   withCredentials: false,
   ...overrideOptions,
   jsonData: {
-    path: '',
+    url: '',
     ...jsonData,
   },
   secureJsonData: {
-    apiKey: '',
+    token: '',
     ...secureJsonData,
   },
 });
@@ -65,106 +65,56 @@ describe('ConfigEditor', () => {
   });
 
   /**
-   * Path
+   * URL
    */
-  describe('Path', () => {
+  describe('URL', () => {
     const getComponent = (wrapper: ShallowComponent) =>
       wrapper.findWhere((node) => {
-        return node.prop('onChange') === wrapper.instance().onPathChange;
+        return node.prop('onChange') === wrapper.instance().onUrlChange;
       });
 
-    it('Should apply path value and change options if field was changed', () => {
-      const options = getOptions({ jsonData: { path: '/nautilus' } });
+    it('Should apply URL value and change options if field was changed', () => {
+      const options = getOptions({ jsonData: { url: 'http://localhost:3000' } });
       const wrapper = shallow<ConfigEditor>(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
       const testedComponent = getComponent(wrapper);
-      expect(testedComponent.prop('value')).toEqual(options.jsonData.path);
+      expect(testedComponent.prop('value')).toEqual(options.jsonData.url);
 
-      const newValue = '/123';
+      const newValue = 'http://localhost:3100';
       testedComponent.simulate('change', { target: { value: newValue } });
       expect(onChange).toHaveBeenCalledWith({
         ...options,
         jsonData: {
           ...options.jsonData,
-          path: newValue,
+          url: newValue,
         },
       });
     });
   });
 
   /**
-   * API Key
+   * Token
    */
-  describe('APIKey', () => {
-    const label = 'API Key';
-
-    it('Should apply APIKey value and change options if field was changed', () => {
-      const options = getOptions({
-        secureJsonFields: { apiKey: true },
-        secureJsonData: { apiKey: '123' },
+  describe('Token', () => {
+    const getComponent = (wrapper: ShallowComponent) =>
+      wrapper.findWhere((node) => {
+        return node.prop('onChange') === wrapper.instance().onTokenChange;
       });
+
+    it('Should apply URL value and change options if field was changed', () => {
+      const options = getOptions({ jsonData: { url: '123' } });
       const wrapper = shallow<ConfigEditor>(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
-      /**
-       * Check component
-       */
-      const testedComponent = wrapper.findWhere((node) => node.prop('label') === label);
-      expect(testedComponent.prop('value')).toEqual(options.secureJsonData.apiKey);
-      expect(testedComponent.prop('isConfigured')).toBeTruthy();
+      const testedComponent = getComponent(wrapper);
+      expect(testedComponent.prop('value')).toEqual(options.secureJsonData.token);
 
-      /**
-       * Simulate OnChange
-       */
-      const newValue = 'newKey';
+      const newValue = '321';
       testedComponent.simulate('change', { target: { value: newValue } });
       expect(onChange).toHaveBeenCalledWith({
         ...options,
         secureJsonData: {
           ...options.secureJsonData,
-          apiKey: newValue,
-        },
-      });
-    });
-
-    it('Should be Ok with not secureJsonData', () => {
-      const options = getOptions();
-      delete options.secureJsonData;
-      const wrapper = shallow<ConfigEditor>(<ConfigEditor options={options} onOptionsChange={onChange} />);
-
-      /**
-       * Check component
-       */
-      const testedComponent = wrapper.findWhere((node) => node.prop('label') === label);
-      expect(testedComponent.prop('value')).toEqual('');
-      expect(testedComponent.prop('isConfigured')).toBeFalsy();
-    });
-
-    it('Should reset APIKey', () => {
-      const options = getOptions({
-        secureJsonFields: { apiKey: true },
-        secureJsonData: {},
-      });
-
-      /**
-       * Check component
-       */
-      const wrapper = shallow<ConfigEditor>(<ConfigEditor options={options} onOptionsChange={onChange} />);
-      const testedComponent = wrapper.findWhere((node) => node.prop('label') === label);
-
-      /**
-       * Simulate OnChange
-       */
-      expect(testedComponent.prop('isConfigured')).toBeTruthy();
-      testedComponent.simulate('reset');
-      expect(onChange).toHaveBeenCalledWith({
-        ...options,
-        secureJsonFields: {
-          ...options.secureJsonFields,
-          apiKey: false,
-        },
-        secureJsonData: {
-          ...options.secureJsonData,
-          apiKey: '',
+          token: newValue,
         },
       });
     });

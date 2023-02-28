@@ -1,6 +1,13 @@
-import { DataQueryRequest, DataQueryResponse, DataSourceApi, DataSourceInstanceSettings } from '@grafana/data';
+import {
+  DataFrame,
+  DataQueryRequest,
+  DataQueryResponse,
+  DataSourceApi,
+  DataSourceInstanceSettings,
+  MutableDataFrame,
+} from '@grafana/data';
 import { Api } from '../api';
-import { DataSourceTestStatus } from '../constants';
+import { DataSourceTestStatus, RequestTypeValue } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 
 /**
@@ -23,15 +30,42 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
   }
 
   /**
+   * Annotations
+   */
+  annotations = {};
+
+  /**
    * Query
    */
   async query(options: DataQueryRequest<Query>): Promise<DataQueryResponse> {
-    const { range } = options;
+    const data: DataFrame[] = [];
 
     /**
      * Process targets
      */
-    const data = options.targets.map((target) => this.api.getData(target, range));
+    await Promise.all(
+      options.targets.map(async (target) => {
+        let frames: MutableDataFrame[] = [];
+
+        /**
+         * Request Types
+         */
+        switch (target.requestType) {
+          case RequestTypeValue.ANNOTATIONS:
+            frames = await this.api.getAnnotationsFrame(target);
+            break;
+        }
+
+        if (!frames || !frames.length) {
+          return;
+        }
+
+        /**
+         * Add Frames
+         */
+        data.push(...frames);
+      })
+    );
 
     /**
      * Return data
@@ -43,7 +77,10 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
    * Health Check
    */
   async testDatasource() {
-    const isStatusOk = true;
+    /**
+     * Check Ping and A
+     */
+    const isStatusOk = await this.api.ping();
 
     /**
      * Return

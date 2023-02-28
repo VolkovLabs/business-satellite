@@ -1,6 +1,6 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { defaultQuery } from '../../constants';
+import { DefaultQuery, RequestType, RequestTypeValue } from '../../constants';
 import { Query } from '../../types';
 import { QueryEditor } from './QueryEditor';
 
@@ -15,7 +15,7 @@ type ShallowComponent = ShallowWrapper<QueryEditor['props'], QueryEditor['state'
  * @param overrideQuery
  */
 export const getQuery = (overrideQuery = {}): Query => ({
-  queryText: defaultQuery.queryText,
+  requestType: DefaultQuery.requestType,
   refId: 'A',
   ...overrideQuery,
 });
@@ -33,31 +33,31 @@ describe('QueryEditor', () => {
   });
 
   /**
-   * Query Text
+   * Request Type
    */
-  describe('QueryText', () => {
+  describe('Request Type', () => {
     const getComponent = (wrapper: ShallowComponent) =>
       wrapper.findWhere((node) => {
-        return node.prop('onChange') === wrapper.instance().onQueryTextChange;
+        return node.prop('onChange') === wrapper.instance().onRequestTypeChange;
       });
 
-    it('Should apply queryText value and change', () => {
+    it('Should apply requestType value and change', () => {
       const query = getQuery();
       const wrapper = shallow<QueryEditor>(
         <QueryEditor datasource={[] as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
       );
 
       const testedComponent = getComponent(wrapper);
-      expect(testedComponent.prop('value')).toEqual(defaultQuery.queryText);
+      expect(testedComponent.prop('value')).toEqual(RequestType.find((type) => type.value === query.requestType));
 
       /**
        * OnChange
        */
-      const newValue = 'new';
-      testedComponent.simulate('change', { target: { value: newValue } });
+      const newValue = RequestType.find((type) => type.value === RequestTypeValue.NONE);
+      testedComponent.simulate('change', newValue);
       expect(onChange).toHaveBeenCalledWith({
         ...query,
-        queryText: newValue,
+        requestType: newValue?.value,
       });
     });
   });

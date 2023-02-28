@@ -1,5 +1,8 @@
-import { DataSourceInstanceSettings, FieldType, MutableDataFrame, TimeRange } from '@grafana/data';
-import { DataSourceOptions, Query } from '../types';
+import { lastValueFrom } from 'rxjs';
+import { DataSourceInstanceSettings } from '@grafana/data';
+import { getBackendSrv } from '@grafana/runtime';
+import { DataSourceOptions, Health } from '../types';
+import * as annotations from './annotations';
 
 /**
  * API
@@ -11,15 +14,38 @@ export class Api {
   constructor(public instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {}
 
   /**
-   * Get data
+   * Ping
    */
-  getData(query: Query, range: TimeRange): MutableDataFrame {
-    return new MutableDataFrame({
-      refId: query.refId,
-      fields: [
-        { name: 'Time', values: [range.from, range.to], type: FieldType.time },
-        { name: 'Value', values: [1, 2], type: FieldType.number },
-      ],
-    });
+  async ping(): Promise<boolean> {
+    const response = await lastValueFrom(
+      getBackendSrv().fetch({
+        method: 'GET',
+        url: `${this.instanceSettings.url}/api/health`,
+      })
+    );
+
+    /**
+     * Check Response
+     */
+    if (!response || !response.data) {
+      console.error('Get Health: API Request failed', response);
+      return false;
+    }
+
+    /**
+     * Data received
+     */
+    const health = response.data as Health;
+    if (health.version) {
+      return true;
+    }
+
+    return false;
   }
+
+  /**
+   * Annotations
+   */
+  getAnnotations = annotations.getAnnotations;
+  getAnnotationsFrame = annotations.getAnnotationsFrame;
 }

@@ -1,12 +1,12 @@
 import React, { ChangeEvent, PureComponent } from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { FieldSet, InlineField, InlineFieldRow, Input, LegacyForms } from '@grafana/ui';
+import { FieldSet, InlineField, InlineFieldRow, Input } from '@grafana/ui';
 import { DataSourceOptions, SecureJsonData } from '../../types';
 
 /**
  * Editor Properties
  */
-interface Props extends DataSourcePluginOptionsEditorProps<DataSourceOptions> {}
+interface Props extends DataSourcePluginOptionsEditorProps<DataSourceOptions, SecureJsonData> {}
 
 /**
  * State
@@ -18,47 +18,28 @@ interface State {}
  */
 export class ConfigEditor extends PureComponent<Props, State> {
   /**
-   * Path Change
+   * API URL Change
    */
-  onPathChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
     onOptionsChange({
       ...options,
       jsonData: {
         ...options.jsonData,
-        path: event.target.value,
+        url: event.target.value,
       },
     });
   };
 
   /**
-   * API Key Change
-   * Secure fields only sent to the backend
+   * Token Change
    */
-  onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onTokenChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
     onOptionsChange({
       ...options,
       secureJsonData: {
-        apiKey: event.target.value,
-      },
-    });
-  };
-
-  /**
-   * API Key Reset
-   */
-  onResetAPIKey = () => {
-    const { onOptionsChange, options } = this.props;
-    onOptionsChange({
-      ...options,
-      secureJsonFields: {
-        ...options.secureJsonFields,
-        apiKey: false,
-      },
-      secureJsonData: {
-        ...options.secureJsonData,
-        apiKey: '',
+        token: event.target.value,
       },
     });
   };
@@ -74,21 +55,20 @@ export class ConfigEditor extends PureComponent<Props, State> {
     return (
       <FieldSet>
         <InlineFieldRow>
-          <InlineField label="Path" labelWidth={14}>
-            <Input type="text" value={jsonData.path} width={40} onChange={this.onPathChange} />
+          <InlineField label="Grafana URL" labelWidth={14} grow>
+            <Input type="text" placeholder="http://localhost:3000" value={jsonData.url} onChange={this.onUrlChange} />
           </InlineField>
         </InlineFieldRow>
 
         <InlineFieldRow>
-          <LegacyForms.SecretFormField
-            isConfigured={(secureJsonFields && secureJsonFields.apiKey) as boolean}
-            value={secureJsonData.apiKey || ''}
-            label="API Key"
-            labelWidth={7}
-            inputWidth={20}
-            onReset={this.onResetAPIKey}
-            onChange={this.onAPIKeyChange}
-          />
+          <InlineField label="Token" labelWidth={14} grow>
+            <Input
+              type="password"
+              placeholder={secureJsonFields?.token ? 'configured' : ''}
+              value={secureJsonData.token ?? ''}
+              onChange={this.onTokenChange}
+            />
+          </InlineField>
         </InlineFieldRow>
       </FieldSet>
     );

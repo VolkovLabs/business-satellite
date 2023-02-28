@@ -60,8 +60,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 6,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -74,7 +74,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.0.0",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
@@ -82,15 +82,16 @@
             "uid": "P06D90109C8CCE34A"
           },
           "queryText": "test",
-          "refId": "A"
+          "refId": "A",
+          "requestType": "annotations"
         }
       ],
-      "title": "Test",
+      "title": "Annotations",
       "type": "table"
     }
   ],
   "refresh": "",
-  "schemaVersion": 36,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
