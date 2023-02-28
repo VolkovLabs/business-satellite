@@ -1,4 +1,4 @@
-# Template to create a new Grafana data source plugin
+# Grafana API (Grapi) Data Source for Grafana
 
 ![Datasource](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/raw/main/src/img/datasource.png)
 
