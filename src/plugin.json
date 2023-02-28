@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
+  "annotations": true,
   "dependencies": {
     "grafanaDependency": ">=8.5.0",
     "plugins": []
@@ -36,6 +37,20 @@
     "version": "%VERSION%"
   },
   "metrics": true,
+  "routes": [
+    {
+      "method": "GET",
+      "path": "api",
+      "reqRole": "Viewer",
+      "url": "{{ .JsonData.url }}/api",
+      "headers": [
+        {
+          "name": "Authorization",
+          "content": "Bearer {{ .SecureJsonData.token }}"
+        }
+      ]
+    }
+  ],
   "name": "Nautilus",
   "type": "datasource"
 }

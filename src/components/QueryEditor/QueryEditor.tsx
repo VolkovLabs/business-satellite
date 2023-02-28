@@ -1,8 +1,8 @@
 import { defaults } from 'lodash';
-import React, { ChangeEvent, PureComponent } from 'react';
-import { QueryEditorProps } from '@grafana/data';
-import { InlineField, InlineFieldRow, Input } from '@grafana/ui';
-import { defaultQuery } from '../../constants';
+import React, { PureComponent } from 'react';
+import { QueryEditorProps, SelectableValue } from '@grafana/data';
+import { InlineField, InlineFieldRow, Select } from '@grafana/ui';
+import { DefaultQuery, RequestType, RequestTypeValue } from '../../constants';
 import { DataSource } from '../../datasource';
 import { DataSourceOptions, Query } from '../../types';
 
@@ -16,25 +16,32 @@ type Props = QueryEditorProps<DataSource, Query, DataSourceOptions>;
  */
 export class QueryEditor extends PureComponent<Props> {
   /**
-   * Query Text change
+   * Request Type change
    */
-  onQueryTextChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, query } = this.props;
-    onChange({ ...query, queryText: event.target.value });
+  onRequestTypeChange = async (item: SelectableValue<RequestTypeValue>) => {
+    const { onChange, onRunQuery, query } = this.props;
+    onChange({ ...query, requestType: item.value! });
+    onRunQuery();
   };
 
   /**
    * Render
    */
   render() {
-    const query = defaults(this.props.query, defaultQuery);
+    const query = defaults(this.props.query, DefaultQuery);
 
     return (
-      <InlineFieldRow>
-        <InlineField label="Query Text" labelWidth={14} grow>
-          <Input type="text" value={query.queryText} onChange={this.onQueryTextChange} />
-        </InlineField>
-      </InlineFieldRow>
+      <>
+        <InlineFieldRow>
+          <InlineField grow label="Request" labelWidth={10}>
+            <Select
+              options={RequestType}
+              value={RequestType.find((type) => type.value === query.requestType)}
+              onChange={this.onRequestTypeChange}
+            />
+          </InlineField>
+        </InlineFieldRow>
+      </>
     );
   }
 }
