@@ -1,6 +1,6 @@
 {
   "author": "Volkov Labs",
-  "description": "Nautilus Data Source for Grafana",
+  "description": "Grapi Data Source for Grafana",
   "devDependencies": {
     "@grafana/data": "9.3.6",
     "@grafana/runtime": "9.3.6",
@@ -17,7 +17,7 @@
     "node": ">=16"
   },
   "license": "Apache-2.0",
-  "name": "volkovlabs-nautilus-datasource",
+  "name": "volkovlabs-grapi-datasource",
   "scripts": {
     "build": "grafana-toolkit plugin:build --coverage",
     "dev": "grafana-toolkit plugin:dev",
