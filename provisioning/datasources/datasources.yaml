@@ -5,7 +5,22 @@ datasources:
     type: volkovlabs-nautilus-datasource
     access: proxy
     uid: P06D90109C8CCE34A
-    isDefault: true
     orgId: 1
     version: 1
     editable: true
+    jsonData:
+      url: http://localhost:3000
+  - name: PostgreSQL
+    type: postgres
+    access: proxy
+    orgId: 1
+    version: 1
+    editable: true
+    url: host.docker.internal:5432
+    user: postgres
+    editable: true
+    jsonData:
+      postgresVersion: 1200
+      sslmode: disable
+    secureJsonData:
+      password: postgres
