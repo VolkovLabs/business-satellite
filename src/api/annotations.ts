@@ -16,11 +16,7 @@ export const getAnnotations = async (api: Api): Promise<Annotation[]> => {
       url: `${api.instanceSettings.url}/api/annotations`,
       responseType: 'json',
     })
-  ).catch((e) => {
-    if (e.statusText) {
-      console.error(e.statusText);
-    }
-  });
+  );
 
   /**
    * Check Response
