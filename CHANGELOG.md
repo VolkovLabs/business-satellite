@@ -8,4 +8,4 @@
 - Update README and configuration (#1)
 - Add Postgres for Alerting (#2)
 - Add Annotations (#3)
-- Improve Annotations (#4)
+- Improve Annotations and update to Timescale (#4)
