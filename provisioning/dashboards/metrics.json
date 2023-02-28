@@ -24,15 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1677607446776,
+  "iteration": 1677611103991,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "postgres",
-        "uid": "PCC52D03280B7034C"
+        "uid": "timescale"
       },
       "fieldConfig": {
         "defaults": {
@@ -106,13 +105,13 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "PCC52D03280B7034C"
+            "uid": "timescale"
           },
           "format": "time_series",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  created AS \"time\",\n  value\nFROM metrics\nWHERE\n  name='$metric'\n  and $__timeFilter(created)\nORDER BY 1",
+          "rawSql": "SELECT\n  time,\n  value\nFROM metrics\nWHERE\n  name='$metric'\n  and $__timeFilter(time)\nORDER BY 1",
           "refId": "A",
           "requestType": "none",
           "select": [
@@ -148,12 +147,12 @@
       {
         "current": {
           "selected": false,
-          "text": "test",
-          "value": "test"
+          "text": "test2",
+          "value": "test2"
         },
         "datasource": {
           "type": "postgres",
-          "uid": "PCC52D03280B7034C"
+          "uid": "timescale"
         },
         "definition": "select distinct name from metrics",
         "description": "Metric",
@@ -179,6 +178,6 @@
   "timezone": "",
   "title": "Metrics",
   "uid": "Rcb6nob4k",
-  "version": 11,
+  "version": 1,
   "weekStart": ""
 }

@@ -11,8 +11,8 @@ export const api = {
  */
 export const Messages = {
   api,
-  connected: 'Connected...',
-  connectionError: "Error. Can't connect.",
+  connected: 'Connected.',
+  connectionError: 'Error. Not able connect.',
   requestAnnotations: 'Returns annotations',
   requestNone: 'For internal API calls',
 };

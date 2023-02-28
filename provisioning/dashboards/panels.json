@@ -30,7 +30,7 @@
     {
       "datasource": {
         "type": "volkovlabs-grapi-datasource",
-        "uid": "P06D90109C8CCE34A"
+        "uid": "grapi"
       },
       "fieldConfig": {
         "defaults": {
@@ -79,7 +79,7 @@
         {
           "datasource": {
             "type": "volkovlabs-grapi-datasource",
-            "uid": "P06D90109C8CCE34A"
+            "uid": "grapi"
           },
           "queryText": "test",
           "refId": "A",

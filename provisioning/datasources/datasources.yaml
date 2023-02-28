@@ -4,15 +4,16 @@ datasources:
   - name: Grapi
     type: volkovlabs-grapi-datasource
     access: proxy
-    uid: P06D90109C8CCE34A
+    uid: grapi
     orgId: 1
     version: 1
     editable: true
     jsonData:
       url: http://localhost:3000
-  - name: PostgreSQL
+  - name: Timescale
     type: postgres
     access: proxy
+    uid: timescale
     orgId: 1
     version: 1
     editable: true
