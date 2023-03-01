@@ -16,7 +16,7 @@ export const getAnnotations = async (
   range: TimeRange,
   dashboardUID: string | undefined
 ): Promise<Annotation[]> => {
-  let params: Record<string, any> = { limit: query.annotationLimit };
+  let params: Record<string, any> = {};
 
   /**
    * Time Range
@@ -31,6 +31,13 @@ export const getAnnotations = async (
    */
   if (query.annotationDashboard === AnnotationDashboard.THIS && dashboardUID) {
     params.dashboardUID = dashboardUID;
+  }
+
+  /**
+   * Max Limit
+   */
+  if (query.annotationLimit) {
+    params.limit = query.annotationLimit;
   }
 
   /**

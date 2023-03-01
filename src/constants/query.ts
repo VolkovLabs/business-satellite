@@ -10,5 +10,5 @@ export const DefaultQuery: Partial<Query> = {
   annotationType: AnnotationType.ALL,
   annotationRange: AnnotationRange.NONE,
   annotationDashboard: AnnotationDashboard.ALL,
-  annotationLimit: 100,
+  annotationLimit: 0,
 };
