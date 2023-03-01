@@ -6,7 +6,7 @@ import {
   DataSourceInstanceSettings,
   MutableDataFrame,
 } from '@grafana/data';
-import { Api, getAnnotationsFrame } from '../api';
+import { Api, getAnnotationsFrame, getOrg } from '../api';
 import { DataSourceTestStatus, Messages, RequestTypeValue } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 
@@ -81,13 +81,24 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
      * Check Health
      */
     const isStatusOk = await this.api.getHealth();
+    const org = await getOrg(this.api);
+
+    /**
+     * Connected
+     */
+    if (isStatusOk && org?.name) {
+      return {
+        status: DataSourceTestStatus.SUCCESS,
+        message: `${Messages.connectedTo} ${org.name}.`,
+      };
+    }
 
     /**
      * Return
      */
     return {
-      status: isStatusOk ? DataSourceTestStatus.SUCCESS : DataSourceTestStatus.ERROR,
-      message: isStatusOk ? Messages.connected : Messages.connectionError,
+      status: DataSourceTestStatus.ERROR,
+      message: Messages.connectionError,
     };
   }
 }

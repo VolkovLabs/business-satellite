@@ -14,7 +14,6 @@ export const getAnnotations = async (api: Api): Promise<Annotation[]> => {
     getBackendSrv().fetch({
       method: 'GET',
       url: `${api.instanceSettings.url}/api/annotations`,
-      responseType: 'json',
     })
   );
 

@@ -9,3 +9,4 @@
 - Add Postgres for Alerting (#2)
 - Add Annotations (#3)
 - Improve Annotations and update to Timescale (#4)
+- Improve Data Source to check Organization (#5)
