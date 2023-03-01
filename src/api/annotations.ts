@@ -79,6 +79,20 @@ export const getAnnotations = async (
     annotations = annotations.filter((annotation) => annotation.text?.match(pattern));
   }
 
+  /**
+   * Filter Prev State
+   */
+  if (query.annotationPrevState) {
+    annotations = annotations.filter((annotation) => annotation.prevState === query.annotationPrevState);
+  }
+
+  /**
+   * Filter New State
+   */
+  if (query.annotationNewState) {
+    annotations = annotations.filter((annotation) => annotation.newState === query.annotationNewState);
+  }
+
   return annotations;
 };
 

@@ -7,6 +7,8 @@ import {
   AnnotationDashboardOptions,
   AnnotationRange,
   AnnotationRangeOptions,
+  AnnotationState,
+  AnnotationStateOptions,
   AnnotationType,
   AnnotationTypeOptions,
   DefaultQuery,
@@ -80,6 +82,24 @@ export class QueryEditor extends PureComponent<Props> {
   };
 
   /**
+   * Annotation Prev State change
+   */
+  onAnnotationPrevStateChange = async (type: AnnotationState) => {
+    const { onChange, onRunQuery, query } = this.props;
+    onChange({ ...query, annotationPrevState: type });
+    onRunQuery();
+  };
+
+  /**
+   * Annotation New State change
+   */
+  onAnnotationNewStateChange = async (type: AnnotationState) => {
+    const { onChange, onRunQuery, query } = this.props;
+    onChange({ ...query, annotationNewState: type });
+    onRunQuery();
+  };
+
+  /**
    * Render
    */
   render() {
@@ -124,6 +144,25 @@ export class QueryEditor extends PureComponent<Props> {
                 />
               </InlineField>
             </InlineFieldRow>
+
+            {query.annotationType === AnnotationType.ALERT && (
+              <InlineFieldRow>
+                <InlineField label="Prev State" labelWidth={10}>
+                  <RadioButtonGroup
+                    options={AnnotationStateOptions}
+                    value={AnnotationStateOptions.find((type) => type.value === query.annotationPrevState)?.value}
+                    onChange={this.onAnnotationPrevStateChange}
+                  />
+                </InlineField>
+                <InlineField label="New State" labelWidth={10}>
+                  <RadioButtonGroup
+                    options={AnnotationStateOptions}
+                    value={AnnotationStateOptions.find((type) => type.value === query.annotationNewState)?.value}
+                    onChange={this.onAnnotationNewStateChange}
+                  />
+                </InlineField>
+              </InlineFieldRow>
+            )}
 
             <InlineFieldRow>
               <InlineField label="Text Pattern" labelWidth={20} grow tooltip="Regex format">

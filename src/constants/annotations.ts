@@ -4,7 +4,7 @@ import { SelectableValue } from '@grafana/data';
  * Annotation Types
  */
 export enum AnnotationType {
-  ALL = 'all',
+  ALL = '',
   ANNOTATION = 'annotation',
   ALERT = 'alert',
 }
@@ -13,7 +13,7 @@ export enum AnnotationType {
  * Annotation Dashboard
  */
 export enum AnnotationDashboard {
-  ALL = 'all',
+  ALL = '',
   THIS = 'this',
 }
 
@@ -21,8 +21,18 @@ export enum AnnotationDashboard {
  * Annotation Range
  */
 export enum AnnotationRange {
-  NONE = 'none',
+  NONE = '',
   SELECTED = 'selected',
+}
+
+/**
+ * Annotation State
+ */
+export enum AnnotationState {
+  ALL = '',
+  NORMAL = 'Normal',
+  PENDING = 'Pending',
+  ALERTING = 'Alerting',
 }
 
 /**
@@ -78,5 +88,29 @@ export const AnnotationRangeOptions: SelectableValue[] = [
     label: 'Selected',
     value: AnnotationRange.SELECTED,
     icon: 'calendar-alt',
+  },
+];
+
+/**
+ * Annotations States
+ *
+ * @type {SelectableValue[]}
+ */
+export const AnnotationStateOptions: SelectableValue[] = [
+  {
+    label: 'All',
+    value: AnnotationState.ALL,
+  },
+  {
+    label: 'Normal',
+    value: AnnotationState.NORMAL,
+  },
+  {
+    label: 'Pending',
+    value: AnnotationState.PENDING,
+  },
+  {
+    label: 'Alerting',
+    value: AnnotationState.ALERTING,
   },
 ];

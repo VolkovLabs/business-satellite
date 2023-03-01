@@ -18,12 +18,58 @@
           "type": "dashboard"
         },
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "volkovlabs-grapi-datasource",
+          "uid": "grapi"
+        },
+        "enable": true,
+        "iconColor": "red",
+        "mappings": {
+          "id": {
+            "source": "field",
+            "value": "Id"
+          },
+          "tags": {
+            "source": "field",
+            "value": "Tags"
+          },
+          "text": {
+            "source": "field",
+            "value": "Text"
+          },
+          "time": {
+            "source": "field",
+            "value": "Time"
+          },
+          "timeEnd": {
+            "source": "field",
+            "value": "Time End"
+          }
+        },
+        "name": "Alerting",
+        "target": {
+          "annotationDashboard": "",
+          "annotationLimit": 0,
+          "annotationNewState": "Alerting",
+          "annotationPattern": "name=$metric",
+          "annotationPrevState": "",
+          "annotationRange": "none",
+          "annotationType": "alert",
+          "limit": 100,
+          "matchAny": false,
+          "requestType": "annotations",
+          "tags": [],
+          "type": "dashboard"
+        }
       }
     ]
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "iteration": 1677713109125,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -38,8 +84,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -186,9 +230,16 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "8.5.3",
       "targets": [
         {
+          "annotationDashboard": "this",
+          "annotationLimit": 0,
+          "annotationNewState": "Alerting",
+          "annotationPattern": "",
+          "annotationPrevState": "",
+          "annotationRange": "selected",
+          "annotationType": "alert",
           "datasource": {
             "type": "volkovlabs-grapi-datasource",
             "uid": "grapi"
@@ -203,7 +254,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 37,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -242,6 +293,6 @@
   "timezone": "",
   "title": "Metrics",
   "uid": "Rcb6nob4k",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
