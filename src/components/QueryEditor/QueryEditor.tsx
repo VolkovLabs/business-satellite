@@ -129,7 +129,7 @@ export class QueryEditor extends PureComponent<Props> {
               <InlineField label="Text Pattern" labelWidth={20} grow tooltip="Regex format">
                 <Input value={query.annotationPattern} onChange={this.onAnnotationPatternChange} />
               </InlineField>
-              <InlineField label="Max Limit" labelWidth={10} grow>
+              <InlineField label="Max Limit" labelWidth={10}>
                 <Input type="number" value={query.annotationLimit} onChange={this.onAnnotationLimitChange} />
               </InlineField>
             </InlineFieldRow>
