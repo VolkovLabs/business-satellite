@@ -8,6 +8,7 @@ import { DataSource } from './datasource';
 let frames: DataFrame = [] as any;
 const response: any = {};
 let getHealthResult = {};
+let getOrgResult = { name: 'Test' };
 
 /**
  * Api
@@ -20,6 +21,7 @@ jest.mock('../api', () => ({
   Api: jest.fn().mockImplementation(() => apiMock),
   getAnnotations: jest.fn().mockImplementation(() => Promise.resolve(response)),
   getAnnotationsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  getOrg: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
 }));
 
 /**
@@ -62,7 +64,7 @@ describe('DataSource', () => {
       const result = await dataSource.testDatasource();
       expect(result).toEqual({
         status: DataSourceTestStatus.SUCCESS,
-        message: Messages.connected,
+        message: `${Messages.connectedTo} ${getOrgResult.name}.`,
       });
     });
 

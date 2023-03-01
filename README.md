@@ -21,6 +21,7 @@ Plugin is under development.
 
 ## Features
 
+- Support Local and Remote Grafana instances using API Keys and Tokens.
 - Allows to retrieve Annotations and Alerts.
 
 ## Feedback
