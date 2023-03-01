@@ -1,5 +1,5 @@
 import { DataQuery } from '@grafana/data';
-import { RequestTypeValue } from '../constants';
+import { AnnotationType, RequestType } from '../constants';
 
 /**
  * Query
@@ -8,7 +8,21 @@ export interface Query extends DataQuery {
   /**
    * Request Type
    *
-   * @type {RequestTypeValue}
+   * @type {RequestType}
    */
-  requestType?: RequestTypeValue;
+  requestType?: RequestType;
+
+  /**
+   * Annotation Type
+   *
+   * @type {AnnotationType}
+   */
+  annotationType?: AnnotationType;
+
+  /**
+   * Annotation Pattern
+   *
+   * @type {string}
+   */
+  annotationPattern?: string;
 }

@@ -1,8 +1,8 @@
 import { lastValueFrom } from 'rxjs';
 import { Annotation } from 'types/annotation';
 import { FieldType, MutableDataFrame } from '@grafana/data';
-import { getBackendSrv } from '@grafana/runtime';
-import { Messages, RequestTypeValue } from '../constants';
+import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
+import { AnnotationType, Messages, RequestType } from '../constants';
 import { Query } from '../types';
 import { notifyError } from '../utils';
 import { Api } from './api';
@@ -10,7 +10,7 @@ import { Api } from './api';
 /**
  * Get Annotations
  */
-export const getAnnotations = async (api: Api): Promise<Annotation[]> => {
+export const getAnnotations = async (api: Api, query: Query): Promise<Annotation[]> => {
   const response = await lastValueFrom(
     getBackendSrv().fetch({
       method: 'GET',
@@ -27,14 +27,38 @@ export const getAnnotations = async (api: Api): Promise<Annotation[]> => {
     return [];
   }
 
-  return response.data as Annotation[];
+  let annotations = response.data as Annotation[];
+
+  /**
+   * Filter Alarms
+   */
+  if (query.annotationType === AnnotationType.ALARMS) {
+    annotations = annotations.filter((annotation) => annotation.alertId);
+  }
+
+  /**
+   * Filter Manual
+   */
+  if (query.annotationType === AnnotationType.MANUAL) {
+    annotations = annotations.filter((annotation) => !annotation.alertId);
+  }
+
+  /**
+   * Filter Pattern
+   */
+  if (query.annotationPattern) {
+    const pattern = getTemplateSrv().replace(query.annotationPattern);
+    annotations = annotations.filter((annotation) => annotation.text?.match(pattern));
+  }
+
+  return annotations;
 };
 
 /**
  * Get Annotations Frame
  */
 export const getAnnotationsFrame = async (api: Api, query: Query): Promise<MutableDataFrame[]> => {
-  const annotations = await getAnnotations(api);
+  const annotations = await getAnnotations(api, query);
   if (!annotations.length) {
     return [];
   }
@@ -43,7 +67,7 @@ export const getAnnotationsFrame = async (api: Api, query: Query): Promise<Mutab
    * Create frame
    */
   const frame = new MutableDataFrame({
-    name: RequestTypeValue.ANNOTATIONS,
+    name: RequestType.ANNOTATIONS,
     refId: query.refId,
     fields: [
       {

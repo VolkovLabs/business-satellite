@@ -1,3 +1,4 @@
+export * from './annotations';
 export * from './datasource';
 export * from './messages';
 export * from './query';
