@@ -16,13 +16,19 @@ export const getAnnotations = async (
   range: TimeRange,
   dashboardUID: string | undefined
 ): Promise<Annotation[]> => {
-  let params: Record<string, any> = {};
+  let params: Record<string, any> = { limit: query.annotationLimit };
 
+  /**
+   * Time Range
+   */
   if (query.annotationRange === AnnotationRange.SELECTED) {
     params.from = range.from.valueOf();
     params.to = range.to.valueOf();
   }
 
+  /**
+   * Dashboard
+   */
   if (query.annotationDashboard === AnnotationDashboard.THIS && dashboardUID) {
     params.dashboardUID = dashboardUID;
   }

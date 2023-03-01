@@ -39,4 +39,11 @@ export interface Query extends DataQuery {
    * @type {string}
    */
   annotationPattern?: string;
+
+  /**
+   * Annotation Limit
+   *
+   * @type {number}
+   */
+  annotationLimit?: number;
 }

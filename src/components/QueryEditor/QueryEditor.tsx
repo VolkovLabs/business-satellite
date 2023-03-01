@@ -71,6 +71,15 @@ export class QueryEditor extends PureComponent<Props> {
   };
 
   /**
+   * Annotation Limit change
+   */
+  onAnnotationLimitChange = async (e: FormEvent<HTMLInputElement>) => {
+    const { onChange, onRunQuery, query } = this.props;
+    onChange({ ...query, annotationLimit: Number(e.currentTarget.value)! });
+    onRunQuery();
+  };
+
+  /**
    * Render
    */
   render() {
@@ -119,6 +128,9 @@ export class QueryEditor extends PureComponent<Props> {
             <InlineFieldRow>
               <InlineField label="Text Pattern" labelWidth={20} grow tooltip="Regex format">
                 <Input value={query.annotationPattern} onChange={this.onAnnotationPatternChange} />
+              </InlineField>
+              <InlineField label="Max Limit" labelWidth={10} grow>
+                <Input type="number" value={query.annotationLimit} onChange={this.onAnnotationLimitChange} />
               </InlineField>
             </InlineFieldRow>
           </>
