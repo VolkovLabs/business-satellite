@@ -2,6 +2,7 @@ import { lastValueFrom } from 'rxjs';
 import { OrgProps } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages } from '../constants';
+import { notifyError } from '../utils';
 import { Api } from './api';
 
 /**
@@ -19,7 +20,8 @@ export const getOrg = async (api: Api): Promise<OrgProps | null> => {
    * Check Response
    */
   if (!response || !response.data) {
-    console.error(Messages.api.getOrgFailed, response);
+    notifyError([Messages.error, Messages.api.getOrgFailed]);
+    console.error(response);
     return null;
   }
 

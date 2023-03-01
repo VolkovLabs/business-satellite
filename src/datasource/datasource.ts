@@ -80,16 +80,16 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     /**
      * Check Health
      */
-    const isStatusOk = await this.api.getHealth();
+    const health = await this.api.getHealth();
     const org = await getOrg(this.api);
 
     /**
      * Connected
      */
-    if (isStatusOk && org?.name) {
+    if (health && org?.name) {
       return {
         status: DataSourceTestStatus.SUCCESS,
-        message: `${Messages.connectedTo} ${org.name}.`,
+        message: `${Messages.connectedToOrg} ${org.name}. ${Messages.version} ${health.version}`,
       };
     }
 
