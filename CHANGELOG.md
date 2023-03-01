@@ -12,3 +12,4 @@
 - Improve Annotations and update to Timescale (#5)
 - Improve Data Source to check Organization (#6)
 - Add Notifications and increase Test Coverage (#7)
+- Add Annotation filters (#8)

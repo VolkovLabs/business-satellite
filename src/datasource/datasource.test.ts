@@ -1,6 +1,6 @@
 import { Health } from 'types';
 import { DataFrame, dateTime, OrgProps } from '@grafana/data';
-import { DataSourceTestStatus, Messages, RequestTypeValue } from '../constants';
+import { DataSourceTestStatus, Messages, RequestType } from '../constants';
 import { DataSource } from './datasource';
 
 /**
@@ -49,7 +49,7 @@ describe('DataSource', () => {
    */
   describe('Query', () => {
     it('Should return correct data for MUTABLE frame', async () => {
-      const targets = [{ refId: 'A', requestType: RequestTypeValue.ANNOTATIONS }];
+      const targets = [{ refId: 'A', requestType: RequestType.ANNOTATIONS }];
 
       const response = (await dataSource.query({ targets, range } as any)) as any;
       const frames = response.data;

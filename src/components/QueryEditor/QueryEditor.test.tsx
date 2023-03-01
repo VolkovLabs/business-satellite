@@ -1,6 +1,6 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { DefaultQuery, RequestType, RequestTypeValue } from '../../constants';
+import { DefaultQuery, RequestType, RequestTypeOptions } from '../../constants';
 import { Query } from '../../types';
 import { QueryEditor } from './QueryEditor';
 
@@ -48,12 +48,14 @@ describe('QueryEditor', () => {
       );
 
       const testedComponent = getComponent(wrapper);
-      expect(testedComponent.prop('value')).toEqual(RequestType.find((type) => type.value === query.requestType));
+      expect(testedComponent.prop('value')).toEqual(
+        RequestTypeOptions.find((type) => type.value === query.requestType)
+      );
 
       /**
        * OnChange
        */
-      const newValue = RequestType.find((type) => type.value === RequestTypeValue.NONE);
+      const newValue = RequestTypeOptions.find((type) => type.value === RequestType.NONE);
       testedComponent.simulate('change', newValue);
       expect(onChange).toHaveBeenCalledWith({
         ...query,

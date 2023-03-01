@@ -4,7 +4,7 @@ import { Messages } from './messages';
 /**
  * Request Type Values
  */
-export enum RequestTypeValue {
+export enum RequestType {
   ANNOTATIONS = 'annotations',
   NONE = 'none',
 }
@@ -14,15 +14,15 @@ export enum RequestTypeValue {
  *
  * @type {SelectableValue[]}
  */
-export const RequestType: SelectableValue[] = [
+export const RequestTypeOptions: SelectableValue[] = [
   {
     label: 'Annotations',
     description: Messages.requestAnnotations,
-    value: RequestTypeValue.ANNOTATIONS,
+    value: RequestType.ANNOTATIONS,
   },
   {
     label: 'None',
     description: Messages.requestNone,
-    value: RequestTypeValue.NONE,
+    value: RequestType.NONE,
   },
 ];

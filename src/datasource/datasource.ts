@@ -7,7 +7,7 @@ import {
   MutableDataFrame,
 } from '@grafana/data';
 import { Api, getAnnotationsFrame, getOrg } from '../api';
-import { DataSourceTestStatus, Messages, RequestTypeValue } from '../constants';
+import { DataSourceTestStatus, Messages, RequestType } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 
 /**
@@ -39,6 +39,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
    */
   async query(options: DataQueryRequest<Query>): Promise<DataQueryResponse> {
     const data: DataFrame[] = [];
+    const { range, dashboardUID } = options;
 
     /**
      * Process targets
@@ -51,8 +52,8 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
          * Request Types
          */
         switch (target.requestType) {
-          case RequestTypeValue.ANNOTATIONS:
-            frames = await getAnnotationsFrame(this.api, target);
+          case RequestType.ANNOTATIONS:
+            frames = await getAnnotationsFrame(this.api, target, range, dashboardUID);
             break;
         }
 
