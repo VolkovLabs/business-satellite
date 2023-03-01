@@ -39,6 +39,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
    */
   async query(options: DataQueryRequest<Query>): Promise<DataQueryResponse> {
     const data: DataFrame[] = [];
+    const { range, dashboardUID } = options;
 
     /**
      * Process targets
@@ -52,7 +53,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
          */
         switch (target.requestType) {
           case RequestType.ANNOTATIONS:
-            frames = await getAnnotationsFrame(this.api, target);
+            frames = await getAnnotationsFrame(this.api, target, range, dashboardUID);
             break;
         }
 

@@ -2,7 +2,17 @@ import { defaults } from 'lodash';
 import React, { FormEvent, PureComponent } from 'react';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
-import { AnnotationType, AnnotationTypeOptions, DefaultQuery, RequestType, RequestTypeOptions } from '../../constants';
+import {
+  AnnotationDashboard,
+  AnnotationDashboardOptions,
+  AnnotationRange,
+  AnnotationRangeOptions,
+  AnnotationType,
+  AnnotationTypeOptions,
+  DefaultQuery,
+  RequestType,
+  RequestTypeOptions,
+} from '../../constants';
 import { DataSource } from '../../datasource';
 import { DataSourceOptions, Query } from '../../types';
 
@@ -30,6 +40,24 @@ export class QueryEditor extends PureComponent<Props> {
   onAnnotationTypeChange = async (type: AnnotationType) => {
     const { onChange, onRunQuery, query } = this.props;
     onChange({ ...query, annotationType: type });
+    onRunQuery();
+  };
+
+  /**
+   * Annotation Dashboard change
+   */
+  onAnnotationDashboardChange = async (type: AnnotationDashboard) => {
+    const { onChange, onRunQuery, query } = this.props;
+    onChange({ ...query, annotationDashboard: type });
+    onRunQuery();
+  };
+
+  /**
+   * Annotation Range change
+   */
+  onAnnotationRangeChange = async (type: AnnotationRange) => {
+    const { onChange, onRunQuery, query } = this.props;
+    onChange({ ...query, annotationRange: type });
     onRunQuery();
   };
 
@@ -63,11 +91,27 @@ export class QueryEditor extends PureComponent<Props> {
         {query.requestType === RequestType.ANNOTATIONS && (
           <>
             <InlineFieldRow>
-              <InlineField label="Type" labelWidth={10} grow>
+              <InlineField label="Type" labelWidth={10}>
                 <RadioButtonGroup
                   options={AnnotationTypeOptions}
                   value={AnnotationTypeOptions.find((type) => type.value === query.annotationType)?.value}
                   onChange={this.onAnnotationTypeChange}
+                />
+              </InlineField>
+
+              <InlineField label="Dashboards" labelWidth={10}>
+                <RadioButtonGroup
+                  options={AnnotationDashboardOptions}
+                  value={AnnotationDashboardOptions.find((type) => type.value === query.annotationDashboard)?.value}
+                  onChange={this.onAnnotationDashboardChange}
+                />
+              </InlineField>
+
+              <InlineField label="Time Range" labelWidth={12}>
+                <RadioButtonGroup
+                  options={AnnotationRangeOptions}
+                  value={AnnotationRangeOptions.find((type) => type.value === query.annotationRange)?.value}
+                  onChange={this.onAnnotationRangeChange}
                 />
               </InlineField>
             </InlineFieldRow>

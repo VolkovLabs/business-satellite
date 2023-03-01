@@ -1,8 +1,8 @@
 import { lastValueFrom } from 'rxjs';
 import { Annotation } from 'types/annotation';
-import { FieldType, MutableDataFrame } from '@grafana/data';
+import { FieldType, MutableDataFrame, TimeRange } from '@grafana/data';
 import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
-import { AnnotationType, Messages, RequestType } from '../constants';
+import { AnnotationDashboard, AnnotationRange, AnnotationType, Messages, RequestType } from '../constants';
 import { Query } from '../types';
 import { notifyError } from '../utils';
 import { Api } from './api';
@@ -10,10 +10,39 @@ import { Api } from './api';
 /**
  * Get Annotations
  */
-export const getAnnotations = async (api: Api, query: Query): Promise<Annotation[]> => {
+export const getAnnotations = async (
+  api: Api,
+  query: Query,
+  range: TimeRange,
+  dashboardUID: string | undefined
+): Promise<Annotation[]> => {
+  let params: Record<string, any> = {};
+
+  if (query.annotationRange === AnnotationRange.SELECTED) {
+    params.from = range.from.valueOf();
+    params.to = range.to.valueOf();
+  }
+
+  if (query.annotationDashboard === AnnotationDashboard.THIS && dashboardUID) {
+    params.dashboardUID = dashboardUID;
+  }
+
+  /**
+   * Filter Type
+   */
+  if (query.annotationType === AnnotationType.ALERT) {
+    params.type = AnnotationType.ALERT;
+  } else if (query.annotationType === AnnotationType.ANNOTATION) {
+    params.type = AnnotationType.ANNOTATION;
+  }
+
+  /**
+   * Fetch
+   */
   const response = await lastValueFrom(
     getBackendSrv().fetch({
       method: 'GET',
+      params,
       url: `${api.instanceSettings.url}/api/annotations`,
     })
   );
@@ -30,20 +59,6 @@ export const getAnnotations = async (api: Api, query: Query): Promise<Annotation
   let annotations = response.data as Annotation[];
 
   /**
-   * Filter Alarms
-   */
-  if (query.annotationType === AnnotationType.ALARMS) {
-    annotations = annotations.filter((annotation) => annotation.alertId);
-  }
-
-  /**
-   * Filter Manual
-   */
-  if (query.annotationType === AnnotationType.MANUAL) {
-    annotations = annotations.filter((annotation) => !annotation.alertId);
-  }
-
-  /**
    * Filter Pattern
    */
   if (query.annotationPattern) {
@@ -57,8 +72,13 @@ export const getAnnotations = async (api: Api, query: Query): Promise<Annotation
 /**
  * Get Annotations Frame
  */
-export const getAnnotationsFrame = async (api: Api, query: Query): Promise<MutableDataFrame[]> => {
-  const annotations = await getAnnotations(api, query);
+export const getAnnotationsFrame = async (
+  api: Api,
+  query: Query,
+  range: TimeRange,
+  dashboardUID: string | undefined
+): Promise<MutableDataFrame[]> => {
+  const annotations = await getAnnotations(api, query, range, dashboardUID);
   if (!annotations.length) {
     return [];
   }
