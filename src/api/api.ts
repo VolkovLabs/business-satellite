@@ -3,6 +3,7 @@ import { DataSourceInstanceSettings } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages } from '../constants';
 import { DataSourceOptions, Health } from '../types';
+import { notifyError } from '../utils';
 
 /**
  * API
@@ -16,7 +17,7 @@ export class Api {
   /**
    * Get Health
    */
-  async getHealth(): Promise<boolean> {
+  async getHealth(): Promise<Health | null> {
     const response = await lastValueFrom(
       getBackendSrv().fetch({
         method: 'GET',
@@ -28,8 +29,9 @@ export class Api {
      * Check Response
      */
     if (!response || !response.data) {
-      console.error(Messages.api.getHealthFailed, response);
-      return false;
+      notifyError([Messages.error, Messages.api.getHealthFailed]);
+      console.error(response);
+      return null;
     }
 
     /**
@@ -37,9 +39,9 @@ export class Api {
      */
     const health = response.data as Health;
     if (health.version) {
-      return true;
+      return health;
     }
 
-    return false;
+    return null;
   }
 }

@@ -2,10 +2,9 @@
  * Api
  */
 export const api = {
-  getAnnotationsFailed: 'Get Annotations: API Request failed',
-  getHealthFailed: 'Get Health: API Request failed',
-  getKeysFailed: 'Get Keys: API Request failed',
-  getOrgFailed: 'Get Org: API Request failed',
+  getAnnotationsFailed: 'Get Annotations: API Request failed. See Console for details.',
+  getHealthFailed: 'Get Health: API Request failed. See Console for details.',
+  getOrgFailed: 'Get Org: API Request failed. See Console for details.',
 };
 
 /**
@@ -13,8 +12,10 @@ export const api = {
  */
 export const Messages = {
   api,
-  connectedTo: 'Connected to',
+  connectedToOrg: 'Connected to',
   connectionError: 'Error. Not able connect.',
+  error: 'Error',
   requestAnnotations: 'Returns annotations',
   requestNone: 'For internal API calls',
+  version: 'Version',
 };

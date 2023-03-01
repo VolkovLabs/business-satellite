@@ -4,6 +4,7 @@ import { FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages, RequestTypeValue } from '../constants';
 import { Query } from '../types';
+import { notifyError } from '../utils';
 import { Api } from './api';
 
 /**
@@ -21,7 +22,8 @@ export const getAnnotations = async (api: Api): Promise<Annotation[]> => {
    * Check Response
    */
   if (!response || !response.data) {
-    console.error(Messages.api.getAnnotationsFailed, response);
+    notifyError([Messages.error, Messages.api.getAnnotationsFailed]);
+    console.error(response);
     return [];
   }
 

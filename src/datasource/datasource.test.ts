@@ -1,4 +1,5 @@
-import { DataFrame, dateTime } from '@grafana/data';
+import { Health } from 'types';
+import { DataFrame, dateTime, OrgProps } from '@grafana/data';
 import { DataSourceTestStatus, Messages, RequestTypeValue } from '../constants';
 import { DataSource } from './datasource';
 
@@ -7,8 +8,8 @@ import { DataSource } from './datasource';
  */
 let frames: DataFrame = [] as any;
 const response: any = {};
-let getHealthResult = {};
-let getOrgResult = { name: 'Test' };
+let getHealthResult: Health = { version: '1.0.0', commit: '', database: 'ok' };
+let getOrgResult: OrgProps = { id: 1, name: 'Test' };
 
 /**
  * Api
@@ -64,12 +65,13 @@ describe('DataSource', () => {
       const result = await dataSource.testDatasource();
       expect(result).toEqual({
         status: DataSourceTestStatus.SUCCESS,
-        message: `${Messages.connectedTo} ${getOrgResult.name}.`,
+        message: `${Messages.connectedToOrg} ${getOrgResult.name}. ${Messages.version} ${getHealthResult.version}`,
       });
     });
 
     it('Should handle Error state', async () => {
-      getHealthResult = false;
+      getHealthResult = {} as any;
+      getOrgResult = {} as any;
 
       const result = await dataSource.testDatasource();
       expect(result).toEqual({
