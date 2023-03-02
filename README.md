@@ -1,4 +1,4 @@
-# Grafana HTTP API (GrAPI) Data Source for Grafana
+# Grafana HTTP API Data Source for Grafana
 
 ![Datasource](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/raw/main/src/img/datasource.png)
 
@@ -9,7 +9,7 @@
 
 ## Introduction
 
-The Grafana HTTP API (GrAPI) Data Source for Grafana allows retrieving data via Grafana HTTP API, visualizing it on your dashboard and use in annotations.
+The Grafana HTTP API Data Source for Grafana allows retrieving data from local and remote Grafana instances via HTTP API.
 
 ## Requirements
 
@@ -17,13 +17,22 @@ The Grafana HTTP API (GrAPI) Data Source for Grafana allows retrieving data via 
 
 ## Getting Started
 
-Plugin is under development.
+Grafana HTTP API Data Source is under development and not included in the Grafana Catalog. It can be downloaded directly from GitHub.
+
+The plugin is signed for Grafana running on `http://localhost:3000`.
 
 ## Features
 
 - Connects to Local and Remote Grafana instances via HTTP API using API Keys and Tokens.
 - Allows to get Health information.
 - Allows to retrieve Annotations, Alerts, and Data Sources.
+
+## Documentation
+
+| Section                      | Description                                                  |
+| ---------------------------- | ------------------------------------------------------------ |
+| [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning) | Demonstrates how to automatically provision the Data Source. |
+| [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release)     | Stay up to date with the latest features and updates.        |
 
 ## Feedback
 
