@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
-import { dateTime } from '@grafana/data';
 import { RequestType } from '../constants';
-import { getAnnotations, getAnnotationsFrame } from './annotations';
 import { Api } from './api';
+import { getDataSources, getDataSourcesFrame } from './datasources';
 
 /**
  * Response
@@ -41,18 +40,6 @@ jest.mock('@grafana/runtime', () => ({
 }));
 
 /**
- * Time Range
- */
-const range = {
-  from: dateTime(),
-  to: dateTime(),
-  raw: {
-    from: dateTime(),
-    to: dateTime(),
-  },
-};
-
-/**
  * API
  */
 describe('Api', () => {
@@ -64,43 +51,61 @@ describe('Api', () => {
   const api = new Api(instanceSettings);
 
   /**
-   * Get Annotations
+   * Get Data Sources
    */
-  describe('GetAnnotations', () => {
+  describe('GetDataSources', () => {
     const response = {
       status: 200,
       statusText: 'OK',
       ok: true,
       data: [
         {
-          id: 5,
-          alertId: 0,
-          alertName: '',
-          dashboardId: 1,
-          dashboardUID: 'Rcb6nob4k',
-          panelId: 2,
-          userId: 0,
-          newState: '',
-          prevState: '',
-          created: 1677686602468,
-          updated: 1677686602468,
-          time: 1677686216907,
-          timeEnd: 1677686216907,
-          text: 'Sus value',
-          tags: ['value'],
-          login: 'admin',
-          email: 'admin@localhost',
-          avatarUrl: '/avatar/46d229b033af06a191ff2267bca9ae56',
-          data: {},
+          id: 1,
+          uid: 'grapi',
+          orgId: 1,
+          name: 'Grapi',
+          type: 'volkovlabs-grapi-datasource',
+          typeName: 'Grafana API',
+          typeLogoUrl: 'public/plugins/volkovlabs-grapi-datasource/img/logo.svg',
+          access: 'proxy',
+          url: '',
+          user: '',
+          database: '',
+          basicAuth: false,
+          isDefault: false,
+          jsonData: {
+            url: 'http://localhost:3000',
+          },
+          readOnly: false,
+        },
+        {
+          id: 2,
+          uid: 'timescale',
+          orgId: 1,
+          name: 'Timescale',
+          type: 'postgres',
+          typeName: 'PostgreSQL',
+          typeLogoUrl: 'public/app/plugins/datasource/postgres/img/postgresql_logo.svg',
+          access: 'proxy',
+          url: 'host.docker.internal:5432',
+          user: 'postgres',
+          database: '',
+          basicAuth: false,
+          isDefault: false,
+          jsonData: {
+            postgresVersion: 1200,
+            sslmode: 'disable',
+          },
+          readOnly: false,
         },
       ],
       headers: {},
-      url: 'http://localhost:3000/api/datasources/proxy/1/api/annotations',
+      url: 'http://localhost:3000/api/datasources/proxy/1/api/datasources',
       type: 'basic',
       redirected: false,
       config: {
         method: 'GET',
-        url: 'api/datasources/proxy/1/api/annotations',
+        url: 'api/datasources/proxy/1/api/datasources',
         retry: 0,
         headers: {
           'X-Grafana-Org-Id': 1,
@@ -109,47 +114,47 @@ describe('Api', () => {
       },
     };
 
-    const query = { refId: 'A', requestType: RequestType.ANNOTATIONS };
+    const query = { refId: 'A', requestType: RequestType.DATASOURCES };
 
-    it('Should make getAnnotations request', async () => {
+    it('Should make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAnnotations(api, query, range, '');
+      let result = await getDataSources(api);
       expect(result).toBeTruthy();
     });
 
-    it('Should not make getAnnotations request', async () => {
+    it('Should not make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
       jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await getAnnotations(api, query, range, '');
+      let result = await getDataSources(api);
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
 
-    it('Should throw exception getAnnotations request', async () => {
+    it('Should throw exception getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await getAnnotations(api, query, range, '');
+        let result = await getDataSources(api);
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
-    it('Should make getAnnotationsFrame request', async () => {
+    it('Should make getDataSourcesFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAnnotationsFrame(api, query, range, '');
+      let result = await getDataSourcesFrame(api, query);
       expect(result?.length).toEqual(1);
-      expect(result[0].fields.length).toEqual(14);
-      expect(result[0].fields[0].values.toArray()).toEqual([5]);
+      expect(result[0].fields.length).toEqual(11);
+      expect(result[0].fields[0].values.toArray()).toEqual([1, 2]);
     });
 
-    it('Should handle getAnnotationsFrame request with no data', async () => {
+    it('Should handle getDataSourcesFrame request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
       response.data = [];
       jest.spyOn(console, 'error').mockImplementation();
       jest.spyOn(console, 'log').mockImplementation();
 
-      let result = await getAnnotationsFrame(api, query, range, '');
+      let result = await getDataSourcesFrame(api, query);
       expect(result?.length).toEqual(0);
     });
   });

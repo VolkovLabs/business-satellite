@@ -1,9 +1,8 @@
 import { lastValueFrom } from 'rxjs';
-import { Annotation } from 'types/annotation';
 import { FieldType, MutableDataFrame, TimeRange } from '@grafana/data';
 import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
 import { AnnotationDashboard, AnnotationRange, AnnotationType, Messages, RequestType } from '../constants';
-import { Query } from '../types';
+import { Annotation, Query } from '../types';
 import { notifyError } from '../utils';
 import { Api } from './api';
 

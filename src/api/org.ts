@@ -8,7 +8,7 @@ import { Api } from './api';
 /**
  * Get Org
  */
-export const getOrg = async (api: Api): Promise<OrgProps | null> => {
+export const getOrg = async (api: Api): Promise<OrgProps | undefined> => {
   const response = await lastValueFrom(
     getBackendSrv().fetch({
       method: 'GET',
@@ -22,7 +22,7 @@ export const getOrg = async (api: Api): Promise<OrgProps | null> => {
   if (!response || !response.data) {
     notifyError([Messages.error, Messages.api.getOrgFailed]);
     console.error(response);
-    return null;
+    return;
   }
 
   /**
