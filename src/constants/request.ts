@@ -6,6 +6,8 @@ import { Messages } from './messages';
  */
 export enum RequestType {
   ANNOTATIONS = 'annotations',
+  DATASOURCES = 'datasources',
+  HEALTH = 'health',
   NONE = 'none',
 }
 
@@ -19,6 +21,16 @@ export const RequestTypeOptions: SelectableValue[] = [
     label: 'Annotations',
     description: Messages.requestAnnotations,
     value: RequestType.ANNOTATIONS,
+  },
+  {
+    label: 'Data Sources',
+    description: Messages.requestDataSources,
+    value: RequestType.DATASOURCES,
+  },
+  {
+    label: 'Health information',
+    description: Messages.requestHealth,
+    value: RequestType.HEALTH,
   },
   {
     label: 'None',

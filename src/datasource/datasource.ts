@@ -6,7 +6,7 @@ import {
   DataSourceInstanceSettings,
   MutableDataFrame,
 } from '@grafana/data';
-import { Api, getAnnotationsFrame, getOrg } from '../api';
+import { Api, getAnnotationsFrame, getDataSourcesFrame, getHealth, getHealthFrame, getOrg } from '../api';
 import { DataSourceTestStatus, Messages, RequestType } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 
@@ -55,6 +55,12 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
           case RequestType.ANNOTATIONS:
             frames = await getAnnotationsFrame(this.api, target, range, dashboardUID);
             break;
+          case RequestType.DATASOURCES:
+            frames = await getDataSourcesFrame(this.api, target);
+            break;
+          case RequestType.HEALTH:
+            frames = await getHealthFrame(this.api, target);
+            break;
         }
 
         if (!frames || !frames.length) {
@@ -81,13 +87,13 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     /**
      * Check Health
      */
-    const health = await this.api.getHealth();
+    const health = await getHealth(this.api);
     const org = await getOrg(this.api);
 
     /**
      * Connected
      */
-    if (health && org?.name) {
+    if (health?.version && org?.name) {
       return {
         status: DataSourceTestStatus.SUCCESS,
         message: `${Messages.connectedToOrg} ${org.name}. ${Messages.version} ${health.version}`,

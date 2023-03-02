@@ -1,6 +1,6 @@
-import { Health } from 'types';
 import { DataFrame, dateTime, OrgProps } from '@grafana/data';
 import { DataSourceTestStatus, Messages, RequestType } from '../constants';
+import { Health } from '../types';
 import { DataSource } from './datasource';
 
 /**
@@ -14,14 +14,13 @@ let getOrgResult: OrgProps = { id: 1, name: 'Test' };
 /**
  * Api
  */
-const apiMock = {
-  getHealth: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
-};
+const apiMock = {};
 
 jest.mock('../api', () => ({
   Api: jest.fn().mockImplementation(() => apiMock),
   getAnnotations: jest.fn().mockImplementation(() => Promise.resolve(response)),
   getAnnotationsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  getHealth: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
   getOrg: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
 }));
 

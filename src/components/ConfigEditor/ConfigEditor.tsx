@@ -39,7 +39,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
     onOptionsChange({
       ...options,
       secureJsonData: {
-        token: event.target.value,
+        token: `Bearer ${event.target.value}`,
       },
     });
   };

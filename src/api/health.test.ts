@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
-import { dateTime } from '@grafana/data';
 import { RequestType } from '../constants';
-import { getAnnotations, getAnnotationsFrame } from './annotations';
 import { Api } from './api';
+import { getHealth, getHealthFrame } from './health';
 
 /**
  * Response
@@ -41,18 +40,6 @@ jest.mock('@grafana/runtime', () => ({
 }));
 
 /**
- * Time Range
- */
-const range = {
-  from: dateTime(),
-  to: dateTime(),
-  raw: {
-    from: dateTime(),
-    to: dateTime(),
-  },
-};
-
-/**
  * API
  */
 describe('Api', () => {
@@ -64,92 +51,74 @@ describe('Api', () => {
   const api = new Api(instanceSettings);
 
   /**
-   * Get Annotations
+   * Get Health
    */
-  describe('GetAnnotations', () => {
+  describe('getHealth', () => {
     const response = {
       status: 200,
       statusText: 'OK',
       ok: true,
-      data: [
-        {
-          id: 5,
-          alertId: 0,
-          alertName: '',
-          dashboardId: 1,
-          dashboardUID: 'Rcb6nob4k',
-          panelId: 2,
-          userId: 0,
-          newState: '',
-          prevState: '',
-          created: 1677686602468,
-          updated: 1677686602468,
-          time: 1677686216907,
-          timeEnd: 1677686216907,
-          text: 'Sus value',
-          tags: ['value'],
-          login: 'admin',
-          email: 'admin@localhost',
-          avatarUrl: '/avatar/46d229b033af06a191ff2267bca9ae56',
-          data: {},
-        },
-      ],
+      data: {
+        commit: '978237e7cb',
+        database: 'ok',
+        version: '9.3.6',
+      },
       headers: {},
-      url: 'http://localhost:3000/api/datasources/proxy/1/api/annotations',
+      url: 'http://localhost:3000/api/datasources/proxy/1/api/health',
       type: 'basic',
       redirected: false,
       config: {
         method: 'GET',
-        url: 'api/datasources/proxy/1/api/annotations',
+        url: 'api/datasources/proxy/1/api/health',
         retry: 0,
         headers: {
           'X-Grafana-Org-Id': 1,
+          'X-Grafana-NoCache': 'true',
         },
         hideFromInspector: false,
       },
     };
 
-    const query = { refId: 'A', requestType: RequestType.ANNOTATIONS };
+    const query = { refId: 'A', requestType: RequestType.DATASOURCES };
 
-    it('Should make getAnnotations request', async () => {
+    it('Should make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAnnotations(api, query, range, '');
+      let result = await getHealth(api);
       expect(result).toBeTruthy();
     });
 
-    it('Should not make getAnnotations request', async () => {
+    it('Should not make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
       jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await getAnnotations(api, query, range, '');
-      expect(result).toBeTruthy();
-      expect(result.length).toBe(0);
+      let result = await getHealth(api);
+      expect(result).toBeFalsy();
     });
 
-    it('Should throw exception getAnnotations request', async () => {
+    it('Should throw exception getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await getAnnotations(api, query, range, '');
+        let result = await getHealth(api);
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
-    it('Should make getAnnotationsFrame request', async () => {
+    it('Should make getHealthFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAnnotationsFrame(api, query, range, '');
+      let result = await getHealthFrame(api, query);
       expect(result?.length).toEqual(1);
-      expect(result[0].fields.length).toEqual(14);
-      expect(result[0].fields[0].values.toArray()).toEqual([5]);
+      expect(result[0].fields.length).toEqual(3);
+      expect(result[0].fields[0].values.toArray()).toEqual(['978237e7cb']);
     });
 
-    it('Should handle getAnnotationsFrame request with no data', async () => {
+    it('Should handle getHealthFrame request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      response.data = [];
+      response.data = {} as any;
       jest.spyOn(console, 'error').mockImplementation();
       jest.spyOn(console, 'log').mockImplementation();
 
-      let result = await getAnnotationsFrame(api, query, range, '');
+      let result = await getHealthFrame(api, query);
       expect(result?.length).toEqual(0);
     });
   });
