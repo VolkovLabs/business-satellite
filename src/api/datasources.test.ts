@@ -63,7 +63,7 @@ describe('Api', () => {
           id: 1,
           uid: 'grapi',
           orgId: 1,
-          name: 'Grapi',
+          name: 'GrAPI',
           type: 'volkovlabs-grapi-datasource',
           typeName: 'Grafana API',
           typeLogoUrl: 'public/plugins/volkovlabs-grapi-datasource/img/logo.svg',
