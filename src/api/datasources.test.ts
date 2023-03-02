@@ -144,7 +144,7 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
       let result = await getDataSourcesFrame(api, query);
       expect(result?.length).toEqual(1);
-      expect(result[0].fields.length).toEqual(3);
+      expect(result[0].fields.length).toEqual(11);
       expect(result[0].fields[0].values.toArray()).toEqual([1, 2]);
     });
 

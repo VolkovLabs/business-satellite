@@ -54,6 +54,11 @@ export const getDataSourcesFrame = async (api: Api, query: Query): Promise<Mutab
         type: FieldType.number,
       },
       {
+        name: 'Org Id',
+        values: datasources.map((datasource) => datasource.orgId),
+        type: FieldType.number,
+      },
+      {
         name: 'UID',
         values: datasources.map((datasource) => datasource.uid),
         type: FieldType.string,
@@ -61,6 +66,41 @@ export const getDataSourcesFrame = async (api: Api, query: Query): Promise<Mutab
       {
         name: 'Name',
         values: datasources.map((datasource) => datasource.name),
+        type: FieldType.string,
+      },
+      {
+        name: 'Type',
+        values: datasources.map((datasource) => datasource.type),
+        type: FieldType.string,
+      },
+      {
+        name: 'Type Logo URL',
+        values: datasources.map((datasource) => datasource.typeLogoUrl),
+        type: FieldType.string,
+      },
+      {
+        name: 'Type Name',
+        values: datasources.map((datasource) => datasource.typeName),
+        type: FieldType.string,
+      },
+      {
+        name: 'Is Default',
+        values: datasources.map((datasource) => datasource.isDefault),
+        type: FieldType.boolean,
+      },
+      {
+        name: 'Read Only',
+        values: datasources.map((datasource) => datasource.readOnly),
+        type: FieldType.boolean,
+      },
+      {
+        name: 'URL',
+        values: datasources.map((datasource) => datasource.url),
+        type: FieldType.string,
+      },
+      {
+        name: 'User',
+        values: datasources.map((datasource) => datasource.user),
         type: FieldType.string,
       },
     ],
