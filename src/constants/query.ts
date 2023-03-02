@@ -1,14 +1,17 @@
 import { Query } from '../types';
-import { AnnotationDashboard, AnnotationRange, AnnotationType } from './annotations';
+import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType } from './annotations';
 import { RequestType } from './request';
 
 /**
  * Defaults for Query
  */
 export const DefaultQuery: Partial<Query> = {
-  requestType: RequestType.NONE,
-  annotationType: AnnotationType.ALL,
-  annotationRange: AnnotationRange.NONE,
   annotationDashboard: AnnotationDashboard.ALL,
   annotationLimit: 0,
+  annotationNewState: AnnotationState.ALL,
+  annotationPattern: '',
+  annotationPrevState: AnnotationState.ALL,
+  annotationRange: AnnotationRange.NONE,
+  annotationType: AnnotationType.ALL,
+  requestType: RequestType.NONE,
 };
