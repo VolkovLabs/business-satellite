@@ -31,8 +31,8 @@ The plugin is signed for Grafana running on `http://localhost:3000`.
 
 | Section                      | Description                                                  |
 | ---------------------------- | ------------------------------------------------------------ |
-| [Provisioning](provisioning) | Demonstrates how to automatically provision the Data Source. |
-| [Release Notes](release)     | Stay up to date with the latest features and updates.        |
+| [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning) | Demonstrates how to automatically provision the Data Source. |
+| [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release)     | Stay up to date with the latest features and updates.        |
 
 ## Feedback
 
