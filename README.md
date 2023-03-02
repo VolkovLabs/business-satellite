@@ -1,4 +1,4 @@
-# Grafana API (Grapi) Data Source for Grafana
+# Grafana HTTP API (GrAPI) Data Source for Grafana
 
 ![Datasource](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/raw/main/src/img/datasource.png)
 
@@ -9,7 +9,7 @@
 
 ## Introduction
 
-The Grafana API (Grapi) Data Source for Grafana allows retrieving data from Grafana API, visualizing it on your dashboard and use in annotations.
+The Grafana HTTP API (GrAPI) Data Source for Grafana allows retrieving data via Grafana HTTP API, visualizing it on your dashboard and use in annotations.
 
 ## Requirements
 

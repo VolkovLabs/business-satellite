@@ -1,6 +1,6 @@
 {
   "author": "Volkov Labs",
-  "description": "Grafana API (Grapi) Data Source for Grafana",
+  "description": "Grafana API (GrAPI) Data Source for Grafana",
   "devDependencies": {
     "@grafana/data": "9.3.6",
     "@grafana/runtime": "9.3.6",

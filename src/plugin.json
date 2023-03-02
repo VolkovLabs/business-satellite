@@ -11,7 +11,7 @@
       "name": "Volkov Labs",
       "url": "https://volkovlabs.io"
     },
-    "description": "Grafana API (Grapi) Data Source for Grafana",
+    "description": "Grafana HTTP API (GrAPI) Data Source for Grafana",
     "keywords": ["grafana", "api"],
     "links": [
       {
@@ -51,6 +51,6 @@
       ]
     }
   ],
-  "name": "Grafana API",
+  "name": "Grafana HTTP API",
   "type": "datasource"
 }
