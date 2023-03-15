@@ -2,10 +2,10 @@
   "author": "Volkov Labs",
   "description": "Grafana HTTP API Data Source for Grafana",
   "devDependencies": {
-    "@grafana/data": "9.3.6",
-    "@grafana/runtime": "9.3.6",
-    "@grafana/toolkit": "9.3.6",
-    "@grafana/ui": "9.3.6",
+    "@grafana/data": "9.4.3",
+    "@grafana/runtime": "9.4.3",
+    "@grafana/toolkit": "9.4.3",
+    "@grafana/ui": "9.4.3",
     "@types/enzyme": "^3.10.12",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "enzyme": "^3.11.0",
@@ -30,5 +30,5 @@
     "upgrade": "yarn upgrade --latest",
     "watch": "grafana-toolkit plugin:dev --watch"
   },
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
