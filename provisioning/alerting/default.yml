@@ -1,0 +1,121 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: Test
+    folder: Test
+    interval: 10s
+    rules:
+      - uid: ox_h9f-4k
+        title: Metrics
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 21600
+              to: 0
+            datasourceUid: timescale
+            model:
+              datasource:
+                type: postgres
+                uid: timescale
+              editorMode: code
+              format: table
+              group: []
+              intervalMs: 60000
+              maxDataPoints: 43200
+              metricColumn: none
+              rawQuery: true
+              rawSql: |-
+                SELECT last(value, time), name
+                FROM metrics
+                WHERE $__timeFilter(time)
+                group by name
+              refId: A
+              requestType: none
+              select:
+                - - params:
+                      - value
+                    type: column
+              sql:
+                columns:
+                  - parameters: []
+                    type: function
+                groupBy:
+                  - property:
+                      type: string
+                    type: groupBy
+                limit: 50
+              table: metrics
+              timeColumn: created
+              timeColumnType: timestamp
+              where:
+                - name: $__timeFilter
+                  params: []
+                  type: macro
+          - refId: B
+            relativeTimeRange:
+              from: 21600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              hide: false
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: B
+              type: reduce
+          - refId: C
+            relativeTimeRange:
+              from: 21600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: B
+              hide: false
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: Rcb6nob4k
+        panelId: 2
+        noDataState: NoData
+        execErrState: Error
+        for: 20s
+        annotations:
+          __dashboardUid__: Rcb6nob4k
+          __panelId__: '2'
+        isPaused: false
