@@ -17,9 +17,13 @@ The Grafana HTTP API Data Source for Grafana allows retrieving data from local a
 
 ## Getting Started
 
-Grafana HTTP API Data Source is under development and not included in the Grafana Catalog. It can be downloaded directly from GitHub.
+The Grafana HTTP API Data Source can be installed from the [Grafana Catalog](https://grafana.com/grafana/plugins/volkovlabs-grapi-datasource/) or utilizing the Grafana command line tool.
 
-The plugin is signed for Grafana running on `http://localhost:3000`.
+For the latter, use the following command.
+
+```bash
+grafana-cli plugins install volkovlabs-grapi-datasource
+```
 
 ## Features
 
@@ -31,6 +35,7 @@ The plugin is signed for Grafana running on `http://localhost:3000`.
 
 | Section                      | Description                                                  |
 | ---------------------------- | ------------------------------------------------------------ |
+| [Configuration](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/configuration) | Explains configuration settings for the Data Source.         |
 | [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning) | Demonstrates how to automatically provision the Data Source. |
 | [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release)     | Stay up to date with the latest features and updates.        |
 
