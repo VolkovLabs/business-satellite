@@ -1,4 +1,4 @@
-import { DataQuery } from '@grafana/data';
+import { DataQuery } from '@grafana/schema';
 import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType, RequestType } from '../constants';
 
 /**

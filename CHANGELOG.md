@@ -7,6 +7,7 @@
 - Update to Grafana 9.4.3 (#13)
 - Update Bearer token plugin configuration (#13)
 - Signed as community plugin (#14)
+- Update Grafana types and description (#15)
 
 ## 1.0.0 (2023-03-02)
 
