@@ -46,7 +46,7 @@
       "headers": [
         {
           "name": "Authorization",
-          "content": "{{ .SecureJsonData.token }}"
+          "content": "Bearer {{ .SecureJsonData.token }}"
         }
       ]
     }

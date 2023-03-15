@@ -114,7 +114,7 @@ describe('ConfigEditor', () => {
         ...options,
         secureJsonData: {
           ...options.secureJsonData,
-          token: `Bearer ${newValue}`,
+          token: newValue,
         },
       });
     });
