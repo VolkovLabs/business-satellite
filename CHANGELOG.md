@@ -4,8 +4,8 @@
 
 ### Features / Enhancements
 
-- Update to Grafana 9.4.3
-- Update Bearer token plugin configuration
+- Update to Grafana 9.4.3 (#13)
+- Update Bearer token plugin configuration (#13)
 
 ## 1.0.0 (2023-03-02)
 
