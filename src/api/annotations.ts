@@ -199,7 +199,7 @@ export const getAnnotationsFrame = async (
           return;
         }
 
-        labels[keyValue[0]] = keyValue[1];
+        labels[keyValue[0]] = keyValue[1] ? keyValue[1] : '';
       });
 
       formattedLabels = formatLabels(labels);
