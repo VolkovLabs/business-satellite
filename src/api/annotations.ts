@@ -1,5 +1,5 @@
 import { lastValueFrom } from 'rxjs';
-import { FieldType, formatLabels, Labels, MutableDataFrame, TimeRange } from '@grafana/data';
+import { FieldType, formatLabels, Labels, MutableDataFrame, ScopedVars, TimeRange } from '@grafana/data';
 import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
 import { AnnotationDashboard, AnnotationRange, AnnotationType, Messages, RequestType } from '../constants';
 import { AlertRule, Annotation, Query } from '../types';
@@ -14,7 +14,8 @@ export const getAnnotations = async (
   api: Api,
   query: Query,
   range: TimeRange,
-  dashboardUID: string | undefined
+  dashboardUID: string | undefined,
+  scopedVars: ScopedVars
 ): Promise<Annotation[]> => {
   let params: Record<string, any> = {};
 
@@ -75,7 +76,7 @@ export const getAnnotations = async (
    * Filter Pattern
    */
   if (query.annotationPattern) {
-    const pattern = getTemplateSrv().replace(query.annotationPattern);
+    const pattern = getTemplateSrv().replace(query.annotationPattern, scopedVars);
     annotations = annotations.filter((annotation) => annotation.text?.match(pattern));
   }
 
@@ -103,9 +104,10 @@ export const getAnnotationsFrame = async (
   api: Api,
   query: Query,
   range: TimeRange,
-  dashboardUID: string | undefined
+  dashboardUID: string | undefined,
+  scopedVars: ScopedVars
 ): Promise<MutableDataFrame[]> => {
-  const annotations = await getAnnotations(api, query, range, dashboardUID);
+  const annotations = await getAnnotations(api, query, range, dashboardUID, scopedVars);
   if (!annotations.length) {
     return [];
   }
@@ -126,7 +128,7 @@ export const getAnnotationsFrame = async (
         type: FieldType.number,
       },
       {
-        name: 'Alert Name',
+        name: 'Alert Title',
         type: FieldType.string,
       },
       {
@@ -221,17 +223,17 @@ export const getAnnotationsFrame = async (
       formattedLabels = formatLabels(labels);
     }
 
-    let alertName = '';
+    let alertTitle = '';
     let alertUID = '';
     if (annotation.alertId) {
-      alertName = alertRules[annotation.alertId] ? alertRules[annotation.alertId].title : '';
+      alertTitle = alertRules[annotation.alertId] ? alertRules[annotation.alertId].title : '';
       alertUID = alertRules[annotation.alertId] ? alertRules[annotation.alertId].uid : '';
     }
 
     const row = [
       annotation.id,
       annotation.alertId,
-      alertName,
+      alertTitle,
       alertUID,
       annotation.dashboardId,
       annotation.dashboardUID,
