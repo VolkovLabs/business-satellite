@@ -195,6 +195,10 @@ export const getAnnotationsFrame = async (
 
       pairs.forEach((pair) => {
         const keyValue = pair.split('=');
+        if (!keyValue.length) {
+          return;
+        }
+
         labels[keyValue[0]] = keyValue[1];
       });
 
