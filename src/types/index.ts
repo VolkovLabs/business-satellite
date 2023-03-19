@@ -1,3 +1,4 @@
+export * from './alert-rule';
 export * from './annotation';
 export * from './auth-key';
 export * from './datasource';

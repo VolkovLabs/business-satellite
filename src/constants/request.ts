@@ -5,6 +5,7 @@ import { Messages } from './messages';
  * Request Type Values
  */
 export enum RequestType {
+  ALERT_RULES = 'alertRules',
   ANNOTATIONS = 'annotations',
   DATASOURCES = 'datasources',
   HEALTH = 'health',
@@ -17,6 +18,11 @@ export enum RequestType {
  * @type {SelectableValue[]}
  */
 export const RequestTypeOptions: SelectableValue[] = [
+  {
+    label: 'Alert Rules',
+    description: Messages.requestAlertRules,
+    value: RequestType.ALERT_RULES,
+  },
   {
     label: 'Annotations',
     description: Messages.requestAnnotations,

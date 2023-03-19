@@ -6,6 +6,7 @@
 
 - Add formatted Annotation labels for Alarms (#19)
 - Update Annotation Limit to 100 by default (#19)
+- Add Alert Rules and UID for Alerts Annotations (#20)
 
 ## 1.1.0 (2023-03-15)
 
