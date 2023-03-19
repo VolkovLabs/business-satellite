@@ -2,9 +2,10 @@ import { lastValueFrom } from 'rxjs';
 import { FieldType, formatLabels, Labels, MutableDataFrame, TimeRange } from '@grafana/data';
 import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
 import { AnnotationDashboard, AnnotationRange, AnnotationType, Messages, RequestType } from '../constants';
-import { Annotation, Query } from '../types';
+import { AlertRule, Annotation, Query } from '../types';
 import { notifyError } from '../utils';
 import { Api } from './api';
+import { getAlertRules } from './provisioning';
 
 /**
  * Get Annotations
@@ -125,6 +126,14 @@ export const getAnnotationsFrame = async (
         type: FieldType.number,
       },
       {
+        name: 'Alert Name',
+        type: FieldType.string,
+      },
+      {
+        name: 'Alert UID',
+        type: FieldType.string,
+      },
+      {
         name: 'Dashboard Id',
         type: FieldType.number,
       },
@@ -180,6 +189,13 @@ export const getAnnotationsFrame = async (
   });
 
   /**
+   * Alert Rules
+   */
+  const alertRules: { [id: number]: AlertRule } = {};
+  const rules = await getAlertRules(api);
+  rules.forEach((rule) => (alertRules[rule.id] = rule));
+
+  /**
    * Add Data
    */
   annotations.forEach((annotation) => {
@@ -205,9 +221,18 @@ export const getAnnotationsFrame = async (
       formattedLabels = formatLabels(labels);
     }
 
+    let alertName = '';
+    let alertUID = '';
+    if (annotation.alertId) {
+      alertName = alertRules[annotation.alertId] ? alertRules[annotation.alertId].title : '';
+      alertUID = alertRules[annotation.alertId] ? alertRules[annotation.alertId].uid : '';
+    }
+
     const row = [
       annotation.id,
       annotation.alertId,
+      alertName,
+      alertUID,
       annotation.dashboardId,
       annotation.dashboardUID,
       annotation.panelId,
