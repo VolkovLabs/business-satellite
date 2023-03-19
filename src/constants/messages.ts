@@ -2,6 +2,7 @@
  * Api
  */
 export const api = {
+  getAlertRulesFailed: 'Get Alert Rules: API Request failed. See Console for details.',
   getAnnotationsFailed: 'Get Annotations: API Request failed. See Console for details.',
   getDataSourcesFailed: 'Get Data Sources: API Request failed. See Console for details.',
   getHealthFailed: 'Get Health: API Request failed. See Console for details.',
@@ -16,6 +17,7 @@ export const Messages = {
   connectedToOrg: 'Connected to',
   connectionError: 'Error. Not able connect.',
   error: 'Error',
+  requestAlertRules: 'Returns alert rules',
   requestAnnotations: 'Returns annotations',
   requestDataSources: 'Returns data sources',
   requestHealth: 'Returns health information',

@@ -6,7 +6,15 @@ import {
   DataSourceInstanceSettings,
   MutableDataFrame,
 } from '@grafana/data';
-import { Api, getAnnotationsFrame, getDataSourcesFrame, getHealth, getHealthFrame, getOrg } from '../api';
+import {
+  Api,
+  getAlertRulesFrame,
+  getAnnotationsFrame,
+  getDataSourcesFrame,
+  getHealth,
+  getHealthFrame,
+  getOrg,
+} from '../api';
 import { DataSourceTestStatus, Messages, RequestType } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 
@@ -52,6 +60,9 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
          * Request Types
          */
         switch (target.requestType) {
+          case RequestType.ALERT_RULES:
+            frames = await getAlertRulesFrame(this.api, target);
+            break;
           case RequestType.ANNOTATIONS:
             frames = await getAnnotationsFrame(this.api, target, range, dashboardUID);
             break;

@@ -39,7 +39,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -68,13 +70,14 @@
       "id": 6,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "annotationDashboard": "",
@@ -137,7 +140,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "annotationDashboard": "",
@@ -201,7 +204,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "datasource": {
@@ -227,7 +230,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -256,13 +261,14 @@
       "id": 3,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "datasource": {
@@ -275,11 +281,92 @@
         }
       ],
       "title": "Annotations",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "source": "Labels"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "volkovlabs-grapi-datasource",
+        "uid": "grapi"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 8,
+      "options": {
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "annotationDashboard": "",
+          "annotationLimit": 100,
+          "annotationNewState": "",
+          "annotationPattern": "",
+          "annotationPrevState": "",
+          "annotationRange": "",
+          "annotationType": "",
+          "datasource": {
+            "type": "volkovlabs-grapi-datasource",
+            "uid": "grapi"
+          },
+          "refId": "A",
+          "requestType": "alertRules"
+        }
+      ],
+      "title": "Alert Rules",
       "type": "table"
     }
   ],
   "refresh": "",
-  "schemaVersion": 37,
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
