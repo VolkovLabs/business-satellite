@@ -50,21 +50,23 @@ export const getHealthFrame = async (api: Api, query: Query): Promise<MutableDat
     fields: [
       {
         name: 'Commit',
-        values: [health.commit],
         type: FieldType.string,
       },
       {
         name: 'Database',
-        values: [health.database],
         type: FieldType.string,
       },
       {
         name: 'Version',
-        values: [health.version],
         type: FieldType.string,
       },
     ],
   });
+
+  /**
+   * Add Data
+   */
+  frame.appendRow([health.commit, health.database, health.version]);
 
   return [frame];
 };

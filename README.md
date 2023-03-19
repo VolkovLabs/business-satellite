@@ -39,6 +39,12 @@ grafana-cli plugins install volkovlabs-grapi-datasource
 | [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning) | Demonstrates how to automatically provision the Data Source. |
 | [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release)     | Stay up to date with the latest features and updates.        |
 
+### Features
+
+| Section                    | Description                                                    |
+| -------------------------- | -------------------------------------------------------------- |
+| [Annotations](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/annotations) | Explains how to use the Data Source for Dashboard annotations. |
+
 ## Feedback
 
 We love to hear from you. There are various ways to get in touch with us:

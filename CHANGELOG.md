@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.2.0 (IN PROGRESS)
+
+### Features / Enhancements
+
+- Add formatted Annotation labels for Alarms
+- Update Annotation Limit to 100 by default
+
 ## 1.1.0 (2023-03-15)
 
 ### Features / Enhancements
