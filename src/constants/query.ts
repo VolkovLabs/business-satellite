@@ -7,7 +7,7 @@ import { RequestType } from './request';
  */
 export const DefaultQuery: Partial<Query> = {
   annotationDashboard: AnnotationDashboard.ALL,
-  annotationLimit: 0,
+  annotationLimit: 100,
   annotationNewState: AnnotationState.ALL,
   annotationPattern: '',
   annotationPrevState: AnnotationState.ALL,

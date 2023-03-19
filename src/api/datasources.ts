@@ -50,60 +50,68 @@ export const getDataSourcesFrame = async (api: Api, query: Query): Promise<Mutab
     fields: [
       {
         name: 'Id',
-        values: datasources.map((datasource) => datasource.id),
         type: FieldType.number,
       },
       {
         name: 'Org Id',
-        values: datasources.map((datasource) => datasource.orgId),
         type: FieldType.number,
       },
       {
         name: 'UID',
-        values: datasources.map((datasource) => datasource.uid),
         type: FieldType.string,
       },
       {
         name: 'Name',
-        values: datasources.map((datasource) => datasource.name),
         type: FieldType.string,
       },
       {
         name: 'Type',
-        values: datasources.map((datasource) => datasource.type),
         type: FieldType.string,
       },
       {
         name: 'Type Logo URL',
-        values: datasources.map((datasource) => datasource.typeLogoUrl),
         type: FieldType.string,
       },
       {
         name: 'Type Name',
-        values: datasources.map((datasource) => datasource.typeName),
         type: FieldType.string,
       },
       {
         name: 'Is Default',
-        values: datasources.map((datasource) => datasource.isDefault),
         type: FieldType.boolean,
       },
       {
         name: 'Read Only',
-        values: datasources.map((datasource) => datasource.readOnly),
         type: FieldType.boolean,
       },
       {
         name: 'URL',
-        values: datasources.map((datasource) => datasource.url),
         type: FieldType.string,
       },
       {
         name: 'User',
-        values: datasources.map((datasource) => datasource.user),
         type: FieldType.string,
       },
     ],
+  });
+
+  /**
+   * Add Data
+   */
+  datasources.forEach((datasource) => {
+    frame.appendRow([
+      datasource.id,
+      datasource.orgId,
+      datasource.uid,
+      datasource.name,
+      datasource.type,
+      datasource.typeLogoUrl,
+      datasource.typeName,
+      datasource.isDefault,
+      datasource.readOnly,
+      datasource.url,
+      datasource.user,
+    ]);
   });
 
   return [frame];

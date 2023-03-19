@@ -1,5 +1,5 @@
 import { lastValueFrom } from 'rxjs';
-import { FieldType, MutableDataFrame, TimeRange } from '@grafana/data';
+import { FieldType, formatLabels, Labels, MutableDataFrame, TimeRange } from '@grafana/data';
 import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
 import { AnnotationDashboard, AnnotationRange, AnnotationType, Messages, RequestType } from '../constants';
 import { Annotation, Query } from '../types';
@@ -118,75 +118,112 @@ export const getAnnotationsFrame = async (
     fields: [
       {
         name: 'Id',
-        values: annotations.map((annotation) => annotation.id),
         type: FieldType.number,
       },
       {
         name: 'Alert Id',
-        values: annotations.map((annotation) => annotation.alertId),
         type: FieldType.number,
       },
       {
         name: 'Dashboard Id',
-        values: annotations.map((annotation) => annotation.dashboardId),
         type: FieldType.number,
       },
       {
         name: 'Dashboard UID',
-        values: annotations.map((annotation) => annotation.dashboardUID),
         type: FieldType.string,
       },
       {
         name: 'Panel Id',
-        values: annotations.map((annotation) => annotation.panelId),
         type: FieldType.number,
       },
       {
         name: 'Time',
-        values: annotations.map((annotation) => annotation.time),
         type: FieldType.time,
       },
       {
         name: 'Time End',
-        values: annotations.map((annotation) => annotation.timeEnd),
         type: FieldType.time,
       },
       {
         name: 'Login',
-        values: annotations.map((annotation) => annotation.login),
         type: FieldType.string,
       },
       {
         name: 'Email',
-        values: annotations.map((annotation) => annotation.email),
         type: FieldType.string,
       },
       {
         name: 'Avatar URL',
-        values: annotations.map((annotation) => annotation.avatarUrl),
         type: FieldType.string,
       },
       {
         name: 'Tags',
-        values: annotations.map((annotation) => annotation.tags?.join(',')),
         type: FieldType.string,
       },
       {
         name: 'Text',
-        values: annotations.map((annotation) => annotation.text),
         type: FieldType.string,
       },
       {
         name: 'Prev State',
-        values: annotations.map((annotation) => annotation.prevState),
         type: FieldType.string,
       },
       {
         name: 'New State',
-        values: annotations.map((annotation) => annotation.newState),
+        type: FieldType.string,
+      },
+      {
+        name: 'Labels',
         type: FieldType.string,
       },
     ],
+  });
+
+  /**
+   * Add Data
+   */
+  annotations.forEach((annotation) => {
+    let formattedLabels = '{}';
+    const text = annotation.text?.match(/{([^}]+)}/);
+
+    /**
+     * Parse Labels
+     */
+    if (text?.length && text[1]) {
+      const labels = {} as Labels;
+      const pairs = text[1].split(', ');
+
+      pairs.forEach((pair) => {
+        const keyValue = pair.split('=');
+        if (!keyValue.length) {
+          return;
+        }
+
+        labels[keyValue[0]] = keyValue[1] ? keyValue[1] : '';
+      });
+
+      formattedLabels = formatLabels(labels);
+    }
+
+    const row = [
+      annotation.id,
+      annotation.alertId,
+      annotation.dashboardId,
+      annotation.dashboardUID,
+      annotation.panelId,
+      annotation.time,
+      annotation.timeEnd,
+      annotation.login,
+      annotation.email,
+      annotation.avatarUrl,
+      annotation.tags?.join(','),
+      annotation.text,
+      annotation.prevState,
+      annotation.newState,
+      formattedLabels,
+    ];
+
+    frame.appendRow(row);
   });
 
   return [frame];
