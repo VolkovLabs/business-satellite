@@ -128,7 +128,7 @@ export const getAnnotationsFrame = async (
         type: FieldType.number,
       },
       {
-        name: 'Alert Title',
+        name: 'Alert Name',
         type: FieldType.string,
       },
       {
