@@ -113,7 +113,7 @@ describe('Api', () => {
 
     it('Should make getAnnotations request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAnnotations(api, query, range, '');
+      let result = await getAnnotations(api, query, range, '', {});
       expect(result).toBeTruthy();
     });
 
@@ -121,7 +121,7 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
       jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await getAnnotations(api, query, range, '');
+      let result = await getAnnotations(api, query, range, '', {});
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -130,14 +130,14 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await getAnnotations(api, query, range, '');
+        let result = await getAnnotations(api, query, range, '', {});
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getAnnotationsFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAnnotationsFrame(api, query, range, '');
+      let result = await getAnnotationsFrame(api, query, range, '', {});
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(17);
       expect(result[0].fields[0].values.toArray()).toEqual([5]);
@@ -149,7 +149,7 @@ describe('Api', () => {
       jest.spyOn(console, 'error').mockImplementation();
       jest.spyOn(console, 'log').mockImplementation();
 
-      let result = await getAnnotationsFrame(api, query, range, '');
+      let result = await getAnnotationsFrame(api, query, range, '', {});
       expect(result?.length).toEqual(0);
     });
   });

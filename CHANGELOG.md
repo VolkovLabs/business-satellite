@@ -4,9 +4,10 @@
 
 ### Features / Enhancements
 
-- Add formatted Annotation labels for Alarms (#19)
+- Add formatted Annotation labels for Alerts (#19)
 - Update Annotation Limit to 100 by default (#19)
 - Add Alert Rules and UID for Alerts Annotations (#20)
+- Update Scoped Variables for Annotations (#21)
 
 ## 1.1.0 (2023-03-15)
 

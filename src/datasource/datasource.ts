@@ -64,7 +64,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
             frames = await getAlertRulesFrame(this.api, target);
             break;
           case RequestType.ANNOTATIONS:
-            frames = await getAnnotationsFrame(this.api, target, range, dashboardUID);
+            frames = await getAnnotationsFrame(this.api, target, range, dashboardUID, options.scopedVars);
             break;
           case RequestType.DATASOURCES:
             frames = await getDataSourcesFrame(this.api, target);
