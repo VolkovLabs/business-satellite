@@ -8,7 +8,7 @@
 - Update Annotation Limit to 100 by default (#19)
 - Add Alert Rules and UID for Alerts Annotations (#20)
 - Update Scoped Variables for Annotations (#21)
-- Add Variable Support (#22)
+- Add Variable Support (#25)
 
 ## 1.1.0 (2023-03-15)
 
