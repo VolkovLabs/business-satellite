@@ -115,7 +115,4 @@ groups:
         noDataState: NoData
         execErrState: Error
         for: 20s
-        annotations:
-          __dashboardUid__: Rcb6nob4k
-          __panelId__: '2'
         isPaused: false

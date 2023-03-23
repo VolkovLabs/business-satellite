@@ -53,7 +53,7 @@
           "annotationDashboard": "",
           "annotationLimit": 0,
           "annotationNewState": "Alerting",
-          "annotationPattern": "name=$metric",
+          "annotationPattern": "name=$metric}",
           "annotationPrevState": "",
           "annotationRange": "none",
           "annotationType": "alert",
@@ -63,13 +63,68 @@
           "tags": [],
           "type": "dashboard"
         }
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "timescale"
+        },
+        "enable": true,
+        "hide": false,
+        "iconColor": "yellow",
+        "mappings": {
+          "id": {
+            "source": "field",
+            "value": "id"
+          },
+          "text": {
+            "source": "field",
+            "value": "value"
+          },
+          "time": {
+            "source": "field",
+            "value": "time"
+          },
+          "title": {
+            "source": "field",
+            "value": "name"
+          }
+        },
+        "name": "Data Manipulation",
+        "target": {
+          "editorMode": "code",
+          "format": "table",
+          "limit": 100,
+          "matchAny": false,
+          "rawQuery": true,
+          "rawSql": "select * from sets where name='$metric';",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "tags": [],
+          "type": "dashboard"
+        }
       }
     ]
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1677713109125,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -84,6 +139,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -195,7 +252,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -224,13 +283,14 @@
       "id": 6,
       "options": {
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
       },
-      "pluginVersion": "8.5.3",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
           "annotationDashboard": "this",
@@ -254,16 +314,17 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 36,
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "test2",
-          "value": "test2"
+          "selected": true,
+          "text": "test",
+          "value": "test"
         },
         "datasource": {
           "type": "postgres",
@@ -286,13 +347,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Metrics",
   "uid": "Rcb6nob4k",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }

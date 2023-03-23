@@ -30,3 +30,17 @@ services:
       - 5432:5432
     volumes:
       - ./timescale:/docker-entrypoint-initdb.d
+
+  server:
+    container_name: server
+    build:
+      context: ./timescale
+    ports:
+      - 3001:3001/tcp
+    depends_on:
+      - timescale
+    environment:
+      WAIT_HOSTS: timescale:5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: postgres
