@@ -9,6 +9,7 @@
 - Add Alert Rules and UID for Alerts Annotations (#20)
 - Update Scoped Variables for Annotations (#21)
 - Add Variable Support (#25)
+- Update provisioning for testing Alerts (#26)
 
 ## 1.1.0 (2023-03-15)
 
