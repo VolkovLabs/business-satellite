@@ -10,12 +10,14 @@ const client = new Client({
 });
 client.connect();
 
+const addMetrics = async () => {
+  await client.query("insert into metrics values(1, now(), 'test', random());");
+  await client.query("insert into metrics values(1, now(), 'test2', random());");
+
+  setTimeout(addMetrics, 1000);
+};
+
 /**
  * Update the database
  */
-while (1) {
-  async () => {
-    await client.query('INSERT INTO sets VALUES(1, NOW(), "test", random())');
-    await client.query('INSERT INTO sets VALUES(1, NOW(), "test2", random())');
-  };
-}
+setTimeout(addMetrics, 1000);

@@ -90,7 +90,7 @@ groups:
               conditions:
                 - evaluator:
                     params:
-                      - 0
+                      - 0.5
                     type: gt
                   operator:
                     type: and
