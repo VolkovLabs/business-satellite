@@ -293,7 +293,7 @@
       "pluginVersion": "9.4.3",
       "targets": [
         {
-          "annotationDashboard": "this",
+          "annotationDashboard": "any",
           "annotationLimit": 0,
           "annotationNewState": "Alerting",
           "annotationPattern": "",
