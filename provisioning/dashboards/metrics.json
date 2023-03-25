@@ -25,6 +25,7 @@
           "uid": "grapi"
         },
         "enable": true,
+        "hide": false,
         "iconColor": "red",
         "mappings": {
           "id": {
@@ -48,10 +49,10 @@
             "value": "Time End"
           }
         },
-        "name": "Alerting",
+        "name": "Show Generated Warnings",
         "target": {
           "annotationDashboard": "",
-          "annotationLimit": 0,
+          "annotationLimit": 1000,
           "annotationNewState": "Alerting",
           "annotationPattern": "name=$metric}",
           "annotationPrevState": "",
@@ -71,7 +72,7 @@
         },
         "enable": true,
         "hide": false,
-        "iconColor": "yellow",
+        "iconColor": "text",
         "mappings": {
           "id": {
             "source": "field",
@@ -90,14 +91,14 @@
             "value": "name"
           }
         },
-        "name": "Data Manipulation",
+        "name": "Show Operator Actions",
         "target": {
           "editorMode": "code",
           "format": "table",
           "limit": 100,
           "matchAny": false,
           "rawQuery": true,
-          "rawSql": "select * from sets where name='$metric';",
+          "rawSql": "select * from controls where name='$metric';",
           "refId": "A",
           "sql": {
             "columns": [
@@ -136,7 +137,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "continuous-GrYlRd"
           },
           "custom": {
             "axisCenteredZero": false,
@@ -145,8 +146,8 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
+            "fillOpacity": 50,
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -159,7 +160,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -173,11 +174,15 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "text",
                 "value": null
               },
               {
-                "color": "red",
+                "color": "#9d70f9",
+                "value": 50
+              },
+              {
+                "color": "#eb4444",
                 "value": 80
               }
             ]
@@ -197,7 +202,7 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "tooltip": {
           "mode": "single",
@@ -237,7 +242,7 @@
           ]
         }
       ],
-      "title": "Metrics",
+      "title": "Temperature",
       "type": "timeseries"
     },
     {
@@ -272,7 +277,92 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 46
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Prev State"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 104
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "New State"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 97
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time End"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 177
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 200
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Alert UID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 125
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Alert Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 139
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -288,14 +378,15 @@
           "reducer": ["sum"],
           "show": false
         },
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "9.4.3",
       "targets": [
         {
           "annotationDashboard": "any",
           "annotationLimit": 0,
-          "annotationNewState": "Alerting",
+          "annotationNewState": "",
           "annotationPattern": "",
           "annotationPrevState": "",
           "annotationRange": "selected",
@@ -310,10 +401,36 @@
         }
       ],
       "title": "Annotations",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Alert Id": true,
+              "Avatar URL": true,
+              "Dashboard Id": true,
+              "Dashboard UID": true,
+              "Email": true,
+              "Login": true,
+              "Panel Id": true,
+              "Tags": true,
+              "Text": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "extractFields",
+          "options": {
+            "source": "Labels"
+          }
+        }
+      ],
       "type": "table"
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
@@ -347,13 +464,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Metrics",
   "uid": "Rcb6nob4k",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }

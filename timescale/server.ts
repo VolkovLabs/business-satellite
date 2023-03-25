@@ -10,11 +10,28 @@ const client = new Client({
 });
 client.connect();
 
-const addMetrics = async () => {
-  await client.query("insert into metrics values(1, now(), 'test', random());");
-  await client.query("insert into metrics values(1, now(), 'test2', random());");
+let temp = 20;
+let temp2 = 20;
 
-  setTimeout(addMetrics, 1000);
+const addMetrics = async () => {
+  temp += Math.random();
+  temp2 += Math.random();
+
+  await client.query(`insert into metrics values(nextval('seq_metrics'), now(), 'test', ${temp});`);
+  await client.query(`insert into metrics values(nextval('seq_metrics'), now(), 'test2', ${temp2});`);
+
+  let timeout = 1000;
+  if (temp > 100 || temp2 > 100) {
+    temp = 20;
+    temp2 = 20;
+
+    await client.query(`insert into controls values(nextval('seq_controls'), now(), 'test', ${temp});`);
+    await client.query(`insert into controls values(nextval('seq_controls'), now(), 'test2', ${temp2});`);
+
+    timeout = 5000;
+  }
+
+  setTimeout(addMetrics, timeout);
 };
 
 /**

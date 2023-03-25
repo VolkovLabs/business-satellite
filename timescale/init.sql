@@ -7,21 +7,18 @@ CREATE TABLE metrics (
     value DOUBLE PRECISION NULL
 );
 
-CREATE TABLE sets (
+CREATE TABLE controls (
     id integer NOT NULL,
     time timestamp with time zone NOT NULL,
     name text NOT NULL,
     value DOUBLE PRECISION NULL
 );
 
+CREATE SEQUENCE seq_metrics START 1;
+CREATE SEQUENCE seq_controls START 1;
+
 SELECT create_hypertable('metrics','time');
-SELECT create_hypertable('sets','time');
+SELECT create_hypertable('controls','time');
 
 CREATE INDEX ix_metrics_name_time ON metrics (name, time DESC);
-CREATE INDEX ix_sets_name_time ON sets (name, time DESC);
-
-insert into metrics values(1, now(), 'test', random());
-insert into metrics values(2, now(), 'test2', random());
-
-insert into sets values(1, now(), 'test', random());
-insert into sets values(2, now(), 'test2', random());
+CREATE INDEX ix_controls_name_time ON controls (name, time DESC);
