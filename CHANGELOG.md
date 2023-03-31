@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.2.0 (IN PROGRESS)
+## 1.2.0 (2023-03-30)
 
 ### Features / Enhancements
 
@@ -10,6 +10,7 @@
 - Update Scoped Variables for Annotations (#21)
 - Add Variable Support (#25)
 - Update provisioning for testing Alerts (#26, #28)
+- Add Annotations Tutorial (#29)
 
 ## 1.1.0 (2023-03-15)
 

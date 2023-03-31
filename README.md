@@ -45,6 +45,12 @@ grafana-cli plugins install volkovlabs-grapi-datasource
 | -------------------------- | -------------------------------------------------------------- |
 | [Annotations](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/annotations) | Explains how to use the Data Source for Dashboard annotations. |
 
+## Tutorial
+
+This is an introductory video for anyone interested in Grafana Alerts and Annotations.
+
+[![Annotations, Alerts, and Annotation queries in Grafana explained | HTTP API Data Source](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/annotations.png)](https://youtu.be/4asWJ_Dhcmw)
+
 ## Feedback
 
 We love to hear from you. There are various ways to get in touch with us:
