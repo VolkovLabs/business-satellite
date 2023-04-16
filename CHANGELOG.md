@@ -5,6 +5,7 @@
 ### Features / Enhancements
 
 - Update to Grafana 9.4.7 (#31)
+- Add Annotations Tutorial to README (#33)
 
 ## 1.2.0 (2023-03-30)
 
