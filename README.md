@@ -11,6 +11,8 @@
 
 The Grafana HTTP API Data Source for Grafana allows retrieving data from local and remote Grafana instances via HTTP API.
 
+[![Annotations and Alerts tutorial for Grafana with Timescale | How to and Demo to reveal the basics](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/tutorial.png)](https://youtu.be/bmOkirtC65w)
+
 ## Requirements
 
 - **Grafana 8.5+, Grafana 9.0+** is required.
