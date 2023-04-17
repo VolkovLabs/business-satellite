@@ -27,6 +27,10 @@ For the latter, use the following command.
 grafana-cli plugins install volkovlabs-grapi-datasource
 ```
 
+### Authentication
+
+The Grafana HTTP API Data source requires Grafana URL and a Token or API key to establish the connection to the organization and get relevant data.
+
 ## Features
 
 - Connects to Local and Remote Grafana instances via HTTP API using API Keys and Tokens.
