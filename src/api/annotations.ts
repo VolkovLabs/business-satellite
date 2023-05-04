@@ -194,7 +194,7 @@ export const getAnnotationsFrame = async (
    * Alert Rules
    */
   const alertRules: { [id: number]: AlertRule } = {};
-  const rules = await getAlertRules(api);
+  const rules = await getAlertRules(api).catch(() => []);
   rules.forEach((rule) => (alertRules[rule.id] = rule));
 
   /**
