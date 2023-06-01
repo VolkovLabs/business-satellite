@@ -1,6 +1,7 @@
 import React, { ChangeEvent, PureComponent } from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { FieldSet, InlineField, InlineFieldRow, Input } from '@grafana/ui';
+import { TestIds } from '../../constants';
 import { DataSourceOptions, SecureJsonData } from '../../types';
 
 /**
@@ -56,7 +57,13 @@ export class ConfigEditor extends PureComponent<Props, State> {
       <FieldSet>
         <InlineFieldRow>
           <InlineField label="Grafana URL" labelWidth={14} grow>
-            <Input type="text" placeholder="http://localhost:3000" value={jsonData.url} onChange={this.onUrlChange} />
+            <Input
+              type="text"
+              placeholder="http://localhost:3000"
+              value={jsonData.url}
+              onChange={this.onUrlChange}
+              data-testid={TestIds.configEditor.fieldUrl}
+            />
           </InlineField>
         </InlineFieldRow>
 
@@ -67,6 +74,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
               placeholder={secureJsonFields?.token ? 'configured' : ''}
               value={secureJsonData.token ?? ''}
               onChange={this.onTokenChange}
+              data-testid={TestIds.configEditor.fieldPassword}
             />
           </InlineField>
         </InlineFieldRow>

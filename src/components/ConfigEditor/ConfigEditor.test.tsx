@@ -1,13 +1,9 @@
-import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 import { DataSourceSettings } from '@grafana/data';
+import { act, screen, render, fireEvent } from '@testing-library/react';
+import { TestIds } from '../../constants';
 import { DataSourceOptions } from '../../types';
 import { ConfigEditor } from './ConfigEditor';
-
-/**
- * Component
- */
-type ShallowComponent = ShallowWrapper<ConfigEditor['props'], ConfigEditor['state'], ConfigEditor>;
 
 /**
  * Override Options
@@ -68,20 +64,19 @@ describe('ConfigEditor', () => {
    * URL
    */
   describe('URL', () => {
-    const getComponent = (wrapper: ShallowComponent) =>
-      wrapper.findWhere((node) => {
-        return node.prop('onChange') === wrapper.instance().onUrlChange;
-      });
-
-    it('Should apply URL value and change options if field was changed', () => {
+    it('Should apply URL value and change options if field was changed', async () => {
       const options = getOptions({ jsonData: { url: 'http://localhost:3000' } });
-      const wrapper = shallow<ConfigEditor>(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
-      const testedComponent = getComponent(wrapper);
-      expect(testedComponent.prop('value')).toEqual(options.jsonData.url);
+      render(<ConfigEditor options={options} onOptionsChange={onChange} />);
+
+      const fieldUrl = screen.getByTestId(TestIds.configEditor.fieldUrl);
+
+      expect(fieldUrl).toHaveValue(options.jsonData.url);
 
       const newValue = 'http://localhost:3100';
-      testedComponent.simulate('change', { target: { value: newValue } });
+
+      await act(() => fireEvent.change(fieldUrl, { target: { value: newValue } }));
+
       expect(onChange).toHaveBeenCalledWith({
         ...options,
         jsonData: {
@@ -96,20 +91,19 @@ describe('ConfigEditor', () => {
    * Token
    */
   describe('Token', () => {
-    const getComponent = (wrapper: ShallowComponent) =>
-      wrapper.findWhere((node) => {
-        return node.prop('onChange') === wrapper.instance().onTokenChange;
-      });
+    it('Should apply Token value and change options if field was changed', async () => {
+      const options = getOptions({ secureJsonData: { token: '123' } });
 
-    it('Should apply URL value and change options if field was changed', () => {
-      const options = getOptions({ jsonData: { url: '123' } });
-      const wrapper = shallow<ConfigEditor>(<ConfigEditor options={options} onOptionsChange={onChange} />);
+      render(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
-      const testedComponent = getComponent(wrapper);
-      expect(testedComponent.prop('value')).toEqual(options.secureJsonData.token);
+      const fieldPassword = screen.getByTestId(TestIds.configEditor.fieldPassword);
+
+      expect(fieldPassword).toHaveValue(options.secureJsonData.token);
 
       const newValue = '321';
-      testedComponent.simulate('change', { target: { value: newValue } });
+
+      await act(() => fireEvent.change(fieldPassword, { target: { value: newValue } }));
+
       expect(onChange).toHaveBeenCalledWith({
         ...options,
         secureJsonData: {
