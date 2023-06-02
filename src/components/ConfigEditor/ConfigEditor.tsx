@@ -1,4 +1,4 @@
-import React, { ChangeEvent, PureComponent } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { FieldSet, InlineField, InlineFieldRow, Input } from '@grafana/ui';
 import { TestIds } from '../../constants';
@@ -10,75 +10,71 @@ import { DataSourceOptions, SecureJsonData } from '../../types';
 interface Props extends DataSourcePluginOptionsEditorProps<DataSourceOptions, SecureJsonData> {}
 
 /**
- * State
- */
-interface State {}
-
-/**
  * Config Editor
  */
-export class ConfigEditor extends PureComponent<Props, State> {
+export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
   /**
    * API URL Change
    */
-  onUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onOptionsChange, options } = this.props;
-    onOptionsChange({
-      ...options,
-      jsonData: {
-        ...options.jsonData,
-        url: event.target.value,
-      },
-    });
-  };
+  const onUrlChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      onOptionsChange({
+        ...options,
+        jsonData: {
+          ...options.jsonData,
+          url: event.target.value,
+        },
+      });
+    },
+    [onOptionsChange, options]
+  );
 
   /**
    * Token Change
    */
-  onTokenChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onOptionsChange, options } = this.props;
-    onOptionsChange({
-      ...options,
-      secureJsonData: {
-        token: event.target.value,
-      },
-    });
-  };
+  const onTokenChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      onOptionsChange({
+        ...options,
+        secureJsonData: {
+          token: event.target.value,
+        },
+      });
+    },
+    [onOptionsChange, options]
+  );
 
   /**
    * Render
    */
-  render() {
-    const { options } = this.props;
-    const { jsonData, secureJsonFields } = options;
-    const secureJsonData = (options.secureJsonData || {}) as SecureJsonData;
+  const { jsonData, secureJsonFields } = options;
+  const secureJsonData = (options.secureJsonData || {}) as SecureJsonData;
 
-    return (
-      <FieldSet>
-        <InlineFieldRow>
-          <InlineField label="Grafana URL" labelWidth={14} grow>
-            <Input
-              type="text"
-              placeholder="http://localhost:3000"
-              value={jsonData.url}
-              onChange={this.onUrlChange}
-              data-testid={TestIds.configEditor.fieldUrl}
-            />
-          </InlineField>
-        </InlineFieldRow>
+  return (
+    <FieldSet>
+      <InlineFieldRow>
+        <InlineField label="Grafana URL" labelWidth={14} grow>
+          <Input
+            type="text"
+            placeholder="http://localhost:3000"
+            value={jsonData.url}
+            onChange={onUrlChange}
+            data-testid={TestIds.configEditor.fieldUrl}
+          />
+        </InlineField>
+      </InlineFieldRow>
 
-        <InlineFieldRow>
-          <InlineField label="Token" labelWidth={14} grow>
-            <Input
-              type="password"
-              placeholder={secureJsonFields?.token ? 'configured' : ''}
-              value={secureJsonData.token ?? ''}
-              onChange={this.onTokenChange}
-              data-testid={TestIds.configEditor.fieldPassword}
-            />
-          </InlineField>
-        </InlineFieldRow>
-      </FieldSet>
-    );
-  }
-}
+      <InlineFieldRow>
+        <InlineField label="Token" labelWidth={14} grow>
+          <Input
+            type="password"
+            placeholder={secureJsonFields?.token ? 'configured' : ''}
+            value={secureJsonData.token ?? ''}
+            onChange={onTokenChange}
+            data-testid={TestIds.configEditor.fieldPassword}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </FieldSet>
+  );
+};
