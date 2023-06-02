@@ -14,6 +14,7 @@ import {
   DefaultQuery,
   RequestType,
   RequestTypeOptions,
+  TestIds,
 } from '../../constants';
 import { DataSource } from '../../datasource';
 import { DataSourceOptions, Query } from '../../types';
@@ -113,6 +114,7 @@ export class QueryEditor extends PureComponent<Props> {
               options={RequestTypeOptions}
               value={RequestTypeOptions.find((type) => type.value === query.requestType)}
               onChange={this.onRequestTypeChange}
+              aria-label={TestIds.queryEditor.fieldRequest}
             />
           </InlineField>
         </InlineFieldRow>

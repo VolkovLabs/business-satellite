@@ -1,20 +1,46 @@
-import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { DefaultQuery, RequestType, RequestTypeOptions } from '../../constants';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { DefaultQuery, RequestType, TestIds } from '../../constants';
 import { Query } from '../../types';
 import { QueryEditor } from './QueryEditor';
 
 /**
- * Component
+ * Mock @grafana/ui
  */
-type ShallowComponent = ShallowWrapper<QueryEditor['props'], QueryEditor['state'], QueryEditor>;
+jest.mock('@grafana/ui', () => ({
+  ...jest.requireActual('@grafana/ui'),
+  /**
+   * Mock Select component
+   */
+  Select: jest.fn().mockImplementation(({ options, onChange, value, ...restProps }) => (
+    <select
+      onChange={(event: any) => {
+        if (onChange) {
+          onChange(options.find((option: any) => option.value === event.target.value));
+        }
+      }}
+      /**
+       * Fix jest warnings because null value.
+       * For Select component in @grafana/io should be used null to reset value.
+       */
+      value={value === null ? '' : value}
+      {...restProps}
+    >
+      {options.map(({ label, value }: any) => (
+        <option key={value} value={value}>
+          {label}
+        </option>
+      ))}
+    </select>
+  )),
+}));
 
 /**
  * Get Query with default values and ability to override
  *
  * @param overrideQuery
  */
-export const getQuery = (overrideQuery = {}): Query => ({
+export const getQuery = (overrideQuery: Partial<Query> = {}): Query => ({
   requestType: DefaultQuery.requestType,
   refId: 'A',
   ...overrideQuery,
@@ -36,30 +62,25 @@ describe('QueryEditor', () => {
    * Request Type
    */
   describe('Request Type', () => {
-    const getComponent = (wrapper: ShallowComponent) =>
-      wrapper.findWhere((node) => {
-        return node.prop('onChange') === wrapper.instance().onRequestTypeChange;
+    it('Should apply requestType value and change', async () => {
+      const query = getQuery({
+        requestType: RequestType.ALERT_RULES,
       });
+      render(<QueryEditor datasource={[] as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />);
 
-    it('Should apply requestType value and change', () => {
-      const query = getQuery();
-      const wrapper = shallow<QueryEditor>(
-        <QueryEditor datasource={[] as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
-      );
+      const fieldRequest = screen.getByLabelText(TestIds.queryEditor.fieldRequest);
 
-      const testedComponent = getComponent(wrapper);
-      expect(testedComponent.prop('value')).toEqual(
-        RequestTypeOptions.find((type) => type.value === query.requestType)
-      );
+      expect(fieldRequest).toHaveValue(RequestType.ALERT_RULES);
 
       /**
        * OnChange
        */
-      const newValue = RequestTypeOptions.find((type) => type.value === RequestType.NONE);
-      testedComponent.simulate('change', newValue);
+
+      await act(() => fireEvent.change(fieldRequest, { target: { value: RequestType.NONE } }));
+
       expect(onChange).toHaveBeenCalledWith({
         ...query,
-        requestType: newValue?.value,
+        requestType: RequestType.NONE,
       });
     });
   });
