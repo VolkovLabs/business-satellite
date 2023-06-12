@@ -4,7 +4,7 @@
 
 ### Features / Enhancements
 
-- Update to Grafana 9.5.1 (#31, #40)
+- Update to Grafana 9.5.2 (#31, #40, #45)
 - Add Annotations Tutorial to README (#33)
 - Add Authentication to Getting Started (#36)
 - Add exception handling for Alert Rules in Annotations (#39)

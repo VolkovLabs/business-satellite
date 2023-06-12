@@ -12,8 +12,6 @@ services:
     volumes:
       - ./dist:/var/lib/grafana/plugins/volkovlabs-grapi-datasource
       - ./provisioning:/etc/grafana/provisioning
-      # Uncomment to preserve Grafana configuration
-      # - ./data:/var/lib/grafana
 
   timescale:
     container_name: timescale
