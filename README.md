@@ -2,7 +2,7 @@
 
 ![Datasource](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/raw/main/src/img/datasource.png)
 
-[![Grafana 9](https://img.shields.io/badge/Grafana-9.5.1-orange)](https://www.grafana.com)
+[![Grafana 9](https://img.shields.io/badge/Grafana-9.5.2-orange)](https://www.grafana.com)
 ![CI](https://github.com/volkovlabs/volkovlabs-grapi-datasource/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource/branch/main/graph/badge.svg)](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource)
 [![CodeQL](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/actions/workflows/codeql-analysis.yml)
@@ -31,7 +31,7 @@ grafana-cli plugins install volkovlabs-grapi-datasource
 
 The Grafana HTTP API Data source requires Grafana URL and a Token or API key to establish the connection to the organization and get relevant data.
 
-## Features
+## Highlights
 
 - Connects to Local and Remote Grafana instances via HTTP API using API Keys and Tokens.
 - Allows to get Health information.
@@ -41,15 +41,10 @@ The Grafana HTTP API Data source requires Grafana URL and a Token or API key to 
 
 | Section                      | Description                                                  |
 | ---------------------------- | ------------------------------------------------------------ |
-| [Configuration](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/configuration) | Explains configuration settings for the Data Source.         |
-| [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning) | Demonstrates how to automatically provision the Data Source. |
-| [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release)     | Stay up to date with the latest features and updates.        |
-
-### Features
-
-| Section                    | Description                                                    |
-| -------------------------- | -------------------------------------------------------------- |
-| [Annotations](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/annotations) | Explains how to use the Data Source for Dashboard annotations. |
+| [Configuration](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/configuration/) | Explains configuration settings for the Data Source.         |
+| [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning/) | Demonstrates how to automatically provision the Data Source. |
+| [Features](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/features/)           | Demonstrates panel features.                                 |
+| [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release/)     | Stay up to date with the latest features and updates.        |
 
 ## Tutorial
 
@@ -62,6 +57,7 @@ This is an introductory video for anyone interested in Grafana Alerts and Annota
 We love to hear from you. There are various ways to get in touch with us:
 
 - Ask a question, request a new feature, and file a bug with [GitHub issues](https://github.com/volkovlabs/volkovlabs-grapi-datasource/issues/new/choose).
+- Subscribe to our [YouTube Channel](https://www.youtube.com/@volkovlabs) and add a comment.
 - Sponsor our open-source plugins for Grafana with [GitHub Sponsor](https://github.com/sponsors/VolkovLabs).
 - Star the repository to show your support.
 
