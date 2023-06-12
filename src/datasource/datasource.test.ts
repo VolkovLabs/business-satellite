@@ -15,15 +15,14 @@ let getOrgResult: OrgProps = { id: 1, name: 'Test' };
  * Api
  */
 const apiMock = {};
-
 jest.mock('../api', () => ({
   Api: jest.fn().mockImplementation(() => apiMock),
+  getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   getAnnotations: jest.fn().mockImplementation(() => Promise.resolve(response)),
   getAnnotationsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   getDataSourcesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  getHealthFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   getHealth: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
+  getHealthFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   getOrg: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
 }));
 

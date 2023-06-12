@@ -76,8 +76,8 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
    * Annotation Pattern change
    */
   const onAnnotationPatternChange = useCallback(
-    async (e: FormEvent<HTMLInputElement>) => {
-      onChange({ ...rawQuery, annotationPattern: e.currentTarget.value! });
+    async (event: FormEvent<HTMLInputElement>) => {
+      onChange({ ...rawQuery, annotationPattern: event.currentTarget.value! });
       onRunQuery();
     },
     [onChange, onRunQuery, rawQuery]
@@ -87,8 +87,8 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
    * Annotation Limit change
    */
   const onAnnotationLimitChange = useCallback(
-    async (e: FormEvent<HTMLInputElement>) => {
-      onChange({ ...rawQuery, annotationLimit: Number(e.currentTarget.value)! });
+    async (event: FormEvent<HTMLInputElement>) => {
+      onChange({ ...rawQuery, annotationLimit: Number(event.currentTarget.value)! });
       onRunQuery();
     },
     [onChange, onRunQuery, rawQuery]
@@ -117,11 +117,13 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   );
 
   /**
-   * Render
+   * Default Query
    */
-
   const query = defaults(rawQuery, DefaultQuery);
 
+  /**
+   * Render
+   */
   return (
     <>
       <InlineFieldRow>

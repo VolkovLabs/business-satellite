@@ -83,7 +83,6 @@ describe('QueryEditor', () => {
       /**
        * OnChange
        */
-
       await act(() => fireEvent.change(fieldRequest, { target: { value: RequestType.NONE } }));
 
       expect(onChange).toHaveBeenCalledWith({

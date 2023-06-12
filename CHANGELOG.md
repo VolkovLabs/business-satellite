@@ -9,6 +9,7 @@
 - Add Authentication to Getting Started (#36)
 - Add exception handling for Alert Rules in Annotations (#39)
 - Update tests with testing-library/react (#42)
+- Add tests for Components and datasource (#44)
 
 ## 1.2.0 (2023-03-30)
 
