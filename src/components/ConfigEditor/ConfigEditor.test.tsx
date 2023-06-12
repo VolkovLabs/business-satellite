@@ -112,5 +112,45 @@ describe('ConfigEditor', () => {
         },
       });
     });
+
+    it('Should work without data ', async () => {
+      const options = getOptions({});
+
+      render(
+        <ConfigEditor
+          options={{
+            ...options,
+            secureJsonData: null as any,
+            secureJsonFields: null as any,
+          }}
+          onOptionsChange={onChange}
+        />
+      );
+
+      const fieldPassword = screen.getByTestId(TestIds.configEditor.fieldPassword);
+
+      expect(fieldPassword).toHaveValue('');
+    });
+
+    it('Should show configured placeholder ', async () => {
+      const options = getOptions({});
+
+      render(
+        <ConfigEditor
+          options={{
+            ...options,
+            secureJsonData: null as any,
+            secureJsonFields: {
+              token: true,
+            },
+          }}
+          onOptionsChange={onChange}
+        />
+      );
+
+      const fieldPassword = screen.getByTestId(TestIds.configEditor.fieldPassword);
+
+      expect(fieldPassword).toHaveProperty('placeholder', 'configured');
+    });
   });
 });
