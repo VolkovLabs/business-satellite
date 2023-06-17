@@ -10,6 +10,8 @@
 - Add exception handling for Alert Rules in Annotations (#39)
 - Update tests with testing-library/react (#42)
 - Add tests for Components and datasource (#44)
+- Migrate to Plugin Tools 1.5.2 (#45)
+- Update to Node 18 and npm (#45)
 
 ## 1.2.0 (2023-03-30)
 
