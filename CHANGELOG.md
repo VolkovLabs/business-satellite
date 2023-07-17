@@ -1,6 +1,10 @@
 # Change Log
 
-## 1.3.0 (IN PROGRESS)
+## 2.0.0 (IN PROGRESS)
+
+### Breaking changes
+
+- Requires Grafana 9 and Grafana 10
 
 ### Features / Enhancements
 
@@ -12,6 +16,7 @@
 - Add tests for Components and datasource (#44)
 - Migrate to Plugin Tools 1.5.2 (#45)
 - Update to Node 18 and npm (#45)
+- Update to Grafana 10.0.2 dependencies ()
 
 ## 1.2.0 (2023-03-30)
 
