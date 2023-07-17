@@ -8,7 +8,7 @@
 
 ### Features / Enhancements
 
-- Update to Grafana 9.5.2 (#31, #40, #45)
+- Update to Grafana 10.0.2 (#31, #40, #45, #47)
 - Add Annotations Tutorial to README (#33)
 - Add Authentication to Getting Started (#36)
 - Add exception handling for Alert Rules in Annotations (#39)
@@ -16,7 +16,6 @@
 - Add tests for Components and datasource (#44)
 - Migrate to Plugin Tools 1.5.2 (#45)
 - Update to Node 18 and npm (#45)
-- Update to Grafana 10.0.2 dependencies ()
 
 ## 1.2.0 (2023-03-30)
 
