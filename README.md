@@ -2,7 +2,7 @@
 
 ![Datasource](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/raw/main/src/img/datasource.png)
 
-[![Grafana 9](https://img.shields.io/badge/Grafana-9.5.2-orange)](https://www.grafana.com)
+![Grafana 10](https://img.shields.io/badge/Grafana-10.0.2-orange)
 ![CI](https://github.com/volkovlabs/volkovlabs-grapi-datasource/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource/branch/main/graph/badge.svg)](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource)
 [![CodeQL](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/actions/workflows/codeql-analysis.yml)
@@ -15,7 +15,8 @@ The Grafana HTTP API Data Source for Grafana allows retrieving data from local a
 
 ## Requirements
 
-- **Grafana 8.5+, Grafana 9.0+** is required.
+- **Grafana 9** and **Grafana 10** are required for major version 2.
+- **Grafana 8.5** and **Grafana 9** are required for major version 1.
 
 ## Getting Started
 
