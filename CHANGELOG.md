@@ -1,6 +1,6 @@
 # Change Log
 
-## 2.0.0 (IN PROGRESS)
+## 2.0.0 (2023-07-17)
 
 ### Breaking changes
 
@@ -16,6 +16,7 @@
 - Add tests for Components and datasource (#44)
 - Migrate to Plugin Tools 1.5.2 (#45)
 - Update to Node 18 and npm (#45)
+- Add E2E Cypress testing (#48)
 
 ## 1.2.0 (2023-03-30)
 
