@@ -29,6 +29,7 @@ const apiMock = {
   },
   org: {
     get: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
+    getUsersFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   },
   datasources: {
     getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
@@ -135,8 +136,8 @@ describe('DataSource', () => {
       expect(frames.length).toEqual(0);
     });
 
-    it('Should return correct data for Users frame', async () => {
-      const targets = [{ refId: 'A', requestType: RequestType.USERS }];
+    it('Should return correct data for Org Users frame', async () => {
+      const targets = [{ refId: 'A', requestType: RequestType.GET_ORG_USERS }];
 
       const response = (await dataSource.query({ targets, range } as any)) as any;
       const frames = response.data;

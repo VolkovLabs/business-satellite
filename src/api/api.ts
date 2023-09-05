@@ -5,7 +5,6 @@ import { Provisioning } from './provisioning';
 import { DataSources } from './datasources';
 import { Health } from './health';
 import { Org } from './org';
-import { Users } from './users';
 
 /**
  * API
@@ -40,9 +39,4 @@ export class Api {
    * Org Api
    */
   org = new Org(this);
-
-  /**
-   * Users Api
-   */
-  users = new Users(this);
 }

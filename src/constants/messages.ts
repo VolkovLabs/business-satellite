@@ -23,6 +23,6 @@ export const Messages = {
   requestDataSources: 'Returns data sources',
   requestHealth: 'Returns health information',
   requestNone: 'For internal API calls',
-  requestUsers: 'Returns all users',
+  requestOrgUsers: 'Returns all org users within the current organization',
   version: 'Version',
 };

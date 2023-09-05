@@ -1,9 +1,14 @@
-import { UserProps } from '@grafana/data';
+import { UserOrgDTO } from '@grafana/data';
 
 /**
  * User
  */
-export interface User extends UserProps {
+export interface OrgUser extends UserOrgDTO {
+  /**
+   * Access Control
+   */
+  accessControl: object;
+
   /**
    * Auth Labels
    *
@@ -19,18 +24,18 @@ export interface User extends UserProps {
   avatarUrl: string;
 
   /**
-   * Is Admin
-   *
-   * @type {boolean}
-   */
-  isAdmin: boolean;
-
-  /**
    * Is Disabled
    *
    * @type {boolean}
    */
   isDisabled: boolean;
+
+  /**
+   * Is Externally Synced
+   *
+   * @type {boolean}
+   */
+  isExternallySynced: boolean;
 
   /**
    * Last Seen At
@@ -47,9 +52,16 @@ export interface User extends UserProps {
   lastSeenAtAge: string;
 
   /**
-   * Name
+   * Login
    *
    * @type {string}
    */
-  name: string;
+  login: string;
+
+  /**
+   * User Id
+   *
+   * @type {string}
+   */
+  userId: number;
 }

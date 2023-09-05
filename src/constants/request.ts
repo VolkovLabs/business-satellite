@@ -9,7 +9,7 @@ export enum RequestType {
   ANNOTATIONS = 'annotations',
   DATASOURCES = 'datasources',
   HEALTH = 'health',
-  USERS = 'users',
+  GET_ORG_USERS = 'getOrgUsers',
   NONE = 'none',
 }
 
@@ -40,9 +40,9 @@ export const RequestTypeOptions: SelectableValue[] = [
     value: RequestType.HEALTH,
   },
   {
-    label: 'Users',
-    description: Messages.requestUsers,
-    value: RequestType.USERS,
+    label: 'Get Org Users',
+    description: Messages.requestOrgUsers,
+    value: RequestType.GET_ORG_USERS,
   },
   {
     label: 'None',

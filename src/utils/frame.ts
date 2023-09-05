@@ -1,4 +1,4 @@
-import { FieldType, MutableDataFrame } from '@grafana/data';
+import { FieldType, getFieldTypeFromValue, MutableDataFrame } from '@grafana/data';
 
 /**
  * Field Mapper
@@ -47,4 +47,25 @@ export const convertToFrame = <ItemType>({
   });
 
   return frame;
+};
+
+/**
+ * Get Fields For Item
+ */
+export const getFieldsForItem = <ItemType extends object>(
+  item: ItemType,
+  override: Partial<{
+    [key in keyof typeof item]: (item: ItemType) => unknown;
+  }> = {}
+): Array<FieldMapper<ItemType>> => {
+  return Object.keys(item).reduce((acc: Array<FieldMapper<ItemType>>, name) => {
+    const getValue = override[name as keyof typeof item] || ((item) => item[name as keyof typeof item]);
+    const value = getValue(item);
+
+    return acc.concat({
+      name,
+      type: getFieldTypeFromValue(value),
+      getValue,
+    });
+  }, []);
 };
