@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { RequestType } from '../constants';
 import { Api } from './api';
-import { getAlertRules, getAlertRulesFrame } from './provisioning';
 
 /**
  * Response
@@ -40,9 +39,9 @@ jest.mock('@grafana/runtime', () => ({
 }));
 
 /**
- * API
+ * Provisioning API
  */
-describe('Api', () => {
+describe('Provisioning Api', () => {
   const instanceSettings: any = {};
 
   /**
@@ -240,7 +239,7 @@ describe('Api', () => {
 
     it('Should make getAlertRules request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAlertRules(api);
+      let result = await api.provisioning.getAlertRules();
       expect(result).toBeTruthy();
     });
 
@@ -248,7 +247,7 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
       jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await getAlertRules(api);
+      let result = await api.provisioning.getAlertRules();
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -257,14 +256,14 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await getAlertRules(api);
+        let result = await api.provisioning.getAlertRules();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getAlertRulesFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getAlertRulesFrame(api, query);
+      let result = await api.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(9);
       expect(result[0].fields[0].values.toArray()).toEqual([1]);
@@ -276,7 +275,7 @@ describe('Api', () => {
       jest.spyOn(console, 'error').mockImplementation();
       jest.spyOn(console, 'log').mockImplementation();
 
-      let result = await getAlertRulesFrame(api, query);
+      let result = await api.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

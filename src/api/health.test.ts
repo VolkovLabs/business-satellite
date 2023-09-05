@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { RequestType } from '../constants';
 import { Api } from './api';
-import { getHealth, getHealthFrame } from './health';
 
 /**
  * Response
@@ -40,9 +39,9 @@ jest.mock('@grafana/runtime', () => ({
 }));
 
 /**
- * API
+ * Health API
  */
-describe('Api', () => {
+describe('Health Api', () => {
   const instanceSettings: any = {};
 
   /**
@@ -83,7 +82,7 @@ describe('Api', () => {
 
     it('Should make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getHealth(api);
+      let result = await api.health.get();
       expect(result).toBeTruthy();
     });
 
@@ -91,7 +90,7 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
       jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await getHealth(api);
+      let result = await api.health.get();
       expect(result).toBeFalsy();
     });
 
@@ -99,14 +98,14 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await getHealth(api);
+        let result = await api.health.get();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getHealthFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getHealthFrame(api, query);
+      let result = await api.health.getFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(3);
       expect(result[0].fields[0].values.toArray()).toEqual(['978237e7cb']);
@@ -118,7 +117,7 @@ describe('Api', () => {
       jest.spyOn(console, 'error').mockImplementation();
       jest.spyOn(console, 'log').mockImplementation();
 
-      let result = await getHealthFrame(api, query);
+      let result = await api.health.getFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

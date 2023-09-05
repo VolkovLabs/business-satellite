@@ -2,71 +2,76 @@ import { lastValueFrom } from 'rxjs';
 import { FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages, RequestType } from '../constants';
-import { Health, Query } from '../types';
+import { Health as HealthType, Query } from '../types';
 import { notifyError } from '../utils';
-import { Api } from './api';
+import { BaseApi } from './base';
 
 /**
- * Get Health
+ * Health Api
  */
-export const getHealth = async (api: Api): Promise<Health | undefined> => {
-  const response = await lastValueFrom(
-    getBackendSrv().fetch({
-      method: 'GET',
-      url: `${api.instanceSettings.url}/api/health`,
-    })
-  );
+export class Health extends BaseApi {
+  /**
+   * Get Health
+   */
+  get = async (): Promise<HealthType | undefined> => {
+    const response = await lastValueFrom(
+      getBackendSrv().fetch({
+        method: 'GET',
+        url: `${this.api.instanceSettings.url}/api/health`,
+      })
+    );
+
+    /**
+     * Check Response
+     */
+    if (!response || !response.data) {
+      notifyError([Messages.error, Messages.api.getHealthFailed]);
+      console.error(response);
+      return;
+    }
+
+    /**
+     * Data received
+     */
+    return response.data as HealthType;
+  };
 
   /**
-   * Check Response
+   * Get Health Frame
    */
-  if (!response || !response.data) {
-    notifyError([Messages.error, Messages.api.getHealthFailed]);
-    console.error(response);
-    return;
-  }
+  getFrame = async (query: Query): Promise<MutableDataFrame[]> => {
+    const health = await this.get();
+    if (!health?.version) {
+      return [];
+    }
 
-  /**
-   * Data received
-   */
-  return response.data as Health;
-};
+    /**
+     * Create frame
+     */
+    const frame = new MutableDataFrame({
+      name: RequestType.HEALTH,
+      refId: query.refId,
+      fields: [
+        {
+          name: 'Commit',
+          type: FieldType.string,
+        },
+        {
+          name: 'Database',
+          type: FieldType.string,
+        },
+        {
+          name: 'Version',
+          type: FieldType.string,
+        },
+      ],
+    });
 
-/**
- * Get Health Frame
- */
-export const getHealthFrame = async (api: Api, query: Query): Promise<MutableDataFrame[]> => {
-  const health = await getHealth(api);
-  if (!health?.version) {
-    return [];
-  }
+    /**
+     * Add Data
+     */
+    frame.appendRow([health.commit, health.database, health.version]);
 
-  /**
-   * Create frame
-   */
-  const frame = new MutableDataFrame({
-    name: RequestType.HEALTH,
-    refId: query.refId,
-    fields: [
-      {
-        name: 'Commit',
-        type: FieldType.string,
-      },
-      {
-        name: 'Database',
-        type: FieldType.string,
-      },
-      {
-        name: 'Version',
-        type: FieldType.string,
-      },
-    ],
-  });
-
-  /**
-   * Add Data
-   */
-  frame.appendRow([health.commit, health.database, health.version]);
-
-  return [frame];
-};
+    return [frame];
+  };
+}
