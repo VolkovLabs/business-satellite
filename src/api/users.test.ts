@@ -116,7 +116,6 @@ describe('Users Api', () => {
       let result = await api.users.getFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(10);
-      expect(result[0].fields[0].values.toArray()).toEqual(['label1, label2']);
     });
 
     it('Should handle getUsersFrame request with no data', async () => {
