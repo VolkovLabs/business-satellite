@@ -245,7 +245,6 @@ describe('Provisioning Api', () => {
 
     it('Should not make getAlertRules request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
-      jest.spyOn(console, 'error').mockImplementation();
 
       let result = await api.provisioning.getAlertRules();
       expect(result).toBeTruthy();
@@ -272,8 +271,6 @@ describe('Provisioning Api', () => {
     it('Should handle getAlertRulesFrame request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
       response.data = [];
-      jest.spyOn(console, 'error').mockImplementation();
-      jest.spyOn(console, 'log').mockImplementation();
 
       let result = await api.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(0);

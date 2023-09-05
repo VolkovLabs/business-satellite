@@ -123,7 +123,6 @@ describe('Data Sources Api', () => {
 
     it('Should not make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
-      jest.spyOn(console, 'error').mockImplementation();
 
       let result = await api.datasources.getAll();
       expect(result).toBeTruthy();
@@ -150,8 +149,6 @@ describe('Data Sources Api', () => {
     it('Should handle getDataSourcesFrame request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
       response.data = [];
-      jest.spyOn(console, 'error').mockImplementation();
-      jest.spyOn(console, 'log').mockImplementation();
 
       let result = await api.datasources.getFrame(query);
       expect(result?.length).toEqual(0);

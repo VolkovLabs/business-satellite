@@ -26,7 +26,6 @@ export class Health extends BaseApi {
      */
     if (!response || !response.data) {
       notifyError([Messages.error, Messages.api.getHealthFailed]);
-      console.error(response);
       return;
     }
 

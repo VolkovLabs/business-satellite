@@ -29,7 +29,6 @@ export class Provisioning extends BaseApi {
      */
     if (!response || !response.data) {
       notifyError([Messages.error, Messages.api.getAlertRulesFailed]);
-      console.error(response);
       return [];
     }
 

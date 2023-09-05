@@ -88,7 +88,6 @@ describe('Health Api', () => {
 
     it('Should not make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
-      jest.spyOn(console, 'error').mockImplementation();
 
       let result = await api.health.get();
       expect(result).toBeFalsy();
@@ -114,8 +113,6 @@ describe('Health Api', () => {
     it('Should handle getHealthFrame request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
       response.data = {} as any;
-      jest.spyOn(console, 'error').mockImplementation();
-      jest.spyOn(console, 'log').mockImplementation();
 
       let result = await api.health.getFrame(query);
       expect(result?.length).toEqual(0);

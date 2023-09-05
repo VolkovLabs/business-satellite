@@ -68,7 +68,6 @@ export class Annotations extends BaseApi {
      */
     if (!response || !response.data) {
       notifyError([Messages.error, Messages.api.getAnnotationsFailed]);
-      console.error(response);
       return [];
     }
 

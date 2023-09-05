@@ -92,7 +92,6 @@ describe('Org Api', () => {
 
     it('Should not make getOrg request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
-      jest.spyOn(console, 'error').mockImplementation();
 
       let result = await api.org.get();
       expect(result).toBeFalsy();

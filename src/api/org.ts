@@ -25,7 +25,6 @@ export class Org extends BaseApi {
      */
     if (!response || !response.data) {
       notifyError([Messages.error, Messages.api.getOrgFailed]);
-      console.error(response);
       return;
     }
 

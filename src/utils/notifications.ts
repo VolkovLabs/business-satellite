@@ -1,5 +1,6 @@
 import { AlertErrorPayload, AlertPayload, AppEvents } from '@grafana/data';
 import { getAppEvents } from '@grafana/runtime';
+import { errorLogger } from './logger';
 
 /**
  * Events
@@ -17,5 +18,5 @@ export const notifySuccess = (payload: AlertPayload) =>
  */
 export const notifyError = (payload: AlertErrorPayload) => {
   appEvents.publish({ type: AppEvents.alertError.name, payload });
-  console.error(payload);
+  errorLogger.log(payload);
 };

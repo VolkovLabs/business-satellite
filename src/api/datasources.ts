@@ -29,7 +29,6 @@ export class DataSources extends BaseApi {
      */
     if (!response || !response.data) {
       notifyError([Messages.error, Messages.api.getDataSourcesFailed]);
-      console.error(response);
       return [];
     }
 
