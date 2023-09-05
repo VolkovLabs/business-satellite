@@ -1,4 +1,5 @@
 import { DataSourceJsonData } from '@grafana/data';
+import { RequestMode } from '../constants';
 
 /**
  * JSON Options
@@ -10,6 +11,11 @@ export interface DataSourceOptions extends DataSourceJsonData {
    * @type {string}
    */
   url: string;
+
+  /**
+   * Request Mode
+   */
+  requestMode: RequestMode;
 }
 
 /**

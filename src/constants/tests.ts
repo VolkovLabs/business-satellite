@@ -5,6 +5,7 @@ export const TestIds = {
   configEditor: {
     fieldPassword: 'data-testid config-editor field-password',
     fieldUrl: 'data-testid config-editor field-url',
+    fieldRequestMode: 'config-editor field-request-mode',
   },
   queryEditor: {
     fieldAnnotationDashboardContainer: 'data-testid query-editor field-annotation-dashboard-container',

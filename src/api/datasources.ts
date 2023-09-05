@@ -14,6 +14,7 @@ export class DataSources extends BaseApi {
    * Get Data Sources
    */
   getAll = async (): Promise<DataSourceSettings[]> => {
+    console.log(this.api.instanceSettings);
     /**
      * Fetch
      */

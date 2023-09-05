@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback } from 'react';
-import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { FieldSet, InlineField, InlineFieldRow, Input } from '@grafana/ui';
-import { TestIds } from '../../constants';
+import { DataSourcePluginOptionsEditorProps, SelectableValue } from '@grafana/data';
+import { FieldSet, InlineField, InlineFieldRow, Input, Select } from '@grafana/ui';
+import { RequestMode, RequestModeOptions, TestIds } from '../../constants';
 import { DataSourceOptions, SecureJsonData } from '../../types';
 
 /**
@@ -13,6 +13,22 @@ interface Props extends DataSourcePluginOptionsEditorProps<DataSourceOptions, Se
  * Config Editor
  */
 export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
+  /**
+   * Request Mode Change
+   */
+  const onRequestModeChange = useCallback(
+    (event: SelectableValue<RequestMode>) => {
+      onOptionsChange({
+        ...options,
+        jsonData: {
+          ...options.jsonData,
+          requestMode: event.value || RequestMode.REMOTE,
+        },
+      });
+    },
+    [onOptionsChange, options]
+  );
+
   /**
    * API URL Change
    */
@@ -53,28 +69,43 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
   return (
     <FieldSet>
       <InlineFieldRow>
-        <InlineField label="Grafana URL" labelWidth={14} grow>
-          <Input
-            type="text"
-            placeholder="http://localhost:3000"
-            value={jsonData.url}
-            onChange={onUrlChange}
+        <InlineField label="Request Mode" labelWidth={14} grow>
+          <Select
+            value={jsonData.requestMode}
+            options={RequestModeOptions}
+            onChange={onRequestModeChange}
             data-testid={TestIds.configEditor.fieldUrl}
           />
         </InlineField>
       </InlineFieldRow>
 
-      <InlineFieldRow>
-        <InlineField label="Token" labelWidth={14} grow>
-          <Input
-            type="password"
-            placeholder={secureJsonFields?.token ? 'configured' : ''}
-            value={secureJsonData.token ?? ''}
-            onChange={onTokenChange}
-            data-testid={TestIds.configEditor.fieldPassword}
-          />
-        </InlineField>
-      </InlineFieldRow>
+      {jsonData.requestMode !== RequestMode.LOCAL && (
+        <>
+          <InlineFieldRow>
+            <InlineField label="Grafana URL" labelWidth={14} grow>
+              <Input
+                type="text"
+                placeholder="http://localhost:3000"
+                value={jsonData.url}
+                onChange={onUrlChange}
+                data-testid={TestIds.configEditor.fieldUrl}
+              />
+            </InlineField>
+          </InlineFieldRow>
+
+          <InlineFieldRow>
+            <InlineField label="Token" labelWidth={14} grow>
+              <Input
+                type="password"
+                placeholder={secureJsonFields?.token ? 'configured' : ''}
+                value={secureJsonData.token ?? ''}
+                onChange={onTokenChange}
+                data-testid={TestIds.configEditor.fieldPassword}
+              />
+            </InlineField>
+          </InlineFieldRow>
+        </>
+      )}
     </FieldSet>
   );
 };
