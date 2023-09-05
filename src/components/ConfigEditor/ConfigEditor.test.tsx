@@ -1,7 +1,8 @@
 import React from 'react';
 import { DataSourceSettings } from '@grafana/data';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { TestIds } from '../../constants';
+import { getJestSelectors } from '@volkovlabs/jest-selectors';
+import { RequestMode, TestIds } from '../../constants';
 import { DataSourceOptions } from '../../types';
 import { ConfigEditor } from './ConfigEditor';
 
@@ -42,6 +43,7 @@ const getOptions = ({
   ...overrideOptions,
   jsonData: {
     url: '',
+    requestMode: RequestMode.REMOTE,
     ...jsonData,
   },
   secureJsonData: {
@@ -56,8 +58,54 @@ const getOptions = ({
 describe('ConfigEditor', () => {
   const onChange = jest.fn();
 
+  /**
+   * Selectors
+   */
+  const getSelectors = getJestSelectors(TestIds.configEditor);
+  const selectors = getSelectors(screen);
+
   beforeEach(() => {
     onChange.mockReset();
+  });
+
+  describe('Request Mode', () => {
+    it('Should hide url and token if local mode enabled', async () => {
+      const options = getOptions({ jsonData: { url: 'http://localhost:3000', requestMode: RequestMode.REMOTE } });
+
+      const { rerender } = render(<ConfigEditor options={options} onOptionsChange={onChange} />);
+
+      const fieldRequestMode = selectors.fieldRequestMode();
+
+      expect(fieldRequestMode).toHaveValue(options.jsonData.requestMode);
+
+      const newValue = RequestMode.LOCAL;
+
+      await act(() => fireEvent.change(fieldRequestMode, { target: { value: newValue } }));
+
+      expect(onChange).toHaveBeenCalledWith({
+        ...options,
+        jsonData: {
+          ...options.jsonData,
+          requestMode: newValue,
+        },
+      });
+
+      /**
+       * Render with local mode
+       */
+      rerender(
+        <ConfigEditor
+          options={getOptions({ jsonData: { url: 'http://localhost:3000', requestMode: RequestMode.LOCAL } })}
+          onOptionsChange={onChange}
+        />
+      );
+
+      /**
+       * Url and Token should be hidden
+       */
+      expect(selectors.fieldUrl(true)).not.toBeInTheDocument();
+      expect(selectors.fieldToken(true)).not.toBeInTheDocument();
+    });
   });
 
   /**
@@ -69,7 +117,7 @@ describe('ConfigEditor', () => {
 
       render(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
-      const fieldUrl = screen.getByTestId(TestIds.configEditor.fieldUrl);
+      const fieldUrl = selectors.fieldUrl();
 
       expect(fieldUrl).toHaveValue(options.jsonData.url);
 
@@ -96,7 +144,7 @@ describe('ConfigEditor', () => {
 
       render(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
-      const fieldPassword = screen.getByTestId(TestIds.configEditor.fieldPassword);
+      const fieldPassword = selectors.fieldToken();
 
       expect(fieldPassword).toHaveValue(options.secureJsonData.token);
 
@@ -127,7 +175,7 @@ describe('ConfigEditor', () => {
         />
       );
 
-      const fieldPassword = screen.getByTestId(TestIds.configEditor.fieldPassword);
+      const fieldPassword = selectors.fieldToken();
 
       expect(fieldPassword).toHaveValue('');
     });
@@ -148,7 +196,7 @@ describe('ConfigEditor', () => {
         />
       );
 
-      const fieldPassword = screen.getByTestId(TestIds.configEditor.fieldPassword);
+      const fieldPassword = selectors.fieldToken();
 
       expect(fieldPassword).toHaveProperty('placeholder', 'configured');
     });

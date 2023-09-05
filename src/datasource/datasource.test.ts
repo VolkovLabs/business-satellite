@@ -1,15 +1,23 @@
 import { DataFrame, dateTime, OrgProps } from '@grafana/data';
-import { DataSourceTestStatus, Messages, RequestType } from '../constants';
-import { Health } from '../types';
+import { Observable } from 'rxjs';
+import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
+import { Health as HealthType } from '../types';
 import { DataSource } from './datasource';
+import { Health } from '../api/health';
 
 /**
  * Response
  */
 let frames: DataFrame = [] as any;
 const response: any = {};
-let getHealthResult: Health = { version: '1.0.0', commit: '', database: 'ok' };
+let getHealthResult: HealthType = { version: '1.0.0', commit: '', database: 'ok' };
 let getOrgResult: OrgProps = { id: 1, name: 'Test' };
+
+const getResponse = (response: any) =>
+  new Observable((subscriber) => {
+    subscriber.next(response);
+    subscriber.complete();
+  });
 
 /**
  * Api
@@ -35,14 +43,45 @@ const apiMock = {
 };
 
 jest.mock('../api', () => ({
-  Api: jest.fn().mockImplementation(() => apiMock),
+  Api: jest.fn().mockImplementation((api: any) => {
+    const health = new Health({ instanceSettings: api } as any);
+    return {
+      ...apiMock,
+      health: {
+        ...health,
+        getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+      },
+    };
+  }),
+}));
+
+/**
+ * Fetch request Mock
+ */
+let fetchRequestMock = jest.fn().mockImplementation(() => getResponse({}));
+
+/**
+ * Mock @grafana/runtime
+ */
+jest.mock('@grafana/runtime', () => ({
+  getBackendSrv: () => ({
+    fetch: fetchRequestMock,
+  }),
+  getAppEvents: () => ({
+    publish: jest.fn().mockImplementation(() => {}),
+  }),
 }));
 
 /**
  * Data Source
  */
 describe('DataSource', () => {
-  const instanceSettings: any = {};
+  const instanceSettings: any = {
+    jsonData: {
+      requestMode: RequestMode.REMOTE,
+    },
+    url: '/api/grapi',
+  };
   const dataSource = new DataSource(instanceSettings);
 
   /**
@@ -99,11 +138,22 @@ describe('DataSource', () => {
    */
   describe('testDatasource', () => {
     it('Should handle Success state', async () => {
+      fetchRequestMock.mockImplementationOnce(() =>
+        getResponse({
+          data: getHealthResult,
+        })
+      );
       const result = await dataSource.testDatasource();
+
       expect(result).toEqual({
         status: DataSourceTestStatus.SUCCESS,
         message: `${Messages.connectedToOrg} ${getOrgResult.name}. ${Messages.version} ${getHealthResult.version}`,
       });
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: instanceSettings.url + '/api/health',
+        })
+      );
     });
 
     it('Should handle Error state', async () => {
@@ -115,6 +165,23 @@ describe('DataSource', () => {
         status: DataSourceTestStatus.ERROR,
         message: Messages.connectionError,
       });
+    });
+
+    it('Should use local url', async () => {
+      const localDataSource = new DataSource({
+        jsonData: {
+          requestMode: RequestMode.LOCAL,
+          url: '',
+        },
+      } as any);
+
+      await localDataSource.testDatasource();
+
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: '/api/health',
+        })
+      );
     });
   });
 });

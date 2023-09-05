@@ -22,7 +22,7 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
         ...options,
         jsonData: {
           ...options.jsonData,
-          requestMode: event.value || RequestMode.REMOTE,
+          requestMode: event.value!,
         },
       });
     },
@@ -74,7 +74,7 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
             value={jsonData.requestMode}
             options={RequestModeOptions}
             onChange={onRequestModeChange}
-            data-testid={TestIds.configEditor.fieldUrl}
+            aria-label={TestIds.configEditor.fieldRequestMode}
           />
         </InlineField>
       </InlineFieldRow>
@@ -100,7 +100,7 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
                 placeholder={secureJsonFields?.token ? 'configured' : ''}
                 value={secureJsonData.token ?? ''}
                 onChange={onTokenChange}
-                data-testid={TestIds.configEditor.fieldPassword}
+                data-testid={TestIds.configEditor.fieldToken}
               />
             </InlineField>
           </InlineFieldRow>

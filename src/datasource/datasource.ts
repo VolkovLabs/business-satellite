@@ -29,7 +29,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     super(instanceSettings);
     this.api = new Api({
       ...instanceSettings,
-      url: instanceSettings.jsonData.requestMode === RequestMode.LOCAL ? '' : instanceSettings.jsonData.url,
+      url: instanceSettings.jsonData.requestMode === RequestMode.LOCAL ? '' : instanceSettings.url,
     });
     this.annotations = {};
     this.variables = new VariableSupport();

@@ -3,7 +3,7 @@
  */
 export const TestIds = {
   configEditor: {
-    fieldPassword: 'data-testid config-editor field-password',
+    fieldToken: 'data-testid config-editor field-token',
     fieldUrl: 'data-testid config-editor field-url',
     fieldRequestMode: 'config-editor field-request-mode',
   },
