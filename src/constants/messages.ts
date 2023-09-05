@@ -7,6 +7,7 @@ export const api = {
   getDataSourcesFailed: 'Get Data Sources: API Request failed. See Console for details.',
   getHealthFailed: 'Get Health: API Request failed. See Console for details.',
   getOrgFailed: 'Get Org: API Request failed. See Console for details.',
+  getUsersFailed: 'Get Users: API Request failed. See Console for details.',
 };
 
 /**
@@ -22,5 +23,6 @@ export const Messages = {
   requestDataSources: 'Returns data sources',
   requestHealth: 'Returns health information',
   requestNone: 'For internal API calls',
+  requestUsers: 'Returns all users',
   version: 'Version',
 };

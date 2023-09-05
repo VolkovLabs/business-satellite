@@ -4,3 +4,4 @@ export * from './auth-key';
 export * from './datasource';
 export * from './health';
 export * from './query';
+export * from './user';

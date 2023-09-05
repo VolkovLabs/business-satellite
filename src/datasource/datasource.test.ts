@@ -40,6 +40,9 @@ const apiMock = {
   provisioning: {
     getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   },
+  users: {
+    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  },
 };
 
 jest.mock('../api', () => ({
@@ -126,6 +129,14 @@ describe('DataSource', () => {
 
     it('Should return correct data for Health frame', async () => {
       const targets = [{ refId: 'A', requestType: RequestType.HEALTH }];
+
+      const response = (await dataSource.query({ targets, range } as any)) as any;
+      const frames = response.data;
+      expect(frames.length).toEqual(0);
+    });
+
+    it('Should return correct data for Users frame', async () => {
+      const targets = [{ refId: 'A', requestType: RequestType.USERS }];
 
       const response = (await dataSource.query({ targets, range } as any)) as any;
       const frames = response.data;
