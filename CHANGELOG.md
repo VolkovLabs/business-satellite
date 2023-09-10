@@ -1,11 +1,13 @@
 # Change Log
 
-## 2.1.0 (IN PROGRESS)
+## 2.1.0 (2023-09-10)
 
 ### Features / Enhancements
 
 - Refactor API and increase test coverage (#50)
 - Update ESLint configuration (#50)
+- Add Local mode to access local instance (#51)
+- Add Organization Users (#52)
 
 ## 2.0.0 (2023-07-17)
 
