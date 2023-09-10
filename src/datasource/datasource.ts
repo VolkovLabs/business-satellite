@@ -7,7 +7,7 @@ import {
   MutableDataFrame,
 } from '@grafana/data';
 import { Api } from '../api';
-import { DataSourceTestStatus, Messages, RequestType } from '../constants';
+import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 import { VariableSupport } from './variable';
 
@@ -27,7 +27,10 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
    */
   constructor(instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {
     super(instanceSettings);
-    this.api = new Api(instanceSettings);
+    this.api = new Api({
+      ...instanceSettings,
+      url: instanceSettings.jsonData.requestMode === RequestMode.LOCAL ? '' : instanceSettings.url,
+    });
     this.annotations = {};
     this.variables = new VariableSupport();
   }
