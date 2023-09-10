@@ -70,7 +70,7 @@ export class Org extends BaseApi {
     }
 
     const frame = convertToFrame<OrgUser>({
-      name: RequestType.GET_ORG_USERS,
+      name: RequestType.ORG_USERS,
       refId: query.refId,
       fields: getFieldsForItem(items[0]),
       items,

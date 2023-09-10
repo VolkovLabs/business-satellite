@@ -145,7 +145,7 @@ describe('Org Api', () => {
       },
     };
 
-    const query = { refId: 'A', requestType: RequestType.GET_ORG_USERS };
+    const query = { refId: 'A', requestType: RequestType.ORG_USERS };
 
     it('Should make getUsers request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));

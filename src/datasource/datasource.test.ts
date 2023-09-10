@@ -137,7 +137,7 @@ describe('DataSource', () => {
     });
 
     it('Should return correct data for Org Users frame', async () => {
-      const targets = [{ refId: 'A', requestType: RequestType.GET_ORG_USERS }];
+      const targets = [{ refId: 'A', requestType: RequestType.ORG_USERS }];
 
       const response = (await dataSource.query({ targets, range } as any)) as any;
       const frames = response.data;
