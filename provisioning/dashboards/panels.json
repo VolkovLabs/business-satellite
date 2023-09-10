@@ -69,6 +69,7 @@
       },
       "id": 6,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -77,7 +78,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "annotationDashboard": "",
@@ -140,7 +141,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "annotationDashboard": "",
@@ -204,7 +205,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "datasource": {
@@ -260,6 +261,7 @@
       },
       "id": 3,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -268,7 +270,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "datasource": {
@@ -327,13 +329,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 24,
         "x": 0,
         "y": 19
       },
       "id": 8,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -342,7 +345,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "annotationDashboard": "",
@@ -361,6 +364,78 @@
         }
       ],
       "title": "Alert Rules",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "volkovlabs-grapi-datasource",
+        "uid": "grapi"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "annotationDashboard": "",
+          "annotationLimit": 100,
+          "annotationNewState": "",
+          "annotationPattern": "",
+          "annotationPrevState": "",
+          "annotationRange": "",
+          "annotationType": "",
+          "datasource": {
+            "type": "volkovlabs-grapi-datasource",
+            "uid": "grapi"
+          },
+          "refId": "A",
+          "requestType": "orgUsers"
+        }
+      ],
+      "title": "Users",
       "type": "table"
     }
   ],
