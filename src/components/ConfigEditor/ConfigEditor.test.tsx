@@ -70,7 +70,7 @@ describe('ConfigEditor', () => {
 
   describe('Request Mode', () => {
     it('Should hide url and token if local mode enabled', async () => {
-      const options = getOptions({ jsonData: { url: 'http://localhost:3000', requestMode: RequestMode.REMOTE } });
+      const options = getOptions({ jsonData: { url: 'http://localhost:3000' } });
 
       const { rerender } = render(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
@@ -92,7 +92,7 @@ describe('ConfigEditor', () => {
        */
       rerender(
         <ConfigEditor
-          options={getOptions({ jsonData: { url: 'http://localhost:3000', requestMode: RequestMode.LOCAL } })}
+          options={getOptions({ jsonData: { url: 'http://localhost:3000', requestMode: newValue } })}
           onOptionsChange={onChange}
         />
       );

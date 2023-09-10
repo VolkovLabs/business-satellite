@@ -66,6 +66,13 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
   const { jsonData, secureJsonFields } = options;
   const secureJsonData = (options.secureJsonData || {}) as SecureJsonData;
 
+  /**
+   * Set default mode as Remote
+   */
+  if (!jsonData.requestMode) {
+    onRequestModeChange(RequestMode.REMOTE);
+  }
+
   return (
     <FieldSet>
       <InlineFieldRow>
@@ -74,7 +81,7 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
         </InlineField>
       </InlineFieldRow>
 
-      {jsonData.requestMode !== RequestMode.LOCAL && (
+      {jsonData.requestMode === RequestMode.REMOTE && (
         <>
           <InlineFieldRow>
             <InlineField label="Grafana URL" labelWidth={14} grow>
