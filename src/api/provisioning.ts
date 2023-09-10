@@ -3,7 +3,7 @@ import { FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages, RequestType } from '../constants';
 import { AlertRule, Query } from '../types';
-import { notifyError } from '../utils';
+import { convertToFrame, notifyError } from '../utils';
 import { BaseApi } from './base';
 
 /**
@@ -18,7 +18,7 @@ export class Provisioning extends BaseApi {
      * Fetch
      */
     const response = await lastValueFrom(
-      getBackendSrv().fetch({
+      getBackendSrv().fetch<AlertRule[]>({
         method: 'GET',
         url: `${this.api.instanceSettings.url}/api/v1/provisioning/alert-rules`,
       })
@@ -32,7 +32,7 @@ export class Provisioning extends BaseApi {
       return [];
     }
 
-    return response.data as AlertRule[];
+    return response.data;
   };
 
   /**
@@ -47,64 +47,57 @@ export class Provisioning extends BaseApi {
     /**
      * Create frame
      */
-    const frame = new MutableDataFrame({
+    const frame = convertToFrame<AlertRule>({
       name: RequestType.ALERT_RULES,
       refId: query.refId,
       fields: [
         {
           name: 'Id',
           type: FieldType.number,
+          getValue: (item) => item.id,
         },
         {
           name: 'UID',
           type: FieldType.string,
+          getValue: (item) => item.uid,
         },
         {
           name: 'Org Id',
           type: FieldType.number,
+          getValue: (item) => item.orgID,
         },
         {
           name: 'Rule Group',
           type: FieldType.string,
+          getValue: (item) => item.ruleGroup,
         },
         {
           name: 'Title',
           type: FieldType.string,
+          getValue: (item) => item.title,
         },
         {
           name: 'Updated',
           type: FieldType.time,
+          getValue: (item) => item.updated,
         },
         {
           name: 'Folder UID',
           type: FieldType.string,
+          getValue: (item) => item.folderUID,
         },
         {
           name: 'Paused',
           type: FieldType.boolean,
+          getValue: (item) => item.isPaused,
         },
         {
           name: 'Evaluate For',
           type: FieldType.string,
+          getValue: (item) => item.for,
         },
       ],
-    });
-
-    /**
-     * Add Data
-     */
-    rules.forEach((rule) => {
-      frame.appendRow([
-        rule.id,
-        rule.uid,
-        rule.orgID,
-        rule.ruleGroup,
-        rule.title,
-        rule.updated,
-        rule.folderUID,
-        rule.isPaused,
-        rule.for,
-      ]);
+      items: rules,
     });
 
     return [frame];

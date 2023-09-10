@@ -65,6 +65,9 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
           case RequestType.HEALTH:
             frames = await this.api.health.getFrame(target);
             break;
+          case RequestType.ORG_USERS:
+            frames = await this.api.org.getUsersFrame(target);
+            break;
         }
 
         if (!frames || !frames.length) {

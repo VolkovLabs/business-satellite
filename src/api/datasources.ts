@@ -3,7 +3,7 @@ import { DataSourceSettings, FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages, RequestType } from '../constants';
 import { Query } from '../types';
-import { notifyError } from '../utils';
+import { convertToFrame, notifyError } from '../utils';
 import { BaseApi } from './base';
 
 /**
@@ -18,7 +18,7 @@ export class DataSources extends BaseApi {
      * Fetch
      */
     const response = await lastValueFrom(
-      getBackendSrv().fetch({
+      getBackendSrv().fetch<DataSourceSettings[]>({
         method: 'GET',
         url: `${this.api.instanceSettings.url}/api/datasources`,
       })
@@ -32,7 +32,7 @@ export class DataSources extends BaseApi {
       return [];
     }
 
-    return response.data as DataSourceSettings[];
+    return response.data;
   };
 
   /**
@@ -45,76 +45,69 @@ export class DataSources extends BaseApi {
     }
 
     /**
-     * Create frame
+     * Create Frame
      */
-    const frame = new MutableDataFrame({
+    const frame = convertToFrame<DataSourceSettings>({
       name: RequestType.DATASOURCES,
       refId: query.refId,
       fields: [
         {
           name: 'Id',
           type: FieldType.number,
+          getValue: (item) => item.id,
         },
         {
           name: 'Org Id',
           type: FieldType.number,
+          getValue: (item) => item.orgId,
         },
         {
           name: 'UID',
           type: FieldType.string,
+          getValue: (item) => item.uid,
         },
         {
           name: 'Name',
           type: FieldType.string,
+          getValue: (item) => item.name,
         },
         {
           name: 'Type',
           type: FieldType.string,
+          getValue: (item) => item.type,
         },
         {
           name: 'Type Logo URL',
           type: FieldType.string,
+          getValue: (item) => item.typeLogoUrl,
         },
         {
           name: 'Type Name',
           type: FieldType.string,
+          getValue: (item) => item.typeName,
         },
         {
           name: 'Is Default',
           type: FieldType.boolean,
+          getValue: (item) => item.isDefault,
         },
         {
           name: 'Read Only',
           type: FieldType.boolean,
+          getValue: (item) => item.readOnly,
         },
         {
           name: 'URL',
           type: FieldType.string,
+          getValue: (item) => item.url,
         },
         {
           name: 'User',
           type: FieldType.string,
+          getValue: (item) => item.user,
         },
       ],
-    });
-
-    /**
-     * Add Data
-     */
-    datasources.forEach((datasource) => {
-      frame.appendRow([
-        datasource.id,
-        datasource.orgId,
-        datasource.uid,
-        datasource.name,
-        datasource.type,
-        datasource.typeLogoUrl,
-        datasource.typeName,
-        datasource.isDefault,
-        datasource.readOnly,
-        datasource.url,
-        datasource.user,
-      ]);
+      items: datasources,
     });
 
     return [frame];

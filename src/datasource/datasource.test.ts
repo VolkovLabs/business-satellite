@@ -29,6 +29,7 @@ const apiMock = {
   },
   org: {
     get: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
+    getUsersFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   },
   datasources: {
     getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
@@ -39,6 +40,9 @@ const apiMock = {
   },
   provisioning: {
     getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  },
+  users: {
+    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
   },
 };
 
@@ -126,6 +130,14 @@ describe('DataSource', () => {
 
     it('Should return correct data for Health frame', async () => {
       const targets = [{ refId: 'A', requestType: RequestType.HEALTH }];
+
+      const response = (await dataSource.query({ targets, range } as any)) as any;
+      const frames = response.data;
+      expect(frames.length).toEqual(0);
+    });
+
+    it('Should return correct data for Org Users frame', async () => {
+      const targets = [{ refId: 'A', requestType: RequestType.ORG_USERS }];
 
       const response = (await dataSource.query({ targets, range } as any)) as any;
       const frames = response.data;

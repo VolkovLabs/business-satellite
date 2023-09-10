@@ -3,7 +3,7 @@ import { FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages, RequestType } from '../constants';
 import { Health as HealthType, Query } from '../types';
-import { notifyError } from '../utils';
+import { convertToFrame, notifyError } from '../utils';
 import { BaseApi } from './base';
 
 /**
@@ -15,7 +15,7 @@ export class Health extends BaseApi {
    */
   get = async (): Promise<HealthType | undefined> => {
     const response = await lastValueFrom(
-      getBackendSrv().fetch({
+      getBackendSrv().fetch<HealthType>({
         method: 'GET',
         url: `${this.api.instanceSettings.url}/api/health`,
       })
@@ -32,7 +32,7 @@ export class Health extends BaseApi {
     /**
      * Data received
      */
-    return response.data as HealthType;
+    return response.data;
   };
 
   /**
@@ -45,31 +45,30 @@ export class Health extends BaseApi {
     }
 
     /**
-     * Create frame
+     * Create Frame
      */
-    const frame = new MutableDataFrame({
+    const frame = convertToFrame<HealthType>({
       name: RequestType.HEALTH,
       refId: query.refId,
       fields: [
         {
           name: 'Commit',
           type: FieldType.string,
+          getValue: (item) => item.commit,
         },
         {
           name: 'Database',
           type: FieldType.string,
+          getValue: (item) => item.database,
         },
         {
           name: 'Version',
           type: FieldType.string,
+          getValue: (item) => item.version,
         },
       ],
+      items: [health],
     });
-
-    /**
-     * Add Data
-     */
-    frame.appendRow([health.commit, health.database, health.version]);
 
     return [frame];
   };
