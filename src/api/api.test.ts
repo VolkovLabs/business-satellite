@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { Api } from './api';
-import { getHealth } from './health';
 
 /**
  * Response
@@ -72,15 +71,14 @@ describe('Api', () => {
 
     it('Should make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getHealth(api);
+      let result = await api.health.get();
       expect(result).toBeTruthy();
     });
 
     it('Should handle getHealth request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse({ ...response, data: '' }));
-      jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await getHealth(api);
+      let result = await api.health.get();
       expect(result).toBeFalsy();
     });
   });

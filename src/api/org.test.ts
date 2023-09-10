@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { Api } from './api';
-import { getOrg } from './org';
 
 /**
  * Response
@@ -39,9 +38,9 @@ jest.mock('@grafana/runtime', () => ({
 }));
 
 /**
- * API
+ * Org API
  */
-describe('Api', () => {
+describe('Org Api', () => {
   const instanceSettings: any = {};
 
   /**
@@ -87,15 +86,14 @@ describe('Api', () => {
 
     it('Should make getOrg request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await getOrg(api);
+      let result = await api.org.get();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getOrg request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
-      jest.spyOn(console, 'error').mockImplementation();
 
-      let result = await getOrg(api);
+      let result = await api.org.get();
       expect(result).toBeFalsy();
     });
 
@@ -103,7 +101,7 @@ describe('Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await getOrg(api);
+        let result = await api.org.get();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });

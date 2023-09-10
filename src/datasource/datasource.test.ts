@@ -14,16 +14,28 @@ let getOrgResult: OrgProps = { id: 1, name: 'Test' };
 /**
  * Api
  */
-const apiMock = {};
+const apiMock = {
+  health: {
+    get: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
+    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  },
+  org: {
+    get: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
+  },
+  datasources: {
+    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  },
+  annotations: {
+    getAll: jest.fn().mockImplementation(() => Promise.resolve(response)),
+    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  },
+  provisioning: {
+    getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+  },
+};
+
 jest.mock('../api', () => ({
   Api: jest.fn().mockImplementation(() => apiMock),
-  getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  getAnnotations: jest.fn().mockImplementation(() => Promise.resolve(response)),
-  getAnnotationsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  getDataSourcesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  getHealth: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
-  getHealthFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  getOrg: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
 }));
 
 /**

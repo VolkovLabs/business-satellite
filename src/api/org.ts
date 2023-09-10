@@ -3,30 +3,34 @@ import { OrgProps } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Messages } from '../constants';
 import { notifyError } from '../utils';
-import { Api } from './api';
+import { BaseApi } from './base';
 
 /**
- * Get Org
+ * Org Api
  */
-export const getOrg = async (api: Api): Promise<OrgProps | undefined> => {
-  const response = await lastValueFrom(
-    getBackendSrv().fetch({
-      method: 'GET',
-      url: `${api.instanceSettings.url}/api/org`,
-    })
-  );
-
+export class Org extends BaseApi {
   /**
-   * Check Response
+   * Get Org
    */
-  if (!response || !response.data) {
-    notifyError([Messages.error, Messages.api.getOrgFailed]);
-    console.error(response);
-    return;
-  }
+  get = async (): Promise<OrgProps | undefined> => {
+    const response = await lastValueFrom(
+      getBackendSrv().fetch({
+        method: 'GET',
+        url: `${this.api.instanceSettings.url}/api/org`,
+      })
+    );
 
-  /**
-   * Data received
-   */
-  return response.data as OrgProps;
-};
+    /**
+     * Check Response
+     */
+    if (!response || !response.data) {
+      notifyError([Messages.error, Messages.api.getOrgFailed]);
+      return;
+    }
+
+    /**
+     * Data received
+     */
+    return response.data as OrgProps;
+  };
+}

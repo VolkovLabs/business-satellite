@@ -6,15 +6,7 @@ import {
   DataSourceInstanceSettings,
   MutableDataFrame,
 } from '@grafana/data';
-import {
-  Api,
-  getAlertRulesFrame,
-  getAnnotationsFrame,
-  getDataSourcesFrame,
-  getHealth,
-  getHealthFrame,
-  getOrg,
-} from '../api';
+import { Api } from '../api';
 import { DataSourceTestStatus, Messages, RequestType } from '../constants';
 import { DataSourceOptions, Query } from '../types';
 import { VariableSupport } from './variable';
@@ -59,16 +51,16 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
          */
         switch (target.requestType) {
           case RequestType.ALERT_RULES:
-            frames = await getAlertRulesFrame(this.api, target);
+            frames = await this.api.provisioning.getAlertRulesFrame(target);
             break;
           case RequestType.ANNOTATIONS:
-            frames = await getAnnotationsFrame(this.api, target, range, dashboardUID, options.scopedVars);
+            frames = await this.api.annotations.getFrame(target, range, dashboardUID, options.scopedVars);
             break;
           case RequestType.DATASOURCES:
-            frames = await getDataSourcesFrame(this.api, target);
+            frames = await this.api.datasources.getFrame(target);
             break;
           case RequestType.HEALTH:
-            frames = await getHealthFrame(this.api, target);
+            frames = await this.api.health.getFrame(target);
             break;
         }
 
@@ -96,8 +88,8 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     /**
      * Check Health
      */
-    const health = await getHealth(this.api);
-    const org = await getOrg(this.api);
+    const health = await this.api.health.get();
+    const org = await this.api.org.get();
 
     /**
      * Connected
