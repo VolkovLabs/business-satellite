@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback } from 'react';
-import { DataSourcePluginOptionsEditorProps, SelectableValue } from '@grafana/data';
-import { FieldSet, InlineField, InlineFieldRow, Input, Select } from '@grafana/ui';
+import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
+import { FieldSet, InlineField, InlineFieldRow, Input, RadioButtonGroup } from '@grafana/ui';
 import { RequestMode, RequestModeOptions, TestIds } from '../../constants';
 import { DataSourceOptions, SecureJsonData } from '../../types';
 
@@ -17,12 +17,12 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
    * Request Mode Change
    */
   const onRequestModeChange = useCallback(
-    (event: SelectableValue<RequestMode>) => {
+    (value: RequestMode) => {
       onOptionsChange({
         ...options,
         jsonData: {
           ...options.jsonData,
-          requestMode: event.value!,
+          requestMode: value,
         },
       });
     },
@@ -69,13 +69,8 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
   return (
     <FieldSet>
       <InlineFieldRow>
-        <InlineField label="Request Mode" labelWidth={14} grow>
-          <Select
-            value={jsonData.requestMode}
-            options={RequestModeOptions}
-            onChange={onRequestModeChange}
-            aria-label={TestIds.configEditor.fieldRequestMode}
-          />
+        <InlineField label="Request Mode" labelWidth={14} grow data-testid={TestIds.configEditor.fieldRequestMode}>
+          <RadioButtonGroup value={jsonData.requestMode} options={RequestModeOptions} onChange={onRequestModeChange} />
         </InlineField>
       </InlineFieldRow>
 

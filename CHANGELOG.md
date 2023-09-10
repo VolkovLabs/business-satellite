@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.1.0 (IN PROGRESS)
+
+### Features / Enhancements
+
+- Refactor API and increase test coverage (#50)
+- Update ESLint configuration (#50)
+
 ## 2.0.0 (2023-07-17)
 
 ### Breaking changes
