@@ -1,4 +1,5 @@
 import { DataSourceInstanceSettings } from '@grafana/data';
+import { RequestType } from '../constants';
 import { DataSourceOptions } from '../types';
 import { Annotations } from './annotations';
 import { Provisioning } from './provisioning';
@@ -52,31 +53,47 @@ export class Api {
     org: FeatureApi<Org>;
   };
 
+  availableRequestTypes: RequestType[];
+
   /**
    * Constructor
    */
   constructor(public instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {
+    const requestTypes = [RequestType.HEALTH, RequestType.DATASOURCES, RequestType.ANNOTATIONS, RequestType.ORG_USERS];
+
+    if (instanceSettings.jsonData.targetVersion >= 10) {
+      requestTypes.push(RequestType.ALERT_RULES);
+    }
+
+    this.availableRequestTypes = requestTypes;
+
     this.features = {
       provisioning: {
-        getAlertRules: createFeatureMethod(this.all.provisioning.getAlertRules, true),
-        getAlertRulesFrame: createFeatureMethod(this.all.provisioning.getAlertRulesFrame, true),
+        getAlertRules: createFeatureMethod(
+          this.all.provisioning.getAlertRules,
+          instanceSettings.jsonData.targetVersion >= 10
+        ),
+        getAlertRulesFrame: createFeatureMethod(
+          this.all.provisioning.getAlertRulesFrame,
+          instanceSettings.jsonData.targetVersion >= 10
+        ),
       },
       annotations: {
-        getAll: createFeatureMethod(this.all.annotations.getAll, true),
-        getFrame: createFeatureMethod(this.all.annotations.getFrame, true),
+        getAll: createFeatureMethod(this.all.annotations.getAll),
+        getFrame: createFeatureMethod(this.all.annotations.getFrame),
       },
       datasources: {
-        getAll: createFeatureMethod(this.all.datasources.getAll, true),
-        getFrame: createFeatureMethod(this.all.datasources.getFrame, true),
+        getAll: createFeatureMethod(this.all.datasources.getAll),
+        getFrame: createFeatureMethod(this.all.datasources.getFrame),
       },
       health: {
-        get: createFeatureMethod(this.all.health.get, true),
-        getFrame: createFeatureMethod(this.all.health.getFrame, true),
+        get: createFeatureMethod(this.all.health.get),
+        getFrame: createFeatureMethod(this.all.health.getFrame),
       },
       org: {
-        get: createFeatureMethod(this.all.org.get, true),
-        getUsers: createFeatureMethod(this.all.org.getUsers, true),
-        getUsersFrame: createFeatureMethod(this.all.org.getUsersFrame, true),
+        get: createFeatureMethod(this.all.org.get),
+        getUsers: createFeatureMethod(this.all.org.getUsers),
+        getUsersFrame: createFeatureMethod(this.all.org.getUsersFrame),
       },
     };
   }

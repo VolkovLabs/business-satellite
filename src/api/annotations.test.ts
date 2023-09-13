@@ -59,7 +59,11 @@ const range = {
  * Annotations API
  */
 describe('Annotations Api', () => {
-  const instanceSettings: any = {};
+  const instanceSettings: any = {
+    jsonData: {
+      targetVersion: 10,
+    },
+  };
 
   /**
    * Api

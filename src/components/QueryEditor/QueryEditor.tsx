@@ -1,5 +1,5 @@
 import { defaults } from 'lodash';
-import React, { FormEvent, useCallback } from 'react';
+import React, { FormEvent, useCallback, useMemo } from 'react';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
 import {
@@ -27,7 +27,7 @@ type Props = QueryEditorProps<DataSource, Query, DataSourceOptions>;
 /**
  * Query Editor
  */
-export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQuery }) => {
+export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQuery, datasource }) => {
   /**
    * Request Type change
    */
@@ -122,6 +122,17 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   const query = defaults(rawQuery, DefaultQuery);
 
   /**
+   * Available Request Types
+   */
+  const availableRequestTypes = useMemo(() => {
+    return RequestTypeOptions.filter((option) =>
+      datasource.api.availableRequestTypes.some(
+        (supported) => supported === option.value || option.value === RequestType.NONE
+      )
+    );
+  }, [datasource.api.availableRequestTypes]);
+
+  /**
    * Render
    */
   return (
@@ -129,8 +140,8 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
       <InlineFieldRow>
         <InlineField grow label="Request" labelWidth={10}>
           <Select
-            options={RequestTypeOptions}
-            value={RequestTypeOptions.find((type) => type.value === query.requestType)}
+            options={availableRequestTypes}
+            value={query.requestType}
             onChange={onRequestTypeChange}
             aria-label={TestIds.queryEditor.fieldRequest}
           />

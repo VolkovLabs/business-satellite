@@ -13,37 +13,6 @@ import { Query } from '../../types';
 import { QueryEditor } from './QueryEditor';
 
 /**
- * Mock @grafana/ui
- */
-jest.mock('@grafana/ui', () => ({
-  ...jest.requireActual('@grafana/ui'),
-  /**
-   * Mock Select component
-   */
-  Select: jest.fn().mockImplementation(({ options, onChange, value, ...restProps }) => (
-    <select
-      onChange={(event: any) => {
-        if (onChange) {
-          onChange(options.find((option: any) => option.value === event.target.value));
-        }
-      }}
-      /**
-       * Fix jest warnings because null value.
-       * For Select component in @grafana/io should be used null to reset value.
-       */
-      value={value === null ? '' : value}
-      {...restProps}
-    >
-      {options.map(({ label, value }: any) => (
-        <option key={value} value={value}>
-          {label}
-        </option>
-      ))}
-    </select>
-  )),
-}));
-
-/**
  * Get Query with default values and ability to override
  *
  * @param overrideQuery
@@ -66,6 +35,12 @@ describe('QueryEditor', () => {
     onChange.mockReset();
   });
 
+  const datasource = {
+    api: {
+      availableRequestTypes: Object.values(RequestType),
+    },
+  };
+
   /**
    * Request Type
    */
@@ -74,7 +49,7 @@ describe('QueryEditor', () => {
       const query = getQuery({
         requestType: RequestType.ALERT_RULES,
       });
-      render(<QueryEditor datasource={[] as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />);
+      render(<QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />);
 
       const fieldRequest = screen.getByLabelText(TestIds.queryEditor.fieldRequest);
 
@@ -106,7 +81,9 @@ describe('QueryEditor', () => {
           requestType: RequestType.ANNOTATIONS,
         });
 
-        render(<QueryEditor datasource={[] as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />);
+        render(
+          <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
+        );
       });
 
       it('Should render and update annotation type', () => {
@@ -193,7 +170,9 @@ describe('QueryEditor', () => {
           annotationType: AnnotationType.ALERT,
         });
 
-        render(<QueryEditor datasource={[] as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />);
+        render(
+          <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
+        );
       });
 
       it('Should render and update annotation prev state', () => {
@@ -233,7 +212,7 @@ describe('QueryEditor', () => {
       it('Should not apply value if not mapped for annotation type', () => {
         render(
           <QueryEditor
-            datasource={[] as any}
+            datasource={datasource as any}
             query={getQuery({
               requestType: RequestType.ANNOTATIONS,
               annotationType: '123' as any,
@@ -251,7 +230,7 @@ describe('QueryEditor', () => {
       it('Should not apply value if not mapped for annotation dashboard', () => {
         render(
           <QueryEditor
-            datasource={[] as any}
+            datasource={datasource as any}
             query={getQuery({
               requestType: RequestType.ANNOTATIONS,
               annotationDashboard: '123' as any,
@@ -269,7 +248,7 @@ describe('QueryEditor', () => {
       it('Should not apply value if not mapped for annotation time range', () => {
         render(
           <QueryEditor
-            datasource={[] as any}
+            datasource={datasource as any}
             query={getQuery({
               requestType: RequestType.ANNOTATIONS,
               annotationRange: '123' as any,
@@ -287,7 +266,7 @@ describe('QueryEditor', () => {
       it('Should not apply value if not mapped for annotation prev state', () => {
         render(
           <QueryEditor
-            datasource={[] as any}
+            datasource={datasource as any}
             query={getQuery({
               requestType: RequestType.ANNOTATIONS,
               annotationType: AnnotationType.ALERT,
@@ -308,7 +287,7 @@ describe('QueryEditor', () => {
       it('Should not apply value if not mapped for annotation new state', () => {
         render(
           <QueryEditor
-            datasource={[] as any}
+            datasource={datasource as any}
             query={getQuery({
               requestType: RequestType.ANNOTATIONS,
               annotationType: AnnotationType.ALERT,
