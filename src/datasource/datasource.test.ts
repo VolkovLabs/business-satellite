@@ -51,9 +51,12 @@ jest.mock('../api', () => ({
     const health = new Health({ instanceSettings: api } as any);
     return {
       ...apiMock,
-      health: {
-        ...health,
-        getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+      features: {
+        ...apiMock,
+        health: {
+          ...health,
+          getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+        },
       },
     };
   }),

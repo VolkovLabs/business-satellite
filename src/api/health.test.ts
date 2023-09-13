@@ -82,14 +82,14 @@ describe('Health Api', () => {
 
     it('Should make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.health.get();
+      let result = await api.features.health.get();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      let result = await api.health.get();
+      let result = await api.features.health.get();
       expect(result).toBeFalsy();
     });
 
@@ -97,14 +97,14 @@ describe('Health Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await api.health.get();
+        let result = await api.features.health.get();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getHealthFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.health.getFrame(query);
+      let result = await api.features.health.getFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(3);
       expect(result[0].fields[0].values.toArray()).toEqual(['978237e7cb']);
@@ -114,7 +114,7 @@ describe('Health Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
       response.data = {} as any;
 
-      let result = await api.health.getFrame(query);
+      let result = await api.features.health.getFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

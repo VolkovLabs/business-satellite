@@ -123,7 +123,7 @@ describe('Annotations Api', () => {
 
     it('Should make getAnnotations request', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
-      let result = await api.annotations.getAll(query, range, '123', {});
+      let result = await api.features.annotations.getAll(query, range, '123', {});
 
       expect(fetchRequestMock).toHaveBeenCalledWith({
         method: 'GET',
@@ -137,7 +137,7 @@ describe('Annotations Api', () => {
 
     it('Should make getAnnotations request for alerts', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
-      let result = await api.annotations.getAll(
+      let result = await api.features.annotations.getAll(
         {
           ...query,
           annotationType: AnnotationType.ALERT,
@@ -178,7 +178,7 @@ describe('Annotations Api', () => {
         })
       );
 
-      let result = await api.annotations.getAll(
+      let result = await api.features.annotations.getAll(
         {
           ...query,
           annotationPattern: /name/g as any,
@@ -196,7 +196,7 @@ describe('Annotations Api', () => {
     it('Should not make getAnnotations request', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(undefined));
 
-      let result = await api.annotations.getAll(query, range, '', {});
+      let result = await api.features.annotations.getAll(query, range, '', {});
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -205,14 +205,14 @@ describe('Annotations Api', () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getErrorResponse(response));
 
       try {
-        let result = await api.annotations.getAll(query, range, '', {});
+        let result = await api.features.annotations.getAll(query, range, '', {});
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getAnnotationsFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
-      let result = await api.annotations.getFrame(query, range, '', {});
+      let result = await api.features.annotations.getFrame(query, range, '', {});
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(17);
       expect(result[0].fields[0].values.toArray()).toEqual([5]);
@@ -222,7 +222,7 @@ describe('Annotations Api', () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
       response.data = [];
 
-      let result = await api.annotations.getFrame(query, range, '', {});
+      let result = await api.features.annotations.getFrame(query, range, '', {});
       expect(result?.length).toEqual(0);
     });
   });

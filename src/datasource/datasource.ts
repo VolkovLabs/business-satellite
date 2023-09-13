@@ -29,6 +29,10 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     super(instanceSettings);
     this.api = new Api({
       ...instanceSettings,
+      jsonData: {
+        ...instanceSettings.jsonData,
+        targetVersion: 10,
+      },
       url: instanceSettings.jsonData.requestMode === RequestMode.LOCAL ? '' : instanceSettings.url,
     });
     this.annotations = {};
@@ -54,19 +58,19 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
          */
         switch (target.requestType) {
           case RequestType.ALERT_RULES:
-            frames = await this.api.provisioning.getAlertRulesFrame(target);
+            frames = await this.api.features.provisioning.getAlertRulesFrame(target);
             break;
           case RequestType.ANNOTATIONS:
-            frames = await this.api.annotations.getFrame(target, range, dashboardUID, options.scopedVars);
+            frames = await this.api.features.annotations.getFrame(target, range, dashboardUID, options.scopedVars);
             break;
           case RequestType.DATASOURCES:
-            frames = await this.api.datasources.getFrame(target);
+            frames = await this.api.features.datasources.getFrame(target);
             break;
           case RequestType.HEALTH:
-            frames = await this.api.health.getFrame(target);
+            frames = await this.api.features.health.getFrame(target);
             break;
           case RequestType.ORG_USERS:
-            frames = await this.api.org.getUsersFrame(target);
+            frames = await this.api.features.org.getUsersFrame(target);
             break;
         }
 
@@ -94,8 +98,8 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     /**
      * Check Health
      */
-    const health = await this.api.health.get();
-    const org = await this.api.org.get();
+    const health = await this.api.features.health.get();
+    const org = await this.api.features.org.get();
 
     /**
      * Connected

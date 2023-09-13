@@ -117,14 +117,14 @@ describe('Data Sources Api', () => {
 
     it('Should make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.datasources.getAll();
+      let result = await api.features.datasources.getAll();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      let result = await api.datasources.getAll();
+      let result = await api.features.datasources.getAll();
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -133,14 +133,14 @@ describe('Data Sources Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await api.datasources.getAll();
+        let result = await api.features.datasources.getAll();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getDataSourcesFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.datasources.getFrame(query);
+      let result = await api.features.datasources.getFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(11);
       expect(result[0].fields[0].values.toArray()).toEqual([1, 2]);
@@ -150,7 +150,7 @@ describe('Data Sources Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
       response.data = [];
 
-      let result = await api.datasources.getFrame(query);
+      let result = await api.features.datasources.getFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

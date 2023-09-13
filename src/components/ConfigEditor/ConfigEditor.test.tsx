@@ -44,6 +44,7 @@ const getOptions = ({
   jsonData: {
     url: '',
     requestMode: RequestMode.REMOTE,
+    targetVersion: 10,
     ...jsonData,
   },
   secureJsonData: {
