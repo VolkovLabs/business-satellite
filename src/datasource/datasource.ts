@@ -8,7 +8,7 @@ import {
 } from '@grafana/data';
 import { Api } from '../api';
 import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
-import { DataSourceOptions, Query } from '../types';
+import { DataSourceOptions, Health, Query } from '../types';
 import { VariableSupport } from './variable';
 
 /**
@@ -23,20 +23,62 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
   api: Api;
 
   /**
+   * Target Info
+   */
+  private targetInfo: { version: string } | undefined;
+
+  /**
+   * Get Target Promise
+   */
+  private getTargetPromise: Promise<[Health | undefined]> | null = null;
+
+  /**
    * Constructor
    */
-  constructor(instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {
+  constructor(private instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {
     super(instanceSettings);
     this.api = new Api({
       ...instanceSettings,
-      jsonData: {
-        ...instanceSettings.jsonData,
-        targetVersion: 10,
-      },
       url: instanceSettings.jsonData.requestMode === RequestMode.LOCAL ? '' : instanceSettings.url,
     });
     this.annotations = {};
     this.variables = new VariableSupport();
+  }
+
+  private async initApi() {
+    /**
+     * Get All Info for Initialization
+     */
+    this.getTargetPromise = Promise.all([this.api.features.health.get()]);
+
+    const [health] = await this.getTargetPromise;
+
+    if (!health) {
+      throw new Error('Unable to get Health data.');
+    }
+
+    /**
+     * Set Target Info
+     */
+    this.targetInfo = {
+      version: health.version,
+    };
+
+    /**
+     * Initialize API
+     */
+    this.api = new Api(
+      {
+        ...this.instanceSettings,
+        url: this.instanceSettings.jsonData.requestMode === RequestMode.LOCAL ? '' : this.instanceSettings.url,
+      },
+      this.targetInfo
+    );
+
+    /**
+     * Clear promise
+     */
+    this.getTargetPromise = null;
   }
 
   /**
@@ -45,6 +87,14 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
   async query(options: DataQueryRequest<Query>): Promise<DataQueryResponse> {
     const data: DataFrame[] = [];
     const { range, dashboardUID } = options;
+
+    if (!this.targetInfo) {
+      if (!this.getTargetPromise) {
+        await this.initApi();
+      } else {
+        await this.getTargetPromise;
+      }
+    }
 
     /**
      * Process targets

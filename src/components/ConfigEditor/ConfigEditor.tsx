@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { FieldSet, InlineField, InlineFieldRow, Input, RadioButtonGroup } from '@grafana/ui';
 import { RequestMode, RequestModeOptions, TestIds } from '../../constants';
@@ -69,9 +69,11 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
   /**
    * Set default mode as Remote
    */
-  if (!jsonData.requestMode) {
-    onRequestModeChange(RequestMode.REMOTE);
-  }
+  useEffect(() => {
+    if (!jsonData.requestMode) {
+      onRequestModeChange(RequestMode.REMOTE);
+    }
+  }, [jsonData.requestMode, onRequestModeChange]);
 
   return (
     <FieldSet>

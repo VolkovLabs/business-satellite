@@ -16,11 +16,6 @@ export interface DataSourceOptions extends DataSourceJsonData {
    * Request Mode
    */
   requestMode: RequestMode;
-
-  /**
-   * Target Version
-   */
-  targetVersion: number;
 }
 
 /**

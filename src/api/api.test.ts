@@ -33,11 +33,7 @@ jest.mock('@grafana/runtime', () => ({
  * API
  */
 describe('Api', () => {
-  const instanceSettings: any = {
-    jsonData: {
-      targetVersion: 10,
-    },
-  };
+  const instanceSettings: any = {};
 
   /**
    * Api

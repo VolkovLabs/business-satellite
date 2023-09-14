@@ -103,6 +103,14 @@ describe('DataSource', () => {
     },
   };
 
+  beforeAll(() => {
+    fetchRequestMock.mockImplementation(() =>
+      getResponse({
+        data: getHealthResult,
+      })
+    );
+  });
+
   /**
    * Query
    */

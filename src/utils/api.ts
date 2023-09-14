@@ -1,17 +1,22 @@
 /**
- * No Supported Method
+ * Create No Supported Method
  */
-const noSupportedMethod = () => Promise.reject(new Error('Feature is not available.'));
+const createNoSupportedMethod = (message: string) => () => Promise.reject(new Error(message));
 
 /**
  * Create Feature Method
  * @param method
  * @param isEnabled
+ * @param noSupportedMessage
  */
-export const createFeatureMethod = <TMethod>(method: TMethod, isEnabled = true): TMethod => {
+export const createFeatureMethod = <TMethod>(
+  method: TMethod,
+  isEnabled = true,
+  noSupportedMessage = 'Feature is not available.'
+): TMethod => {
   if (isEnabled) {
     return method;
   }
 
-  return noSupportedMethod as TMethod;
+  return createNoSupportedMethod(noSupportedMessage) as TMethod;
 };

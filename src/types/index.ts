@@ -5,3 +5,4 @@ export * from './datasource';
 export * from './health';
 export * from './query';
 export * from './user';
+export * from './api';
