@@ -41,6 +41,27 @@ describe('QueryEditor', () => {
     },
   };
 
+  it('Should run query on mount', async () => {
+    const { rerender } = await act(async () =>
+      render(
+        <QueryEditor datasource={datasource as any} query={{} as any} onRunQuery={onRunQuery} onChange={onChange} />
+      )
+    );
+
+    expect(onRunQuery).toHaveBeenCalledTimes(1);
+
+    await act(async () =>
+      rerender(
+        <QueryEditor datasource={datasource as any} query={{} as any} onRunQuery={onRunQuery} onChange={onChange} />
+      )
+    );
+
+    /**
+     * Check if re-renders don't run query again
+     */
+    expect(onRunQuery).toHaveBeenCalledTimes(1);
+  });
+
   /**
    * Request Type
    */

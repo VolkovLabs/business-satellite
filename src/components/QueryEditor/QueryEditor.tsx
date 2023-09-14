@@ -1,5 +1,5 @@
 import { defaults } from 'lodash';
-import React, { FormEvent, useCallback, useMemo } from 'react';
+import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
 import {
@@ -28,6 +28,21 @@ type Props = QueryEditorProps<DataSource, Query, DataSourceOptions>;
  * Query Editor
  */
 export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQuery, datasource }) => {
+  /**
+   * Initialized
+   */
+  const [isInitialized, setInitialized] = useState(false);
+
+  /**
+   * Initialize Data Source
+   */
+  useEffect(() => {
+    if (!isInitialized) {
+      onRunQuery();
+      setInitialized(true);
+    }
+  }, [isInitialized, onRunQuery]);
+
   /**
    * Request Type change
    */
