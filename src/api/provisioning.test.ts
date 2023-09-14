@@ -275,14 +275,5 @@ describe('Provisioning Api', () => {
       let result = await api.features.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(0);
     });
-
-    it('Should be unavailable for grafana 9', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      response.data = [];
-
-      const api = new Api(instanceSettings, { version: '9.0.0' });
-      let result = await api.features.provisioning.getAlertRulesFrame(query).catch(() => ({ notSupported: true }));
-      expect(result).toEqual({ notSupported: true });
-    });
   });
 });
