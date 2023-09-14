@@ -45,6 +45,10 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     this.variables = new VariableSupport();
   }
 
+  /**
+   * Api Initialization
+   * @private
+   */
   private async initApi() {
     /**
      * Get All Info for Initialization
@@ -88,6 +92,9 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     const data: DataFrame[] = [];
     const { range, dashboardUID } = options;
 
+    /**
+     * Once Initialize Api
+     */
     if (!this.targetInfo) {
       if (!this.getTargetPromise) {
         await this.initApi();
