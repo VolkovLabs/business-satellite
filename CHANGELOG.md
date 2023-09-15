@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.2.0 (IN PROGRESS)
+
+### Features / Enhancements
+
+- Move API methods under feature flag to support various Grafana versions (#53)
+
 ## 2.1.0 (2023-09-10)
 
 ### Features / Enhancements
