@@ -176,6 +176,10 @@ export class Annotations extends BaseApi {
         name: 'Labels',
         type: FieldType.string,
       },
+      {
+        name: 'Values',
+        type: FieldType.string,
+      },
     ];
 
     /**
@@ -215,7 +219,8 @@ export class Annotations extends BaseApi {
      */
     annotations.forEach((annotation) => {
       let formattedLabels = '{}';
-      const text = annotation.text?.match(/{([^}]+)}/);
+      let formattedValues = '';
+      const text = annotation.text?.match(/{([^}]+)} - ([^}]+)/);
 
       /**
        * Parse Labels
@@ -236,6 +241,13 @@ export class Annotations extends BaseApi {
         formattedLabels = formatLabels(labels);
       }
 
+      /**
+       * Parse Values
+       */
+      if (text?.length && text[2]) {
+        formattedValues = text[2];
+      }
+
       const row = [
         annotation.id,
         annotation.alertId,
@@ -252,6 +264,7 @@ export class Annotations extends BaseApi {
         annotation.prevState,
         annotation.newState,
         formattedLabels,
+        formattedValues,
       ];
 
       if (query.annotationRules !== false && query.annotationType !== AnnotationType.ANNOTATION) {
