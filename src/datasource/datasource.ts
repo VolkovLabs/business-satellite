@@ -55,8 +55,10 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
      */
     this.getTargetPromise = Promise.all([this.api.features.health.get()]);
 
+    /**
+     * Get Health
+     */
     const [health] = await this.getTargetPromise;
-
     if (!health) {
       throw new Error('Unable to get Health data.');
     }

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { Api } from './api';
 import { RequestType } from '../constants';
+import { Api } from './api';
 
 /**
  * Response

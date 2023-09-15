@@ -1,10 +1,10 @@
-import { DataFrame, dateTime, OrgProps } from '@grafana/data';
 import { Observable } from 'rxjs';
+import { DataFrame, dateTime, OrgProps } from '@grafana/data';
+import { Api } from '../api';
+import { Health } from '../api/health';
 import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
 import { Health as HealthType } from '../types';
 import { DataSource } from './datasource';
-import { Api } from '../api';
-import { Health } from '../api/health';
 
 /**
  * Response

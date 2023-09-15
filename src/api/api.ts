@@ -1,13 +1,13 @@
-import { DataSourceInstanceSettings } from '@grafana/data';
 import { satisfies } from 'compare-versions';
+import { DataSourceInstanceSettings } from '@grafana/data';
 import { RequestType } from '../constants';
 import { DataSourceOptions, FeatureApi } from '../types';
+import { createFeatureMethod } from '../utils';
 import { Annotations } from './annotations';
-import { Provisioning } from './provisioning';
 import { DataSources } from './datasources';
 import { Health } from './health';
 import { Org } from './org';
-import { createFeatureMethod } from '../utils';
+import { Provisioning } from './provisioning';
 
 /**
  * API
@@ -75,7 +75,6 @@ export class Api {
      * Grafana Versions
      */
     const isGrafana10AndHigher = satisfies(version, '>=10.*');
-
     if (isGrafana10AndHigher) {
       requestTypes.push(RequestType.ALERT_RULES);
     }

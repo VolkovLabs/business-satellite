@@ -4,8 +4,8 @@ import { getBackendSrv } from '@grafana/runtime';
 import { Messages, RequestType } from '../constants';
 import { AlertRule, Query } from '../types';
 import { convertToFrame, notifyError } from '../utils';
-import { BaseApi } from './base';
 import { Api } from './api';
+import { BaseApi } from './base';
 
 /**
  * Provisioning Api
@@ -14,6 +14,7 @@ export class Provisioning extends BaseApi {
   constructor(api: Api) {
     super(api);
   }
+
   /**
    * Get Alert Rules
    */
