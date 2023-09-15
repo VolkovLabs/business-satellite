@@ -18,7 +18,7 @@ export enum RequestType {
  *
  * @type {SelectableValue[]}
  */
-export const RequestTypeOptions: SelectableValue[] = [
+export const RequestTypeOptions: Array<SelectableValue<RequestType>> = [
   {
     label: 'Alert Rules',
     description: Messages.requestAlertRules,

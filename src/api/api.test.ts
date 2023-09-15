@@ -71,14 +71,14 @@ describe('Api', () => {
 
     it('Should make getHealth request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.health.get();
+      let result = await api.features.health.get();
       expect(result).toBeTruthy();
     });
 
     it('Should handle getHealth request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse({ ...response, data: '' }));
 
-      let result = await api.health.get();
+      let result = await api.features.health.get();
       expect(result).toBeFalsy();
     });
   });

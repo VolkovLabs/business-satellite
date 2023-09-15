@@ -194,7 +194,7 @@ export class Annotations extends BaseApi {
      * Alert Rules
      */
     const alertRules: { [id: number]: AlertRule } = {};
-    const rules = await this.api.provisioning.getAlertRules().catch(() => []);
+    const rules = await this.api.features.provisioning.getAlertRules().catch(() => []);
     rules.forEach((rule) => (alertRules[rule.id] = rule));
 
     /**

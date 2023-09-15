@@ -8,7 +8,7 @@ import {
 } from '@grafana/data';
 import { Api } from '../api';
 import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
-import { DataSourceOptions, Query } from '../types';
+import { DataSourceOptions, Health, Query } from '../types';
 import { VariableSupport } from './variable';
 
 /**
@@ -23,9 +23,19 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
   api: Api;
 
   /**
+   * Target Info
+   */
+  private targetInfo: { version: string } | undefined;
+
+  /**
+   * Get Target Promise
+   */
+  private getTargetPromise: Promise<[Health | undefined]> | null = null;
+
+  /**
    * Constructor
    */
-  constructor(instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {
+  constructor(private instanceSettings: DataSourceInstanceSettings<DataSourceOptions>) {
     super(instanceSettings);
     this.api = new Api({
       ...instanceSettings,
@@ -36,11 +46,64 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
   }
 
   /**
+   * Api Initialization
+   * @private
+   */
+  private async initApi() {
+    /**
+     * Get All Info for Initialization
+     */
+    this.getTargetPromise = Promise.all([this.api.features.health.get()]);
+
+    /**
+     * Get Health
+     */
+    const [health] = await this.getTargetPromise;
+    if (!health) {
+      throw new Error('Unable to get Health data.');
+    }
+
+    /**
+     * Set Target Info
+     */
+    this.targetInfo = {
+      version: health.version,
+    };
+
+    /**
+     * Initialize API
+     */
+    this.api = new Api(
+      {
+        ...this.instanceSettings,
+        url: this.instanceSettings.jsonData.requestMode === RequestMode.LOCAL ? '' : this.instanceSettings.url,
+      },
+      this.targetInfo
+    );
+
+    /**
+     * Clear promise
+     */
+    this.getTargetPromise = null;
+  }
+
+  /**
    * Query
    */
   async query(options: DataQueryRequest<Query>): Promise<DataQueryResponse> {
     const data: DataFrame[] = [];
     const { range, dashboardUID } = options;
+
+    /**
+     * Once Initialize Api
+     */
+    if (!this.targetInfo) {
+      if (!this.getTargetPromise) {
+        await this.initApi();
+      } else {
+        await this.getTargetPromise;
+      }
+    }
 
     /**
      * Process targets
@@ -54,19 +117,19 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
          */
         switch (target.requestType) {
           case RequestType.ALERT_RULES:
-            frames = await this.api.provisioning.getAlertRulesFrame(target);
+            frames = await this.api.features.provisioning.getAlertRulesFrame(target);
             break;
           case RequestType.ANNOTATIONS:
-            frames = await this.api.annotations.getFrame(target, range, dashboardUID, options.scopedVars);
+            frames = await this.api.features.annotations.getFrame(target, range, dashboardUID, options.scopedVars);
             break;
           case RequestType.DATASOURCES:
-            frames = await this.api.datasources.getFrame(target);
+            frames = await this.api.features.datasources.getFrame(target);
             break;
           case RequestType.HEALTH:
-            frames = await this.api.health.getFrame(target);
+            frames = await this.api.features.health.getFrame(target);
             break;
           case RequestType.ORG_USERS:
-            frames = await this.api.org.getUsersFrame(target);
+            frames = await this.api.features.org.getUsersFrame(target);
             break;
         }
 
@@ -94,8 +157,8 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     /**
      * Check Health
      */
-    const health = await this.api.health.get();
-    const org = await this.api.org.get();
+    const health = await this.api.features.health.get();
+    const org = await this.api.features.org.get();
 
     /**
      * Connected

@@ -1,9 +1,10 @@
-import { DataFrame, dateTime, OrgProps } from '@grafana/data';
 import { Observable } from 'rxjs';
+import { DataFrame, dateTime, OrgProps } from '@grafana/data';
+import { Api } from '../api';
+import { Health } from '../api/health';
 import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
 import { Health as HealthType } from '../types';
 import { DataSource } from './datasource';
-import { Health } from '../api/health';
 
 /**
  * Response
@@ -22,40 +23,40 @@ const getResponse = (response: any) =>
 /**
  * Api
  */
-const apiMock = {
-  health: {
-    get: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
-    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  },
-  org: {
-    get: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
-    getUsersFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  },
-  datasources: {
-    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  },
-  annotations: {
-    getAll: jest.fn().mockImplementation(() => Promise.resolve(response)),
-    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  },
-  provisioning: {
-    getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  },
-  users: {
-    getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-  },
+const createApiMock = () => {
+  const all = {
+    health: {
+      get: jest.fn().mockImplementation(() => Promise.resolve(getHealthResult)),
+      getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
+    org: {
+      get: jest.fn().mockImplementation(() => Promise.resolve(getOrgResult)),
+      getUsersFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
+    datasources: {
+      getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
+    annotations: {
+      getAll: jest.fn().mockImplementation(() => Promise.resolve(response)),
+      getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
+    provisioning: {
+      getAlertRulesFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
+    users: {
+      getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
+  };
+
+  return {
+    all,
+    features: all,
+  };
 };
 
 jest.mock('../api', () => ({
-  Api: jest.fn().mockImplementation((api: any) => {
-    const health = new Health({ instanceSettings: api } as any);
-    return {
-      ...apiMock,
-      health: {
-        ...health,
-        getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
-      },
-    };
+  Api: jest.fn().mockImplementation(() => {
+    return createApiMock();
   }),
 }));
 
@@ -100,10 +101,49 @@ describe('DataSource', () => {
     },
   };
 
+  beforeAll(() => {
+    fetchRequestMock.mockImplementation(() =>
+      getResponse({
+        data: getHealthResult,
+      })
+    );
+  });
+
   /**
    * Query
    */
   describe('Query', () => {
+    describe('API initialization', () => {
+      it('Should request target info once', async () => {
+        const apiMock = createApiMock();
+        jest.mocked(Api).mockImplementationOnce(() => apiMock as any);
+
+        const targets = [{ refId: 'A', requestType: RequestType.ANNOTATIONS }];
+
+        const datasource = new DataSource(instanceSettings);
+        const promise1 = datasource.query({ targets, range } as any);
+        const promise2 = datasource.query({ targets, range } as any);
+
+        await promise1;
+        await promise2;
+        expect(apiMock.features.health.get).toHaveBeenCalledTimes(1);
+      });
+
+      it('Should not make query if initialization failed', async () => {
+        const apiMock = createApiMock();
+        jest.mocked(Api).mockImplementationOnce(() => apiMock as any);
+
+        apiMock.features.health.get.mockResolvedValue(null);
+
+        const datasource = new DataSource(instanceSettings);
+        const targets = [{ refId: 'A', requestType: RequestType.ANNOTATIONS }];
+
+        await datasource.query({ targets, range } as any).catch(() => null);
+
+        expect(apiMock.features.annotations.getFrame).not.toHaveBeenCalled();
+      });
+    });
+
     it('Should return correct data for MUTABLE frame', async () => {
       const targets = [{ refId: 'A', requestType: RequestType.ANNOTATIONS }];
 
@@ -161,11 +201,6 @@ describe('DataSource', () => {
         status: DataSourceTestStatus.SUCCESS,
         message: `${Messages.connectedToOrg} ${getOrgResult.name}. ${Messages.version} ${getHealthResult.version}`,
       });
-      expect(fetchRequestMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          url: instanceSettings.url + '/api/health',
-        })
-      );
     });
 
     it('Should handle Error state', async () => {
@@ -180,12 +215,28 @@ describe('DataSource', () => {
     });
 
     it('Should use local url', async () => {
-      const localDataSource = new DataSource({
+      const instanceSettings = {
         jsonData: {
           requestMode: RequestMode.LOCAL,
           url: '',
         },
-      } as any);
+      };
+
+      jest.mocked(Api).mockImplementationOnce((api: any) => {
+        const health = new Health({ instanceSettings: api } as any);
+        const apiMock = createApiMock();
+        return {
+          ...apiMock,
+          features: {
+            ...apiMock.features,
+            health: {
+              ...health,
+            },
+          },
+        } as any;
+      });
+
+      const localDataSource = new DataSource(instanceSettings as any);
 
       await localDataSource.testDatasource();
 
