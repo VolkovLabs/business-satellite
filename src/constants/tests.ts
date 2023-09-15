@@ -11,6 +11,8 @@ export const TestIds = {
   queryEditor: {
     fieldAnnotationDashboardContainer: 'data-testid query-editor field-annotation-dashboard-container',
     fieldAnnotationDashboardOption: (name: string) => `query-editor field-annotation-dashboard-option-${name}`,
+    fieldAnnotationRulesContainer: 'data-testid query-editor field-annotation-dashboard-rules',
+    fieldAnnotationRulesOption: (name: boolean) => `query-editor field-annotation-rules-option-${name}`,
     fieldAnnotationLimit: 'data-testid query-editor field-annotation-limit',
     fieldAnnotationNewStateContainer: 'data-testid query-editor field-annotation-new-state-container',
     fieldAnnotationPattern: 'data-testid query-editor field-annotation-pattern',

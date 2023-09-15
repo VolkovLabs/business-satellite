@@ -60,4 +60,11 @@ export interface Query extends DataQuery {
    * @type {AnnotationState}
    */
   annotationNewState?: AnnotationState;
+
+  /**
+   * Annotation Rules
+   *
+   * @type {boolean}
+   */
+  annotationRules?: boolean;
 }

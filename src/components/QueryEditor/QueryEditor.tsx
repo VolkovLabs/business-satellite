@@ -7,6 +7,7 @@ import {
   AnnotationDashboardOptions,
   AnnotationRange,
   AnnotationRangeOptions,
+  AnnotationRulesOptions,
   AnnotationState,
   AnnotationStateOptions,
   AnnotationType,
@@ -71,6 +72,17 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   const onAnnotationDashboardChange = useCallback(
     async (type: AnnotationDashboard) => {
       onChange({ ...rawQuery, annotationDashboard: type });
+      onRunQuery();
+    },
+    [onChange, onRunQuery, rawQuery]
+  );
+
+  /**
+   * Annotation Rules change
+   */
+  const onAnnotationRulesChange = useCallback(
+    async (type: boolean) => {
+      onChange({ ...rawQuery, annotationRules: type });
       onRunQuery();
     },
     [onChange, onRunQuery, rawQuery]
@@ -243,6 +255,23 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               />
             </InlineField>
           </InlineFieldRow>
+
+          {query.annotationType !== AnnotationType.ANNOTATION && (
+            <InlineFieldRow>
+              <InlineField
+                label="Add Alert fields"
+                tooltip="Add Alert Name and Alert UID from provisioned alert rules"
+                labelWidth={20}
+                data-testid={TestIds.queryEditor.fieldAnnotationRulesContainer}
+              >
+                <RadioButtonGroup
+                  options={AnnotationRulesOptions}
+                  value={AnnotationRulesOptions.find((type) => type.value === query.annotationRules)?.value}
+                  onChange={onAnnotationRulesChange}
+                />
+              </InlineField>
+            </InlineFieldRow>
+          )}
         </>
       )}
     </>

@@ -113,20 +113,83 @@ export class Annotations extends BaseApi {
     }
 
     /**
-     * Create frame
+     * Fields
      */
-    const frame = new MutableDataFrame({
-      name: RequestType.ANNOTATIONS,
-      refId: query.refId,
-      fields: [
-        {
-          name: 'Id',
-          type: FieldType.number,
-        },
-        {
-          name: 'Alert Id',
-          type: FieldType.number,
-        },
+    const fields = [
+      {
+        name: 'Id',
+        type: FieldType.number,
+      },
+      {
+        name: 'Alert Id',
+        type: FieldType.number,
+      },
+      {
+        name: 'Dashboard Id',
+        type: FieldType.number,
+      },
+      {
+        name: 'Dashboard UID',
+        type: FieldType.string,
+      },
+      {
+        name: 'Panel Id',
+        type: FieldType.number,
+      },
+      {
+        name: 'Time',
+        type: FieldType.time,
+      },
+      {
+        name: 'Time End',
+        type: FieldType.time,
+      },
+      {
+        name: 'Login',
+        type: FieldType.string,
+      },
+      {
+        name: 'Email',
+        type: FieldType.string,
+      },
+      {
+        name: 'Avatar URL',
+        type: FieldType.string,
+      },
+      {
+        name: 'Tags',
+        type: FieldType.string,
+      },
+      {
+        name: 'Text',
+        type: FieldType.string,
+      },
+      {
+        name: 'Prev State',
+        type: FieldType.string,
+      },
+      {
+        name: 'New State',
+        type: FieldType.string,
+      },
+      {
+        name: 'Labels',
+        type: FieldType.string,
+      },
+    ];
+
+    /**
+     * Alert Rules if enabled
+     */
+    const alertRules: { [id: number]: AlertRule } = {};
+    if (query.annotationRules !== false && query.annotationType !== AnnotationType.ANNOTATION) {
+      const rules = await this.api.features.provisioning.getAlertRules().catch(() => []);
+      rules.forEach((rule) => (alertRules[rule.id] = rule));
+
+      /**
+       * Add fields
+       */
+      fields.push(
         {
           name: 'Alert Name',
           type: FieldType.string,
@@ -134,68 +197,18 @@ export class Annotations extends BaseApi {
         {
           name: 'Alert UID',
           type: FieldType.string,
-        },
-        {
-          name: 'Dashboard Id',
-          type: FieldType.number,
-        },
-        {
-          name: 'Dashboard UID',
-          type: FieldType.string,
-        },
-        {
-          name: 'Panel Id',
-          type: FieldType.number,
-        },
-        {
-          name: 'Time',
-          type: FieldType.time,
-        },
-        {
-          name: 'Time End',
-          type: FieldType.time,
-        },
-        {
-          name: 'Login',
-          type: FieldType.string,
-        },
-        {
-          name: 'Email',
-          type: FieldType.string,
-        },
-        {
-          name: 'Avatar URL',
-          type: FieldType.string,
-        },
-        {
-          name: 'Tags',
-          type: FieldType.string,
-        },
-        {
-          name: 'Text',
-          type: FieldType.string,
-        },
-        {
-          name: 'Prev State',
-          type: FieldType.string,
-        },
-        {
-          name: 'New State',
-          type: FieldType.string,
-        },
-        {
-          name: 'Labels',
-          type: FieldType.string,
-        },
-      ],
-    });
+        }
+      );
+    }
 
     /**
-     * Alert Rules
+     * Create frame
      */
-    const alertRules: { [id: number]: AlertRule } = {};
-    const rules = await this.api.features.provisioning.getAlertRules().catch(() => []);
-    rules.forEach((rule) => (alertRules[rule.id] = rule));
+    const frame = new MutableDataFrame({
+      name: RequestType.ANNOTATIONS,
+      refId: query.refId,
+      fields,
+    });
 
     /**
      * Add Data
@@ -223,18 +236,9 @@ export class Annotations extends BaseApi {
         formattedLabels = formatLabels(labels);
       }
 
-      let alertTitle = '';
-      let alertUID = '';
-      if (annotation.alertId) {
-        alertTitle = alertRules[annotation.alertId] ? alertRules[annotation.alertId].title : '';
-        alertUID = alertRules[annotation.alertId] ? alertRules[annotation.alertId].uid : '';
-      }
-
       const row = [
         annotation.id,
         annotation.alertId,
-        alertTitle,
-        alertUID,
         annotation.dashboardId,
         annotation.dashboardUID,
         annotation.panelId,
@@ -249,6 +253,14 @@ export class Annotations extends BaseApi {
         annotation.newState,
         formattedLabels,
       ];
+
+      if (query.annotationRules !== false && query.annotationType !== AnnotationType.ANNOTATION) {
+        const alertTitle =
+          annotation.alertId && alertRules[annotation.alertId] ? alertRules[annotation.alertId].title : '';
+        const alertUID = annotation.alertId && alertRules[annotation.alertId] ? alertRules[annotation.alertId].uid : '';
+
+        row.push(alertTitle, alertUID);
+      }
 
       frame.appendRow(row);
     });

@@ -126,3 +126,21 @@ export const AnnotationStateOptions: SelectableValue[] = [
     ariaLabel: TestIds.queryEditor.fieldAnnotationStateOption(AnnotationState.ALERTING),
   },
 ];
+
+/**
+ * Annotations Alert Rules
+ *
+ * @type {SelectableValue[]}
+ */
+export const AnnotationRulesOptions: SelectableValue[] = [
+  {
+    label: 'Enabled',
+    value: true,
+    ariaLabel: TestIds.queryEditor.fieldAnnotationRulesOption(true),
+  },
+  {
+    label: 'Disabled',
+    value: false,
+    ariaLabel: TestIds.queryEditor.fieldAnnotationRulesOption(false),
+  },
+];
