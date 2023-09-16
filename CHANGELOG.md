@@ -5,6 +5,8 @@
 ### Features / Enhancements
 
 - Move API methods under feature flag to support various Grafana versions (#53)
+- Add an option to disable Alert Rules in Annotations (#55)
+- Add a values field from text to parse using transformations (#30)
 
 ## 2.1.0 (2023-09-10)
 
