@@ -133,6 +133,19 @@ describe('QueryEditor', () => {
         );
       });
 
+      it('Should render and update annotation rules', () => {
+        expect(screen.getByTestId(TestIds.queryEditor.fieldAnnotationRulesContainer)).toBeInTheDocument();
+
+        const newValue = false;
+        fireEvent.click(screen.getByLabelText(TestIds.queryEditor.fieldAnnotationRulesOption(newValue)));
+
+        expect(onChange).toHaveBeenCalledWith(
+          expect.objectContaining({
+            annotationRules: newValue,
+          })
+        );
+      });
+
       it('Should render and update annotation range', () => {
         expect(screen.getByTestId(TestIds.queryEditor.fieldAnnotationTimeRangeContainer)).toBeInTheDocument();
 
