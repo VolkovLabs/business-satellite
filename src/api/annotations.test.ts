@@ -214,7 +214,7 @@ describe('Annotations Api', () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
       let result = await api.features.annotations.getFrame(query, range, '', {});
       expect(result?.length).toEqual(1);
-      expect(result[0].fields.length).toEqual(15);
+      expect(result[0].fields.length).toEqual(16);
       expect(result[0].fields[0].values.toArray()).toEqual([5]);
     });
 
