@@ -266,7 +266,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               >
                 <RadioButtonGroup
                   options={AnnotationRulesOptions}
-                  value={AnnotationRulesOptions.find((type) => type.value === query.annotationRules)?.value}
+                  value={query.annotationRules}
                   onChange={onAnnotationRulesChange}
                 />
               </InlineField>

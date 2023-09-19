@@ -74,10 +74,10 @@ describe('ConfigEditor', () => {
 
       const { rerender } = render(<ConfigEditor options={options} onOptionsChange={onChange} />);
 
-      expect(screen.getByLabelText(TestIds.configEditor.fieldRequestModelOption(RequestMode.REMOTE))).toBeChecked();
+      expect(selectors.fieldRequestModelOption(false, RequestMode.REMOTE)).toBeChecked();
 
       const newValue = RequestMode.LOCAL;
-      fireEvent.click(screen.getByLabelText(TestIds.configEditor.fieldRequestModelOption(newValue)));
+      fireEvent.click(selectors.fieldRequestModelOption(false, newValue));
 
       expect(onChange).toHaveBeenCalledWith({
         ...options,
