@@ -111,8 +111,12 @@ describe('Health Api', () => {
     });
 
     it('Should handle getHealthFrame request with no data', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      response.data = {} as any;
+      fetchRequestMock = jest.fn().mockImplementation(() =>
+        getResponse({
+          ...response,
+          data: {},
+        })
+      );
 
       let result = await api.features.health.getFrame(query);
       expect(result?.length).toEqual(0);

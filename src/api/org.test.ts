@@ -178,8 +178,12 @@ describe('Org Api', () => {
     });
 
     it('Should handle getUsersFrame request with no data', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      response.data = [];
+      fetchRequestMock = jest.fn().mockImplementation(() =>
+        getResponse({
+          ...response,
+          data: [],
+        })
+      );
 
       let result = await api.features.org.getUsersFrame(query);
       expect(result?.length).toEqual(0);

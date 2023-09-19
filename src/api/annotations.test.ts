@@ -267,7 +267,7 @@ describe('Annotations Api', () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
 
       /**
-       * Enable getAlertRules feature
+       * Disable getAlertRules feature
        */
       const api = new Api(instanceSettings);
       api.features.provisioning.getAlertRules = createFeatureMethod(jest.fn(), false);
