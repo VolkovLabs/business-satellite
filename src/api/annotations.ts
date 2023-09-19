@@ -220,7 +220,7 @@ export class Annotations extends BaseApi {
     annotations.forEach((annotation) => {
       let formattedLabels = '{}';
       let formattedValues = '';
-      const text = annotation.text?.match(/{([^}]+)} - ([^}]+)/);
+      const text = annotation.text?.match(/{([^}]+)} - ([^}]*)/);
 
       /**
        * Parse Labels
