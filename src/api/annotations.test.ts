@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { dateTime } from '@grafana/data';
 import { AnnotationDashboard, AnnotationRange, AnnotationType, RequestType } from '../constants';
 import { Query } from '../types';
+import { createFeatureMethod } from '../utils';
 import { Api } from './api';
 
 /**
@@ -77,7 +78,7 @@ describe('Annotations Api', () => {
       data: [
         {
           id: 5,
-          alertId: 0,
+          alertId: 1,
           alertName: '',
           dashboardId: 1,
           dashboardUID: 'Rcb6nob4k',
@@ -89,7 +90,7 @@ describe('Annotations Api', () => {
           updated: 1677686602468,
           time: 1677686216907,
           timeEnd: 1677686216907,
-          text: '{[abc]}',
+          text: '{aaa} - {bbb}',
           tags: ['value'],
           login: 'admin',
           email: 'admin@localhost',
@@ -219,11 +220,70 @@ describe('Annotations Api', () => {
     });
 
     it('Should handle getAnnotationsFrame request with no data', async () => {
-      fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
-      response.data = [];
+      fetchRequestMock = jest.fn().mockImplementationOnce(() =>
+        getResponse({
+          ...response,
+          data: [],
+        })
+      );
 
       let result = await api.features.annotations.getFrame(query, range, '', {});
       expect(result?.length).toEqual(0);
+    });
+
+    it('Should add alert rules', async () => {
+      fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
+
+      /**
+       * Enable getAlertRules feature
+       */
+      const api = new Api(instanceSettings);
+      api.features.provisioning.getAlertRules = jest.fn(() =>
+        Promise.resolve([
+          {
+            id: 1,
+            title: 'alert',
+          },
+        ])
+      ) as any;
+
+      let result = await api.features.annotations.getFrame(
+        {
+          ...query,
+          annotationRules: true,
+          annotationType: AnnotationType.ALL,
+        },
+        range,
+        '',
+        {}
+      );
+
+      expect(api.features.provisioning.getAlertRules).toHaveBeenCalled();
+      expect(result?.length).toEqual(1);
+      expect(result[0].fields.find((field) => field.name === 'Alert Name')?.values).toEqual(['alert']);
+    });
+
+    it('Should return result if alert rules feature disabled', async () => {
+      fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
+
+      /**
+       * Enable getAlertRules feature
+       */
+      const api = new Api(instanceSettings);
+      api.features.provisioning.getAlertRules = createFeatureMethod(jest.fn(), false);
+
+      let result = await api.features.annotations.getFrame(
+        {
+          ...query,
+          annotationRules: true,
+          annotationType: AnnotationType.ALL,
+        },
+        range,
+        '',
+        {}
+      );
+
+      expect(result?.length).toEqual(1);
     });
   });
 });
