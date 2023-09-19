@@ -1,5 +1,6 @@
 import React from 'react';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import {
   AnnotationDashboard,
   AnnotationRange,
@@ -27,6 +28,12 @@ export const getQuery = (overrideQuery: Partial<Query> = {}): Query => ({
  * Query Editor
  */
 describe('QueryEditor', () => {
+  /**
+   * Selectors
+   */
+  const getSelectors = getJestSelectors(TestIds.queryEditor);
+  const selectors = getSelectors(screen);
+
   const onRunQuery = jest.fn();
   const onChange = jest.fn();
 
@@ -72,7 +79,7 @@ describe('QueryEditor', () => {
       });
       render(<QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />);
 
-      const fieldRequest = screen.getByLabelText(TestIds.queryEditor.fieldRequest);
+      const fieldRequest = selectors.fieldRequest();
 
       expect(fieldRequest).toHaveValue(RequestType.ALERT_RULES);
 
@@ -108,10 +115,10 @@ describe('QueryEditor', () => {
       });
 
       it('Should render and update annotation type', () => {
-        expect(screen.getByTestId(TestIds.queryEditor.fieldAnnotationTypeContainer)).toBeInTheDocument();
+        expect(selectors.fieldAnnotationTypeContainer()).toBeInTheDocument();
 
         const newValue = AnnotationType.ANNOTATION;
-        fireEvent.click(screen.getByLabelText(TestIds.queryEditor.fieldAnnotationTypeOption(newValue)));
+        fireEvent.click(selectors.fieldAnnotationTypeOption(false, newValue));
 
         expect(onChange).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -121,10 +128,10 @@ describe('QueryEditor', () => {
       });
 
       it('Should render and update annotation dashboard', () => {
-        expect(screen.getByTestId(TestIds.queryEditor.fieldAnnotationDashboardContainer)).toBeInTheDocument();
+        expect(selectors.fieldAnnotationDashboardContainer()).toBeInTheDocument();
 
         const newValue = AnnotationDashboard.THIS;
-        fireEvent.click(screen.getByLabelText(TestIds.queryEditor.fieldAnnotationDashboardOption(newValue)));
+        fireEvent.click(selectors.fieldAnnotationDashboardOption(false, newValue));
 
         expect(onChange).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -133,11 +140,24 @@ describe('QueryEditor', () => {
         );
       });
 
+      it('Should render and update annotation rules', () => {
+        expect(selectors.fieldAnnotationRulesContainer()).toBeInTheDocument();
+
+        const newValue = false;
+        fireEvent.click(selectors.fieldAnnotationRulesOption(false, newValue));
+
+        expect(onChange).toHaveBeenCalledWith(
+          expect.objectContaining({
+            annotationRules: newValue,
+          })
+        );
+      });
+
       it('Should render and update annotation range', () => {
-        expect(screen.getByTestId(TestIds.queryEditor.fieldAnnotationTimeRangeContainer)).toBeInTheDocument();
+        expect(selectors.fieldAnnotationTimeRangeContainer()).toBeInTheDocument();
 
         const newValue = AnnotationRange.SELECTED;
-        fireEvent.click(screen.getByLabelText(TestIds.queryEditor.fieldAnnotationTimeRangeOption(newValue)));
+        fireEvent.click(selectors.fieldAnnotationTimeRangeOption(false, newValue));
 
         expect(onChange).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -147,15 +167,15 @@ describe('QueryEditor', () => {
       });
 
       it('Should not render fields for Alert type', () => {
-        expect(screen.queryByTestId(TestIds.queryEditor.fieldAnnotationPrevStateContainer)).not.toBeInTheDocument();
-        expect(screen.queryByTestId(TestIds.queryEditor.fieldAnnotationNewStateContainer)).not.toBeInTheDocument();
+        expect(selectors.fieldAnnotationPrevStateContainer(true)).not.toBeInTheDocument();
+        expect(selectors.fieldAnnotationNewStateContainer(true)).not.toBeInTheDocument();
       });
 
       it('Should render and update annotation pattern', () => {
-        expect(screen.getByTestId(TestIds.queryEditor.fieldAnnotationPattern)).toBeInTheDocument();
+        expect(selectors.fieldAnnotationPattern()).toBeInTheDocument();
 
         const newValue = '123';
-        fireEvent.change(screen.getByTestId(TestIds.queryEditor.fieldAnnotationPattern), {
+        fireEvent.change(selectors.fieldAnnotationPattern(), {
           target: { value: newValue },
         });
 
@@ -167,10 +187,10 @@ describe('QueryEditor', () => {
       });
 
       it('Should render and update annotation limit', () => {
-        expect(screen.getByTestId(TestIds.queryEditor.fieldAnnotationLimit)).toBeInTheDocument();
+        expect(selectors.fieldAnnotationLimit()).toBeInTheDocument();
 
         const newValue = '123';
-        fireEvent.change(screen.getByTestId(TestIds.queryEditor.fieldAnnotationLimit), {
+        fireEvent.change(selectors.fieldAnnotationLimit(), {
           target: { value: newValue },
         });
 
@@ -197,13 +217,13 @@ describe('QueryEditor', () => {
       });
 
       it('Should render and update annotation prev state', () => {
-        const container = screen.getByTestId(TestIds.queryEditor.fieldAnnotationPrevStateContainer);
+        const container = selectors.fieldAnnotationPrevStateContainer();
         expect(container).toBeInTheDocument();
 
         const newValue = AnnotationState.PENDING;
-        const containerScreen = within(container);
+        const containerSelectors = getSelectors(within(container));
 
-        fireEvent.click(containerScreen.getByLabelText(TestIds.queryEditor.fieldAnnotationStateOption(newValue)));
+        fireEvent.click(containerSelectors.fieldAnnotationStateOption(false, newValue));
 
         expect(onChange).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -213,13 +233,13 @@ describe('QueryEditor', () => {
       });
 
       it('Should render and update annotation new state', () => {
-        const container = screen.getByTestId(TestIds.queryEditor.fieldAnnotationNewStateContainer);
+        const container = selectors.fieldAnnotationNewStateContainer();
         expect(container).toBeInTheDocument();
 
         const newValue = AnnotationState.NORMAL;
-        const containerScreen = within(container);
+        const containerSelectors = getSelectors(within(container));
 
-        fireEvent.click(containerScreen.getByLabelText(TestIds.queryEditor.fieldAnnotationStateOption(newValue)));
+        fireEvent.click(containerSelectors.fieldAnnotationStateOption(false, newValue));
 
         expect(onChange).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -244,7 +264,7 @@ describe('QueryEditor', () => {
         );
 
         Object.values(AnnotationType).forEach((value) => {
-          expect(screen.getByLabelText(TestIds.queryEditor.fieldAnnotationTypeOption(value))).not.toBeChecked();
+          expect(selectors.fieldAnnotationTypeOption(false, value)).not.toBeChecked();
         });
       });
 
@@ -262,7 +282,7 @@ describe('QueryEditor', () => {
         );
 
         Object.values(AnnotationDashboard).forEach((value) => {
-          expect(screen.getByLabelText(TestIds.queryEditor.fieldAnnotationDashboardOption(value))).not.toBeChecked();
+          expect(selectors.fieldAnnotationDashboardOption(false, value)).not.toBeChecked();
         });
       });
 
@@ -280,7 +300,7 @@ describe('QueryEditor', () => {
         );
 
         Object.values(AnnotationRange).forEach((value) => {
-          expect(screen.getByLabelText(TestIds.queryEditor.fieldAnnotationTimeRangeOption(value))).not.toBeChecked();
+          expect(selectors.fieldAnnotationTimeRangeOption(false, value)).not.toBeChecked();
         });
       });
 
@@ -298,10 +318,10 @@ describe('QueryEditor', () => {
           />
         );
 
-        const elementScreen = within(screen.getByTestId(TestIds.queryEditor.fieldAnnotationPrevStateContainer));
+        const elementSelectors = getSelectors(within(selectors.fieldAnnotationPrevStateContainer()));
 
         Object.values(AnnotationState).forEach((value) => {
-          expect(elementScreen.getByLabelText(TestIds.queryEditor.fieldAnnotationStateOption(value))).not.toBeChecked();
+          expect(elementSelectors.fieldAnnotationStateOption(false, value)).not.toBeChecked();
         });
       });
 
@@ -319,10 +339,10 @@ describe('QueryEditor', () => {
           />
         );
 
-        const elementScreen = within(screen.getByTestId(TestIds.queryEditor.fieldAnnotationNewStateContainer));
+        const elementSelectors = getSelectors(within(selectors.fieldAnnotationNewStateContainer()));
 
         Object.values(AnnotationState).forEach((value) => {
-          expect(elementScreen.getByLabelText(TestIds.queryEditor.fieldAnnotationStateOption(value))).not.toBeChecked();
+          expect(elementSelectors.fieldAnnotationStateOption(false, value)).not.toBeChecked();
         });
       });
     });

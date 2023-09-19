@@ -1,10 +1,12 @@
 # Change Log
 
-## 2.2.0 (IN PROGRESS)
+## 2.2.0 (2023-09-19)
 
 ### Features / Enhancements
 
 - Move API methods under feature flag to support various Grafana versions (#53)
+- Add an option to disable Alert Rules in Annotations (#55)
+- Add a values field from annotation text (#30)
 
 ## 2.1.0 (2023-09-10)
 

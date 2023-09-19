@@ -269,8 +269,12 @@ describe('Provisioning Api', () => {
     });
 
     it('Should handle getAlertRulesFrame request with no data', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      response.data = [];
+      fetchRequestMock = jest.fn().mockImplementation(() =>
+        getResponse({
+          ...response,
+          data: [],
+        })
+      );
 
       let result = await api.features.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(0);

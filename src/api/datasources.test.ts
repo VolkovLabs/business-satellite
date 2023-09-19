@@ -147,8 +147,12 @@ describe('Data Sources Api', () => {
     });
 
     it('Should handle getDataSourcesFrame request with no data', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      response.data = [];
+      fetchRequestMock = jest.fn().mockImplementation(() =>
+        getResponse({
+          ...response,
+          data: [],
+        })
+      );
 
       let result = await api.features.datasources.getFrame(query);
       expect(result?.length).toEqual(0);
