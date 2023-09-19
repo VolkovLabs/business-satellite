@@ -103,6 +103,42 @@ describe('ConfigEditor', () => {
       expect(selectors.fieldUrl(true)).not.toBeInTheDocument();
       expect(selectors.fieldToken(true)).not.toBeInTheDocument();
     });
+
+    it('Should set default requestMode if no initial', () => {
+      const defaultOptions = getOptions();
+      const options = {
+        ...defaultOptions,
+        jsonData: {
+          ...defaultOptions.jsonData,
+          requestMode: null,
+        },
+      };
+
+      render(<ConfigEditor options={options as any} onOptionsChange={onChange} />);
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          jsonData: expect.objectContaining({
+            requestMode: RequestMode.REMOTE,
+          }),
+        })
+      );
+    });
+
+    it('Should not override already exist value', () => {
+      const defaultOptions = getOptions();
+      const options = {
+        ...defaultOptions,
+        jsonData: {
+          ...defaultOptions.jsonData,
+          requestMode: RequestMode.LOCAL,
+        },
+      };
+
+      render(<ConfigEditor options={options as any} onOptionsChange={onChange} />);
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
   });
 
   /**
