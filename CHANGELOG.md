@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.3.0 (IN PROGRESS)
+
+### Features / Enhancements
+
+- Update Tutorial in README ()
+
 ## 2.2.0 (2023-09-19)
 
 ### Features / Enhancements
