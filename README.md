@@ -12,7 +12,7 @@
 
 The Grafana HTTP API Data Source for Grafana allows retrieving data from local and remote Grafana instances via HTTP API.
 
-[![Annotations and Alerts tutorial for Grafana with Timescale | How to and Demo to reveal the basics](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/tutorial.png)](https://youtu.be/bmOkirtC65w)
+[![Grafana HTTP API data source | Easy access to Grafana backend | Includes Annotations tutorial](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/overview.png)](https://youtu.be/0zibOEGqTJ8)
 
 ## Requirements
 
@@ -31,7 +31,7 @@ grafana-cli plugins install volkovlabs-grapi-datasource
 
 ### Authentication
 
-The Grafana HTTP API Data source requires Grafana URL and a Token or API key to establish the connection to the organization and get relevant data.
+The Grafana HTTP API Data source requires a Grafana URL and a Token or API key to establish the connection to the organization and get relevant data.
 
 ## Highlights
 
@@ -49,10 +49,9 @@ The Grafana HTTP API Data source requires Grafana URL and a Token or API key to 
 | [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release/)     | Stay up to date with the latest features and updates.        |
 
 ## Tutorial
+This is a step-by-step tutorial to demonstrate how to use the data source for Alerts and Annotations.
 
-This is an introductory video for anyone interested in Grafana Alerts and Annotations.
-
-[![Annotations, Alerts, and Annotation queries in Grafana explained | HTTP API Data Source](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/annotations.png)](https://youtu.be/4asWJ_Dhcmw)
+[![Annotations and Alerts tutorial for Grafana with Timescale | How to and Demo to reveal the basics](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/tutorial.png)](https://youtu.be/bmOkirtC65w)
 
 ## Feedback
 
