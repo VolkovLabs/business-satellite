@@ -14,7 +14,7 @@ services:
       - ./provisioning:/etc/grafana/provisioning
 
   timescale:
-    container_name: timescale-grapi
+    container_name: timescale
     image: timescale/timescaledb:latest-pg12
     restart: always
     environment:
@@ -25,7 +25,7 @@ services:
       - ./timescale:/docker-entrypoint-initdb.d
 
   server:
-    container_name: server-grapi
+    container_name: server
     build:
       context: ./timescale
     ports:
