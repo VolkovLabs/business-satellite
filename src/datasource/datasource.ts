@@ -6,6 +6,7 @@ import {
   DataSourceInstanceSettings,
   MutableDataFrame,
 } from '@grafana/data';
+
 import { Api } from '../api';
 import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
 import { DataSourceOptions, Health, Query } from '../types';

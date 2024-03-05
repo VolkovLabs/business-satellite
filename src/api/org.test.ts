@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+
 import { RequestType } from '../constants';
 import { Api } from './api';
 
@@ -87,14 +88,14 @@ describe('Org Api', () => {
 
     it('Should make getOrg request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.org.get();
+      const result = await api.features.org.get();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getOrg request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      let result = await api.features.org.get();
+      const result = await api.features.org.get();
       expect(result).toBeFalsy();
     });
 
@@ -102,7 +103,7 @@ describe('Org Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await api.features.org.get();
+        const result = await api.features.org.get();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
@@ -149,14 +150,14 @@ describe('Org Api', () => {
 
     it('Should make getUsers request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.org.getUsers();
+      const result = await api.features.org.getUsers();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getUsers request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      let result = await api.features.org.getUsers();
+      const result = await api.features.org.getUsers();
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -165,14 +166,14 @@ describe('Org Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await api.features.org.getUsers();
+        const result = await api.features.org.getUsers();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getUsersFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.org.getUsersFrame(query);
+      const result = await api.features.org.getUsersFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(10);
     });
@@ -185,7 +186,7 @@ describe('Org Api', () => {
         })
       );
 
-      let result = await api.features.org.getUsersFrame(query);
+      const result = await api.features.org.getUsersFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

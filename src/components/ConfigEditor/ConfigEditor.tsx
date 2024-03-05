@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { FieldSet, InlineField, InlineFieldRow, Input, RadioButtonGroup } from '@grafana/ui';
+import React, { ChangeEvent, useCallback, useEffect } from 'react';
+
 import { RequestMode, RequestModeOptions, TestIds } from '../../constants';
 import { DataSourceOptions, SecureJsonData } from '../../types';
 

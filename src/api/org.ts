@@ -1,6 +1,7 @@
-import { lastValueFrom } from 'rxjs';
 import { MutableDataFrame, OrgProps } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
+import { lastValueFrom } from 'rxjs';
+
 import { Messages, RequestType } from '../constants';
 import { OrgUser, Query } from '../types';
 import { convertToFrame, getFieldsForItem, notifyError } from '../utils';

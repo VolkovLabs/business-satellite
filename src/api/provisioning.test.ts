@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+
 import { RequestType } from '../constants';
 import { Api } from './api';
 
@@ -239,14 +240,14 @@ describe('Provisioning Api', () => {
 
     it('Should make getAlertRules request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.provisioning.getAlertRules();
+      const result = await api.features.provisioning.getAlertRules();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getAlertRules request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      let result = await api.features.provisioning.getAlertRules();
+      const result = await api.features.provisioning.getAlertRules();
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -255,14 +256,14 @@ describe('Provisioning Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
 
       try {
-        let result = await api.features.provisioning.getAlertRules();
+        const result = await api.features.provisioning.getAlertRules();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getAlertRulesFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.provisioning.getAlertRulesFrame(query);
+      const result = await api.features.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(9);
       expect(result[0].fields[0].values.toArray()).toEqual([1]);
@@ -276,7 +277,7 @@ describe('Provisioning Api', () => {
         })
       );
 
-      let result = await api.features.provisioning.getAlertRulesFrame(query);
+      const result = await api.features.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

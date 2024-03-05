@@ -1,4 +1,5 @@
 import { DataSourceJsonData } from '@grafana/data';
+
 import { RequestMode } from '../constants';
 
 /**

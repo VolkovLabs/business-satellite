@@ -1,6 +1,7 @@
-import { lastValueFrom } from 'rxjs';
 import { FieldType, formatLabels, Labels, MutableDataFrame, ScopedVars, TimeRange } from '@grafana/data';
 import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
+import { lastValueFrom } from 'rxjs';
+
 import { AnnotationDashboard, AnnotationRange, AnnotationType, Messages, RequestType } from '../constants';
 import { AlertRule, Annotation, Query } from '../types';
 import { notifyError } from '../utils';
@@ -19,7 +20,7 @@ export class Annotations extends BaseApi {
     dashboardUID: string | undefined,
     scopedVars: ScopedVars
   ): Promise<Annotation[]> => {
-    let params: Record<string, any> = {};
+    const params: Record<string, any> = {};
 
     /**
      * Time Range

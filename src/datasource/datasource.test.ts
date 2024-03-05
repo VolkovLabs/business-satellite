@@ -1,5 +1,6 @@
-import { Observable } from 'rxjs';
 import { DataFrame, dateTime, OrgProps } from '@grafana/data';
+import { Observable } from 'rxjs';
+
 import { Api } from '../api';
 import { Health } from '../api/health';
 import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
@@ -9,7 +10,7 @@ import { DataSource } from './datasource';
 /**
  * Response
  */
-let frames: DataFrame = [] as any;
+const frames: DataFrame = [] as any;
 const response: any = {};
 let getHealthResult: HealthType = { version: '1.0.0', commit: '', database: 'ok' };
 let getOrgResult: OrgProps = { id: 1, name: 'Test' };
@@ -63,7 +64,7 @@ jest.mock('../api', () => ({
 /**
  * Fetch request Mock
  */
-let fetchRequestMock = jest.fn().mockImplementation(() => getResponse({}));
+const fetchRequestMock = jest.fn().mockImplementation(() => getResponse({}));
 
 /**
  * Mock @grafana/runtime

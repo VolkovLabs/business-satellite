@@ -1,5 +1,6 @@
-import { Observable } from 'rxjs';
 import { dateTime } from '@grafana/data';
+import { Observable } from 'rxjs';
+
 import { AnnotationDashboard, AnnotationRange, AnnotationType, RequestType } from '../constants';
 import { Query } from '../types';
 import { createFeatureMethod } from '../utils';
@@ -124,7 +125,7 @@ describe('Annotations Api', () => {
 
     it('Should make getAnnotations request', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
-      let result = await api.features.annotations.getAll(query, range, '123', {});
+      const result = await api.features.annotations.getAll(query, range, '123', {});
 
       expect(fetchRequestMock).toHaveBeenCalledWith({
         method: 'GET',
@@ -138,7 +139,7 @@ describe('Annotations Api', () => {
 
     it('Should make getAnnotations request for alerts', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
-      let result = await api.features.annotations.getAll(
+      const result = await api.features.annotations.getAll(
         {
           ...query,
           annotationType: AnnotationType.ALERT,
@@ -179,7 +180,7 @@ describe('Annotations Api', () => {
         })
       );
 
-      let result = await api.features.annotations.getAll(
+      const result = await api.features.annotations.getAll(
         {
           ...query,
           annotationPattern: /name/g as any,
@@ -197,7 +198,7 @@ describe('Annotations Api', () => {
     it('Should not make getAnnotations request', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(undefined));
 
-      let result = await api.features.annotations.getAll(query, range, '', {});
+      const result = await api.features.annotations.getAll(query, range, '', {});
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -206,14 +207,14 @@ describe('Annotations Api', () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getErrorResponse(response));
 
       try {
-        let result = await api.features.annotations.getAll(query, range, '', {});
+        const result = await api.features.annotations.getAll(query, range, '', {});
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getAnnotationsFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
-      let result = await api.features.annotations.getFrame(query, range, '', {});
+      const result = await api.features.annotations.getFrame(query, range, '', {});
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(16);
       expect(result[0].fields[0].values.toArray()).toEqual([5]);
@@ -227,7 +228,7 @@ describe('Annotations Api', () => {
         })
       );
 
-      let result = await api.features.annotations.getFrame(query, range, '', {});
+      const result = await api.features.annotations.getFrame(query, range, '', {});
       expect(result?.length).toEqual(0);
     });
 
@@ -247,7 +248,7 @@ describe('Annotations Api', () => {
         ])
       ) as any;
 
-      let result = await api.features.annotations.getFrame(
+      const result = await api.features.annotations.getFrame(
         {
           ...query,
           annotationRules: true,
@@ -272,7 +273,7 @@ describe('Annotations Api', () => {
       const api = new Api(instanceSettings);
       api.features.provisioning.getAlertRules = createFeatureMethod(jest.fn(), false);
 
-      let result = await api.features.annotations.getFrame(
+      const result = await api.features.annotations.getFrame(
         {
           ...query,
           annotationRules: true,

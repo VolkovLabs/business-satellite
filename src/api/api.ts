@@ -1,5 +1,6 @@
-import { satisfies } from 'compare-versions';
 import { DataSourceInstanceSettings } from '@grafana/data';
+import { satisfies } from 'compare-versions';
+
 import { RequestType } from '../constants';
 import { DataSourceOptions, FeatureApi } from '../types';
 import { createFeatureMethod } from '../utils';

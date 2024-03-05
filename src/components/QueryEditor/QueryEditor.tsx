@@ -1,7 +1,8 @@
-import { defaults } from 'lodash';
-import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
+import { defaults } from 'lodash';
+import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+
 import {
   AnnotationDashboard,
   AnnotationDashboardOptions,
