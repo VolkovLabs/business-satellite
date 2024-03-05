@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 
 import { Api } from '../api';
 import { Health } from '../api/health';
-import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
-import { Health as HealthType } from '../types';
+import { MESSAGES } from '../constants';
+import { DataSourceTestStatus, Health as HealthType, RequestMode, RequestType } from '../types';
 import { DataSource } from './datasource';
 
 /**
@@ -56,6 +56,7 @@ const createApiMock = () => {
 };
 
 jest.mock('../api', () => ({
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   Api: jest.fn().mockImplementation(() => {
     return createApiMock();
   }),
@@ -200,7 +201,7 @@ describe('DataSource', () => {
 
       expect(result).toEqual({
         status: DataSourceTestStatus.SUCCESS,
-        message: `${Messages.connectedToOrg} ${getOrgResult.name}. ${Messages.version} ${getHealthResult.version}`,
+        message: `${MESSAGES.connectedToOrg} ${getOrgResult.name}. ${MESSAGES.version} ${getHealthResult.version}`,
       });
     });
 
@@ -211,7 +212,7 @@ describe('DataSource', () => {
       const result = await dataSource.testDatasource();
       expect(result).toEqual({
         status: DataSourceTestStatus.ERROR,
-        message: Messages.connectionError,
+        message: MESSAGES.connectionError,
       });
     });
 

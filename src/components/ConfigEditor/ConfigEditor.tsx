@@ -2,8 +2,8 @@ import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { FieldSet, InlineField, InlineFieldRow, Input, RadioButtonGroup } from '@grafana/ui';
 import React, { ChangeEvent, useCallback, useEffect } from 'react';
 
-import { RequestMode, RequestModeOptions, TestIds } from '../../constants';
-import { DataSourceOptions, SecureJsonData } from '../../types';
+import { REQUEST_MODE_OPTIONS, TEST_IDS } from '../../constants';
+import { DataSourceOptions, RequestMode, SecureJsonData } from '../../types';
 
 /**
  * Editor Properties
@@ -79,8 +79,12 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
   return (
     <FieldSet>
       <InlineFieldRow>
-        <InlineField label="Request Mode" labelWidth={14} grow data-testid={TestIds.configEditor.fieldRequestMode}>
-          <RadioButtonGroup value={jsonData.requestMode} options={RequestModeOptions} onChange={onRequestModeChange} />
+        <InlineField label="Request Mode" labelWidth={14} grow data-testid={TEST_IDS.configEditor.fieldRequestMode}>
+          <RadioButtonGroup
+            value={jsonData.requestMode}
+            options={REQUEST_MODE_OPTIONS}
+            onChange={onRequestModeChange}
+          />
         </InlineField>
       </InlineFieldRow>
 
@@ -93,7 +97,7 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
                 placeholder="http://localhost:3000"
                 value={jsonData.url}
                 onChange={onUrlChange}
-                data-testid={TestIds.configEditor.fieldUrl}
+                data-testid={TEST_IDS.configEditor.fieldUrl}
               />
             </InlineField>
           </InlineFieldRow>
@@ -105,7 +109,7 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
                 placeholder={secureJsonFields?.token ? 'configured' : ''}
                 value={secureJsonData.token ?? ''}
                 onChange={onTokenChange}
-                data-testid={TestIds.configEditor.fieldToken}
+                data-testid={TEST_IDS.configEditor.fieldToken}
               />
             </InlineField>
           </InlineFieldRow>

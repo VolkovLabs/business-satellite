@@ -1,83 +1,49 @@
 import { SelectableValue } from '@grafana/data';
 
-import { TestIds } from './tests';
+import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType } from '../types';
+import { TEST_IDS } from './tests';
 
 /**
- * Annotation Types
- */
-export enum AnnotationType {
-  ALL = '',
-  ANNOTATION = 'annotation',
-  ALERT = 'alert',
-}
-
-/**
- * Annotation Dashboard
- */
-export enum AnnotationDashboard {
-  ALL = '',
-  THIS = 'this',
-}
-
-/**
- * Annotation Range
- */
-export enum AnnotationRange {
-  NONE = '',
-  SELECTED = 'selected',
-}
-
-/**
- * Annotation State
- */
-export enum AnnotationState {
-  ALL = '',
-  NORMAL = 'Normal',
-  PENDING = 'Pending',
-  ALERTING = 'Alerting',
-}
-
-/**
- * Annotations Types
+ * Annotations Type Options
  *
  * @type {SelectableValue[]}
  */
-export const AnnotationTypeOptions: SelectableValue[] = [
+export const ANNOTATION_TYPE_OPTIONS: SelectableValue[] = [
   {
     label: 'All',
     value: AnnotationType.ALL,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationTypeOption(AnnotationType.ALL),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationTypeOption(AnnotationType.ALL),
   },
   {
     label: 'Annotation',
     value: AnnotationType.ANNOTATION,
     icon: 'comment-alt-message',
-    ariaLabel: TestIds.queryEditor.fieldAnnotationTypeOption(AnnotationType.ANNOTATION),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationTypeOption(AnnotationType.ANNOTATION),
   },
   {
     label: 'Alert',
     value: AnnotationType.ALERT,
     icon: 'bell',
-    ariaLabel: TestIds.queryEditor.fieldAnnotationTypeOption(AnnotationType.ALERT),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationTypeOption(AnnotationType.ALERT),
   },
 ];
 
 /**
- * Annotations Dashboard
+ * Annotations Dashboard Options
  *
  * @type {SelectableValue[]}
  */
-export const AnnotationDashboardOptions: SelectableValue[] = [
+export const ANNOTATION_DASHBOARD_OPTIONS: SelectableValue[] = [
   {
     label: 'All',
     value: AnnotationDashboard.ALL,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationDashboardOption(AnnotationDashboard.ALL),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationDashboardOption(AnnotationDashboard.ALL),
   },
   {
     label: 'This',
     value: AnnotationDashboard.THIS,
     icon: 'dashboard',
-    ariaLabel: TestIds.queryEditor.fieldAnnotationDashboardOption(AnnotationDashboard.THIS),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationDashboardOption(AnnotationDashboard.THIS),
   },
 ];
 
@@ -86,45 +52,45 @@ export const AnnotationDashboardOptions: SelectableValue[] = [
  *
  * @type {SelectableValue[]}
  */
-export const AnnotationRangeOptions: SelectableValue[] = [
+export const ANNOTATION_RANGE_OPTIONS: SelectableValue[] = [
   {
     label: 'None',
     value: AnnotationRange.NONE,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationTimeRangeOption(AnnotationRange.NONE),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationTimeRangeOption(AnnotationRange.NONE),
   },
   {
     label: 'Selected',
     value: AnnotationRange.SELECTED,
     icon: 'calendar-alt',
-    ariaLabel: TestIds.queryEditor.fieldAnnotationTimeRangeOption(AnnotationRange.SELECTED),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationTimeRangeOption(AnnotationRange.SELECTED),
   },
 ];
 
 /**
- * Annotations States
+ * Annotations States Options
  *
  * @type {SelectableValue[]}
  */
-export const AnnotationStateOptions: SelectableValue[] = [
+export const ANNOTATION_STATES_OPTIONS: SelectableValue[] = [
   {
     label: 'All',
     value: AnnotationState.ALL,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationStateOption(AnnotationState.ALL),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationStateOption(AnnotationState.ALL),
   },
   {
     label: 'Normal',
     value: AnnotationState.NORMAL,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationStateOption(AnnotationState.NORMAL),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationStateOption(AnnotationState.NORMAL),
   },
   {
     label: 'Pending',
     value: AnnotationState.PENDING,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationStateOption(AnnotationState.PENDING),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationStateOption(AnnotationState.PENDING),
   },
   {
     label: 'Alerting',
     value: AnnotationState.ALERTING,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationStateOption(AnnotationState.ALERTING),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationStateOption(AnnotationState.ALERTING),
   },
 ];
 
@@ -133,15 +99,15 @@ export const AnnotationStateOptions: SelectableValue[] = [
  *
  * @type {SelectableValue[]}
  */
-export const AnnotationRulesOptions: SelectableValue[] = [
+export const ANNOTATION_RULES_OPTIONS: SelectableValue[] = [
   {
     label: 'Enabled',
     value: true,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationRulesOption(true),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationRulesOption(true),
   },
   {
     label: 'Disabled',
     value: false,
-    ariaLabel: TestIds.queryEditor.fieldAnnotationRulesOption(false),
+    ariaLabel: TEST_IDS.queryEditor.fieldAnnotationRulesOption(false),
   },
 ];

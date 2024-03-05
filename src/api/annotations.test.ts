@@ -1,8 +1,7 @@
 import { dateTime } from '@grafana/data';
 import { Observable } from 'rxjs';
 
-import { AnnotationDashboard, AnnotationRange, AnnotationType, RequestType } from '../constants';
-import { Query } from '../types';
+import { AnnotationDashboard, AnnotationRange, AnnotationType, Query, RequestType } from '../types';
 import { createFeatureMethod } from '../utils';
 import { Api } from './api';
 
@@ -20,8 +19,8 @@ const getResponse = (response: any) =>
 /**
  * Throw Exception Response
  */
-const getErrorResponse = (response: any) =>
-  new Observable((subscriber) => {
+const getErrorResponse = () =>
+  new Observable(() => {
     throw new TypeError('Error');
   });
 
@@ -82,6 +81,7 @@ describe('Annotations Api', () => {
           alertId: 1,
           alertName: '',
           dashboardId: 1,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           dashboardUID: 'Rcb6nob4k',
           panelId: 2,
           userId: 0,
@@ -130,6 +130,7 @@ describe('Annotations Api', () => {
       expect(fetchRequestMock).toHaveBeenCalledWith({
         method: 'GET',
         params: expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           dashboardUID: '123',
         }),
         url: expect.stringContaining('/api/annotations'),
@@ -204,7 +205,7 @@ describe('Annotations Api', () => {
     });
 
     it('Should throw exception getAnnotations request', async () => {
-      fetchRequestMock = jest.fn().mockImplementationOnce(() => getErrorResponse(response));
+      fetchRequestMock = jest.fn().mockImplementationOnce(() => getErrorResponse());
 
       try {
         const result = await api.features.annotations.getAll(query, range, '', {});

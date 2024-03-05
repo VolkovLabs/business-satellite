@@ -1,33 +1,18 @@
-import { TestIds } from './tests';
-
-/**
- * Data Source test status
- */
-export enum DataSourceTestStatus {
-  SUCCESS = 'success',
-  ERROR = 'error',
-}
-
-/**
- * Request Mode
- */
-export enum RequestMode {
-  LOCAL = 'local',
-  REMOTE = 'remote',
-}
+import { RequestMode } from '../types';
+import { TEST_IDS } from './tests';
 
 /**
  * Request Mode Options
  */
-export const RequestModeOptions = [
+export const REQUEST_MODE_OPTIONS = [
   {
     label: 'Local',
     value: RequestMode.LOCAL,
-    ariaLabel: TestIds.configEditor.fieldRequestModelOption(RequestMode.LOCAL),
+    ariaLabel: TEST_IDS.configEditor.fieldRequestModelOption(RequestMode.LOCAL),
   },
   {
     label: 'Remote',
     value: RequestMode.REMOTE,
-    ariaLabel: TestIds.configEditor.fieldRequestModelOption(RequestMode.REMOTE),
+    ariaLabel: TEST_IDS.configEditor.fieldRequestModelOption(RequestMode.REMOTE),
   },
 ];

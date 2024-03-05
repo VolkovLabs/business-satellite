@@ -8,8 +8,8 @@ import {
 } from '@grafana/data';
 
 import { Api } from '../api';
-import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
-import { DataSourceOptions, Health, Query } from '../types';
+import { MESSAGES } from '../constants';
+import { DataSourceOptions, DataSourceTestStatus, Health, Query, RequestMode, RequestType } from '../types';
 import { VariableSupport } from './variable';
 
 /**
@@ -93,6 +93,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
    */
   async query(options: DataQueryRequest<Query>): Promise<DataQueryResponse> {
     const data: DataFrame[] = [];
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { range, dashboardUID } = options;
 
     /**
@@ -167,7 +168,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     if (health?.version && org?.name) {
       return {
         status: DataSourceTestStatus.SUCCESS,
-        message: `${Messages.connectedToOrg} ${org.name}. ${Messages.version} ${health.version}`,
+        message: `${MESSAGES.connectedToOrg} ${org.name}. ${MESSAGES.version} ${health.version}`,
       };
     }
 
@@ -176,7 +177,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
      */
     return {
       status: DataSourceTestStatus.ERROR,
-      message: Messages.connectionError,
+      message: MESSAGES.connectionError,
     };
   }
 }

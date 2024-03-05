@@ -2,8 +2,8 @@ import { FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { lastValueFrom } from 'rxjs';
 
-import { Messages, RequestType } from '../constants';
-import { Health as HealthType, Query } from '../types';
+import { MESSAGES } from '../constants';
+import { Health as HealthType, Query, RequestType } from '../types';
 import { convertToFrame, notifyError } from '../utils';
 import { BaseApi } from './base';
 
@@ -26,7 +26,7 @@ export class Health extends BaseApi {
      * Check Response
      */
     if (!response || !response.data) {
-      notifyError([Messages.error, Messages.api.getHealthFailed]);
+      notifyError([MESSAGES.error, MESSAGES.api.getHealthFailed]);
       return;
     }
 

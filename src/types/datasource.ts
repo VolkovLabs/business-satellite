@@ -1,6 +1,20 @@
 import { DataSourceJsonData } from '@grafana/data';
 
-import { RequestMode } from '../constants';
+/**
+ * Data Source test status
+ */
+export enum DataSourceTestStatus {
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
+
+/**
+ * Request Mode
+ */
+export enum RequestMode {
+  LOCAL = 'local',
+  REMOTE = 'remote',
+}
 
 /**
  * JSON Options

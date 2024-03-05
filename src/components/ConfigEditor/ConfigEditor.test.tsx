@@ -3,8 +3,8 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
-import { RequestMode, TestIds } from '../../constants';
-import { DataSourceOptions } from '../../types';
+import { TEST_IDS } from '../../constants';
+import { DataSourceOptions, RequestMode } from '../../types';
 import { ConfigEditor } from './ConfigEditor';
 
 /**
@@ -62,7 +62,7 @@ describe('ConfigEditor', () => {
   /**
    * Selectors
    */
-  const getSelectors = getJestSelectors(TestIds.configEditor);
+  const getSelectors = getJestSelectors(TEST_IDS.configEditor);
   const selectors = getSelectors(screen);
 
   beforeEach(() => {

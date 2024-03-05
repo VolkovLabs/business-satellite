@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { RequestType } from '../constants';
+import { RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -17,8 +17,8 @@ const getResponse = (response: any) =>
 /**
  * Throw Exception Response
  */
-const getErrorResponse = (response: any) =>
-  new Observable((subscriber) => {
+const getErrorResponse = () =>
+  new Observable(() => {
     throw new TypeError('Error');
   });
 
@@ -95,7 +95,7 @@ describe('Health Api', () => {
     });
 
     it('Should throw exception getHealth request', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
+      fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse());
 
       try {
         const result = await api.features.health.get();

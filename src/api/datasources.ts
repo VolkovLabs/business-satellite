@@ -2,8 +2,8 @@ import { DataSourceSettings, FieldType, MutableDataFrame } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { lastValueFrom } from 'rxjs';
 
-import { Messages, RequestType } from '../constants';
-import { Query } from '../types';
+import { MESSAGES } from '../constants';
+import { Query, RequestType } from '../types';
 import { convertToFrame, notifyError } from '../utils';
 import { BaseApi } from './base';
 
@@ -29,7 +29,7 @@ export class DataSources extends BaseApi {
      * Check Response
      */
     if (!response || !response.data) {
-      notifyError([Messages.error, Messages.api.getDataSourcesFailed]);
+      notifyError([MESSAGES.error, MESSAGES.api.getDataSourcesFailed]);
       return [];
     }
 

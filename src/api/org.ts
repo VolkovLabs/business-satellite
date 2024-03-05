@@ -2,8 +2,8 @@ import { MutableDataFrame, OrgProps } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { lastValueFrom } from 'rxjs';
 
-import { Messages, RequestType } from '../constants';
-import { OrgUser, Query } from '../types';
+import { MESSAGES } from '../constants';
+import { OrgUser, Query, RequestType } from '../types';
 import { convertToFrame, getFieldsForItem, notifyError } from '../utils';
 import { BaseApi } from './base';
 
@@ -26,7 +26,7 @@ export class Org extends BaseApi {
      * Check Response
      */
     if (!response || !response.data) {
-      notifyError([Messages.error, Messages.api.getOrgFailed]);
+      notifyError([MESSAGES.error, MESSAGES.api.getOrgFailed]);
       return;
     }
 
@@ -51,7 +51,7 @@ export class Org extends BaseApi {
      * Check Response
      */
     if (!response || !response.data) {
-      notifyError([Messages.error, Messages.api.getUsersFailed]);
+      notifyError([MESSAGES.error, MESSAGES.api.getUsersFailed]);
       return [];
     }
 
