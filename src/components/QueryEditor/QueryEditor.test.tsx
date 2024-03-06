@@ -1,16 +1,9 @@
-import React from 'react';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
-import {
-  AnnotationDashboard,
-  AnnotationRange,
-  AnnotationState,
-  AnnotationType,
-  DefaultQuery,
-  RequestType,
-  TestIds,
-} from '../../constants';
-import { Query } from '../../types';
+import React from 'react';
+
+import { DEFAULT_QUERY, TEST_IDS } from '../../constants';
+import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType, Query, RequestType } from '../../types';
 import { QueryEditor } from './QueryEditor';
 
 /**
@@ -19,7 +12,7 @@ import { QueryEditor } from './QueryEditor';
  * @param overrideQuery
  */
 export const getQuery = (overrideQuery: Partial<Query> = {}): Query => ({
-  requestType: DefaultQuery.requestType,
+  requestType: DEFAULT_QUERY.requestType,
   refId: 'A',
   ...overrideQuery,
 });
@@ -31,7 +24,7 @@ describe('QueryEditor', () => {
   /**
    * Selectors
    */
-  const getSelectors = getJestSelectors(TestIds.queryEditor);
+  const getSelectors = getJestSelectors(TEST_IDS.queryEditor);
   const selectors = getSelectors(screen);
 
   const onRunQuery = jest.fn();

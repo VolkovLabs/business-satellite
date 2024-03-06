@@ -1,5 +1,6 @@
 import { AlertErrorPayload, AlertPayload, AppEvents } from '@grafana/data';
 import { getAppEvents } from '@grafana/runtime';
+
 import { errorLogger } from './logger';
 
 /**

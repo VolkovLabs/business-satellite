@@ -11,3 +11,38 @@ export interface Annotation extends AnnotationEvent {
    */
   prevState?: string;
 }
+
+/**
+ * Annotation Type
+ */
+export enum AnnotationType {
+  ALL = '',
+  ANNOTATION = 'annotation',
+  ALERT = 'alert',
+}
+
+/**
+ * Annotation Dashboard
+ */
+export enum AnnotationDashboard {
+  ALL = '',
+  THIS = 'this',
+}
+
+/**
+ * Annotation Range
+ */
+export enum AnnotationRange {
+  NONE = '',
+  SELECTED = 'selected',
+}
+
+/**
+ * Annotation State
+ */
+export enum AnnotationState {
+  ALL = '',
+  NORMAL = 'Normal',
+  PENDING = 'Pending',
+  ALERTING = 'Alerting',
+}

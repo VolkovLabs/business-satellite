@@ -28,6 +28,7 @@
     "@types/node": "^20.11.20",
     "@types/webpack-env": "^1.18.4",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@volkovlabs/eslint-config": "^1.3.0",
     "@volkovlabs/jest-selectors": "^1.2.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.10.0",
@@ -54,7 +55,7 @@
     "webpack-livereload-plugin": "^3.0.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "license": "Apache-2.0",
   "name": "volkovlabs-grapi-datasource",

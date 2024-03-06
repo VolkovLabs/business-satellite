@@ -1,11 +1,9 @@
-import { Query } from '../types';
-import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType } from './annotations';
-import { RequestType } from './request';
+import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType, Query, RequestType } from '../types';
 
 /**
  * Defaults for Query
  */
-export const DefaultQuery: Partial<Query> = {
+export const DEFAULT_QUERY: Partial<Query> = {
   annotationDashboard: AnnotationDashboard.ALL,
   annotationLimit: 100,
   annotationNewState: AnnotationState.ALL,

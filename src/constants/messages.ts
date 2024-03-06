@@ -1,7 +1,7 @@
 /**
  * Api
  */
-export const api = {
+export const API = {
   getAlertRulesFailed: 'Get Alert Rules: API Request failed. See Console for details.',
   getAnnotationsFailed: 'Get Annotations: API Request failed. See Console for details.',
   getDataSourcesFailed: 'Get Data Sources: API Request failed. See Console for details.',
@@ -13,8 +13,8 @@ export const api = {
 /**
  * Messages
  */
-export const Messages = {
-  api,
+export const MESSAGES = {
+  api: API,
   connectedToOrg: 'Connected to',
   connectionError: 'Error. Not able connect.',
   error: 'Error',

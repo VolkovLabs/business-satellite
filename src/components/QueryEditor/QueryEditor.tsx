@@ -1,24 +1,28 @@
-import { defaults } from 'lodash';
-import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
+import { defaults } from 'lodash';
+import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+
 import {
-  AnnotationDashboard,
-  AnnotationDashboardOptions,
-  AnnotationRange,
-  AnnotationRangeOptions,
-  AnnotationRulesOptions,
-  AnnotationState,
-  AnnotationStateOptions,
-  AnnotationType,
-  AnnotationTypeOptions,
-  DefaultQuery,
-  RequestType,
-  RequestTypeOptions,
-  TestIds,
+  ANNOTATION_DASHBOARD_OPTIONS,
+  ANNOTATION_RANGE_OPTIONS,
+  ANNOTATION_RULES_OPTIONS,
+  ANNOTATION_STATES_OPTIONS,
+  ANNOTATION_TYPE_OPTIONS,
+  DEFAULT_QUERY,
+  REQUEST_TYPE_OPTIONS,
+  TEST_IDS,
 } from '../../constants';
 import { DataSource } from '../../datasource';
-import { DataSourceOptions, Query } from '../../types';
+import {
+  AnnotationDashboard,
+  AnnotationRange,
+  AnnotationState,
+  AnnotationType,
+  DataSourceOptions,
+  Query,
+  RequestType,
+} from '../../types';
 
 /**
  * Editor Properties
@@ -146,13 +150,13 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   /**
    * Default Query
    */
-  const query = defaults(rawQuery, DefaultQuery);
+  const query = defaults(rawQuery, DEFAULT_QUERY);
 
   /**
    * Available Request Types
    */
   const availableRequestTypes = useMemo(() => {
-    return RequestTypeOptions.filter((option) =>
+    return REQUEST_TYPE_OPTIONS.filter((option) =>
       datasource.api.availableRequestTypes.some(
         (supported) => supported === option.value || option.value === RequestType.NONE
       )
@@ -170,7 +174,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
             options={availableRequestTypes}
             value={query.requestType}
             onChange={onRequestTypeChange}
-            aria-label={TestIds.queryEditor.fieldRequest}
+            aria-label={TEST_IDS.queryEditor.fieldRequest}
           />
         </InlineField>
       </InlineFieldRow>
@@ -178,10 +182,10 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
       {query.requestType === RequestType.ANNOTATIONS && (
         <>
           <InlineFieldRow>
-            <InlineField label="Type" labelWidth={10} data-testid={TestIds.queryEditor.fieldAnnotationTypeContainer}>
+            <InlineField label="Type" labelWidth={10} data-testid={TEST_IDS.queryEditor.fieldAnnotationTypeContainer}>
               <RadioButtonGroup
-                options={AnnotationTypeOptions}
-                value={AnnotationTypeOptions.find((type) => type.value === query.annotationType)?.value}
+                options={ANNOTATION_TYPE_OPTIONS}
+                value={ANNOTATION_TYPE_OPTIONS.find((type) => type.value === query.annotationType)?.value}
                 onChange={onAnnotationTypeChange}
               />
             </InlineField>
@@ -189,11 +193,11 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
             <InlineField
               label="Dashboards"
               labelWidth={10}
-              data-testid={TestIds.queryEditor.fieldAnnotationDashboardContainer}
+              data-testid={TEST_IDS.queryEditor.fieldAnnotationDashboardContainer}
             >
               <RadioButtonGroup
-                options={AnnotationDashboardOptions}
-                value={AnnotationDashboardOptions.find((type) => type.value === query.annotationDashboard)?.value}
+                options={ANNOTATION_DASHBOARD_OPTIONS}
+                value={ANNOTATION_DASHBOARD_OPTIONS.find((type) => type.value === query.annotationDashboard)?.value}
                 onChange={onAnnotationDashboardChange}
               />
             </InlineField>
@@ -201,11 +205,11 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
             <InlineField
               label="Time Range"
               labelWidth={12}
-              data-testid={TestIds.queryEditor.fieldAnnotationTimeRangeContainer}
+              data-testid={TEST_IDS.queryEditor.fieldAnnotationTimeRangeContainer}
             >
               <RadioButtonGroup
-                options={AnnotationRangeOptions}
-                value={AnnotationRangeOptions.find((type) => type.value === query.annotationRange)?.value}
+                options={ANNOTATION_RANGE_OPTIONS}
+                value={ANNOTATION_RANGE_OPTIONS.find((type) => type.value === query.annotationRange)?.value}
                 onChange={onAnnotationRangeChange}
               />
             </InlineField>
@@ -216,22 +220,22 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               <InlineField
                 label="Prev State"
                 labelWidth={10}
-                data-testid={TestIds.queryEditor.fieldAnnotationPrevStateContainer}
+                data-testid={TEST_IDS.queryEditor.fieldAnnotationPrevStateContainer}
               >
                 <RadioButtonGroup
-                  options={AnnotationStateOptions}
-                  value={AnnotationStateOptions.find((type) => type.value === query.annotationPrevState)?.value}
+                  options={ANNOTATION_STATES_OPTIONS}
+                  value={ANNOTATION_STATES_OPTIONS.find((type) => type.value === query.annotationPrevState)?.value}
                   onChange={onAnnotationPrevStateChange}
                 />
               </InlineField>
               <InlineField
                 label="New State"
                 labelWidth={10}
-                data-testid={TestIds.queryEditor.fieldAnnotationNewStateContainer}
+                data-testid={TEST_IDS.queryEditor.fieldAnnotationNewStateContainer}
               >
                 <RadioButtonGroup
-                  options={AnnotationStateOptions}
-                  value={AnnotationStateOptions.find((type) => type.value === query.annotationNewState)?.value}
+                  options={ANNOTATION_STATES_OPTIONS}
+                  value={ANNOTATION_STATES_OPTIONS.find((type) => type.value === query.annotationNewState)?.value}
                   onChange={onAnnotationNewStateChange}
                 />
               </InlineField>
@@ -243,7 +247,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               <Input
                 value={query.annotationPattern}
                 onChange={onAnnotationPatternChange}
-                data-testid={TestIds.queryEditor.fieldAnnotationPattern}
+                data-testid={TEST_IDS.queryEditor.fieldAnnotationPattern}
               />
             </InlineField>
             <InlineField label="Max Limit" labelWidth={10}>
@@ -251,7 +255,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
                 type="number"
                 value={query.annotationLimit}
                 onChange={onAnnotationLimitChange}
-                data-testid={TestIds.queryEditor.fieldAnnotationLimit}
+                data-testid={TEST_IDS.queryEditor.fieldAnnotationLimit}
               />
             </InlineField>
           </InlineFieldRow>
@@ -262,10 +266,10 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
                 label="Add Alert fields"
                 tooltip="Add Alert Name and Alert UID from provisioned alert rules"
                 labelWidth={20}
-                data-testid={TestIds.queryEditor.fieldAnnotationRulesContainer}
+                data-testid={TEST_IDS.queryEditor.fieldAnnotationRulesContainer}
               >
                 <RadioButtonGroup
-                  options={AnnotationRulesOptions}
+                  options={ANNOTATION_RULES_OPTIONS}
                   value={query.annotationRules}
                   onChange={onAnnotationRulesChange}
                 />

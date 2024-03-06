@@ -6,6 +6,7 @@
 
 - Update Tutorial in README (#57)
 - Update dependencies (#60)
+- Update ESLint configuration and refactoring (#61)
 
 ## 2.2.0 (2023-09-19)
 
