@@ -10,5 +10,5 @@ services:
       - GF_USERS_DEFAULT_THEME=light
       - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel
     volumes:
-      - ../dist:/var/lib/grafana/plugins/volkovlabs-rss-datasource
+      - ../dist:/var/lib/grafana/plugins/volkovlabs-grapi-datasource
       - ../provisioning:/etc/grafana/provisioning
