@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { RequestType } from '../constants';
+
+import { RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -16,8 +17,8 @@ const getResponse = (response: any) =>
 /**
  * Throw Exception Response
  */
-const getErrorResponse = (response: any) =>
-  new Observable((subscriber) => {
+const getErrorResponse = () =>
+  new Observable(() => {
     throw new TypeError('Error');
   });
 
@@ -117,30 +118,30 @@ describe('Data Sources Api', () => {
 
     it('Should make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.datasources.getAll();
+      const result = await api.features.datasources.getAll();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      let result = await api.features.datasources.getAll();
+      const result = await api.features.datasources.getAll();
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
 
     it('Should throw exception getDataSources request', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
+      fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse());
 
       try {
-        let result = await api.features.datasources.getAll();
+        const result = await api.features.datasources.getAll();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getDataSourcesFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.datasources.getFrame(query);
+      const result = await api.features.datasources.getFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(11);
       expect(result[0].fields[0].values.toArray()).toEqual([1, 2]);
@@ -154,7 +155,7 @@ describe('Data Sources Api', () => {
         })
       );
 
-      let result = await api.features.datasources.getFrame(query);
+      const result = await api.features.datasources.getFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { RequestType } from '../constants';
+
+import { RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -16,8 +17,8 @@ const getResponse = (response: any) =>
 /**
  * Throw Exception Response
  */
-const getErrorResponse = (response: any) =>
-  new Observable((subscriber) => {
+const getErrorResponse = () =>
+  new Observable(() => {
     throw new TypeError('Error');
   });
 
@@ -61,7 +62,9 @@ describe('Provisioning Api', () => {
         {
           id: 1,
           uid: 'ox_h9f-4k',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           orgID: 1,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           folderUID: 'e_2vH6aVk',
           ruleGroup: 'Test',
           title: 'Metrics',
@@ -214,7 +217,9 @@ describe('Provisioning Api', () => {
           execErrState: 'Error',
           for: '20s',
           annotations: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             __dashboardUid__: 'Rcb6nob4k',
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             __panelId__: '2',
           },
           isPaused: false,
@@ -239,30 +244,30 @@ describe('Provisioning Api', () => {
 
     it('Should make getAlertRules request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.provisioning.getAlertRules();
+      const result = await api.features.provisioning.getAlertRules();
       expect(result).toBeTruthy();
     });
 
     it('Should not make getAlertRules request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      let result = await api.features.provisioning.getAlertRules();
+      const result = await api.features.provisioning.getAlertRules();
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
 
     it('Should throw exception getAlertRules request', async () => {
-      fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse(response));
+      fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse());
 
       try {
-        let result = await api.features.provisioning.getAlertRules();
+        const result = await api.features.provisioning.getAlertRules();
         expect(result).toThrow(TypeError);
       } catch (e) {}
     });
 
     it('Should make getAlertRulesFrame request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      let result = await api.features.provisioning.getAlertRulesFrame(query);
+      const result = await api.features.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(1);
       expect(result[0].fields.length).toEqual(9);
       expect(result[0].fields[0].values.toArray()).toEqual([1]);
@@ -276,7 +281,7 @@ describe('Provisioning Api', () => {
         })
       );
 
-      let result = await api.features.provisioning.getAlertRulesFrame(query);
+      const result = await api.features.provisioning.getAlertRulesFrame(query);
       expect(result?.length).toEqual(0);
     });
   });

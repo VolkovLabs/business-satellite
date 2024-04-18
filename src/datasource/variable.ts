@@ -1,4 +1,5 @@
 import { DataSourceVariableSupport } from '@grafana/data';
+
 import { Query } from '../types';
 import { DataSource } from './datasource';
 

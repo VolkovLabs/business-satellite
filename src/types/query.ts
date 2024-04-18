@@ -1,5 +1,18 @@
 import { DataQuery } from '@grafana/schema';
-import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType, RequestType } from '../constants';
+
+import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType } from '../types';
+
+/**
+ * Request Type Values
+ */
+export enum RequestType {
+  ALERT_RULES = 'alertRules',
+  ANNOTATIONS = 'annotations',
+  DATASOURCES = 'datasources',
+  HEALTH = 'health',
+  NONE = 'none',
+  ORG_USERS = 'orgUsers',
+}
 
 /**
  * Query

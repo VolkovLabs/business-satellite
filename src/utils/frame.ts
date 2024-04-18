@@ -3,10 +3,10 @@ import { FieldType, getFieldTypeFromValue, MutableDataFrame } from '@grafana/dat
 /**
  * Field Mapper
  */
-type FieldMapper<ItemType> = {
+type FieldMapper<TItem> = {
   name: string;
   type: FieldType;
-  getValue: (item: ItemType) => unknown;
+  getValue: (item: TItem) => unknown;
 };
 
 /**
@@ -16,7 +16,7 @@ type FieldMapper<ItemType> = {
  * @param fields
  * @param items
  */
-export const convertToFrame = <ItemType>({
+export const convertToFrame = <TItem>({
   name,
   refId,
   fields,
@@ -24,8 +24,8 @@ export const convertToFrame = <ItemType>({
 }: {
   name: string;
   refId: string;
-  fields: Array<FieldMapper<ItemType>>;
-  items: ItemType[];
+  fields: Array<FieldMapper<TItem>>;
+  items: TItem[];
 }): MutableDataFrame => {
   /**
    * Create frame
@@ -52,13 +52,13 @@ export const convertToFrame = <ItemType>({
 /**
  * Get Fields For Item
  */
-export const getFieldsForItem = <ItemType extends object>(
-  item: ItemType,
+export const getFieldsForItem = <TItem extends object>(
+  item: TItem,
   override: Partial<{
-    [key in keyof typeof item]: (item: ItemType) => unknown;
+    [key in keyof typeof item]: (item: TItem) => unknown;
   }> = {}
-): Array<FieldMapper<ItemType>> => {
-  return Object.keys(item).reduce((acc: Array<FieldMapper<ItemType>>, name) => {
+): Array<FieldMapper<TItem>> => {
+  return Object.keys(item).reduce((acc: Array<FieldMapper<TItem>>, name) => {
     const getValue = override[name as keyof typeof item] || ((item) => item[name as keyof typeof item]);
     const value = getValue(item);
 

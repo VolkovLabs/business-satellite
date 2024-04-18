@@ -1,8 +1,17 @@
-import { lastValueFrom } from 'rxjs';
 import { FieldType, formatLabels, Labels, MutableDataFrame, ScopedVars, TimeRange } from '@grafana/data';
 import { getBackendSrv, getTemplateSrv } from '@grafana/runtime';
-import { AnnotationDashboard, AnnotationRange, AnnotationType, Messages, RequestType } from '../constants';
-import { AlertRule, Annotation, Query } from '../types';
+import { lastValueFrom } from 'rxjs';
+
+import { MESSAGES } from '../constants';
+import {
+  AlertRule,
+  Annotation,
+  AnnotationDashboard,
+  AnnotationRange,
+  AnnotationType,
+  Query,
+  RequestType,
+} from '../types';
 import { notifyError } from '../utils';
 import { BaseApi } from './base';
 
@@ -16,10 +25,10 @@ export class Annotations extends BaseApi {
   getAll = async (
     query: Query,
     range: TimeRange,
-    dashboardUID: string | undefined,
+    dashboardUid: string | undefined,
     scopedVars: ScopedVars
   ): Promise<Annotation[]> => {
-    let params: Record<string, any> = {};
+    const params: Record<string, unknown> = {};
 
     /**
      * Time Range
@@ -32,8 +41,8 @@ export class Annotations extends BaseApi {
     /**
      * Dashboard
      */
-    if (query.annotationDashboard === AnnotationDashboard.THIS && dashboardUID) {
-      params.dashboardUID = dashboardUID;
+    if (query.annotationDashboard === AnnotationDashboard.THIS && dashboardUid) {
+      params.dashboardUID = dashboardUid;
     }
 
     /**
@@ -67,7 +76,7 @@ export class Annotations extends BaseApi {
      * Check Response
      */
     if (!response || !response.data) {
-      notifyError([Messages.error, Messages.api.getAnnotationsFailed]);
+      notifyError([MESSAGES.error, MESSAGES.api.getAnnotationsFailed]);
       return [];
     }
 
@@ -104,10 +113,10 @@ export class Annotations extends BaseApi {
   getFrame = async (
     query: Query,
     range: TimeRange,
-    dashboardUID: string | undefined,
+    dashboardUid: string | undefined,
     scopedVars: ScopedVars
   ): Promise<MutableDataFrame[]> => {
-    const annotations = await this.getAll(query, range, dashboardUID, scopedVars);
+    const annotations = await this.getAll(query, range, dashboardUid, scopedVars);
     if (!annotations.length) {
       return [];
     }
@@ -270,9 +279,9 @@ export class Annotations extends BaseApi {
       if (query.annotationRules !== false && query.annotationType !== AnnotationType.ANNOTATION) {
         const alertTitle =
           annotation.alertId && alertRules[annotation.alertId] ? alertRules[annotation.alertId].title : '';
-        const alertUID = annotation.alertId && alertRules[annotation.alertId] ? alertRules[annotation.alertId].uid : '';
+        const alertUid = annotation.alertId && alertRules[annotation.alertId] ? alertRules[annotation.alertId].uid : '';
 
-        row.push(alertTitle, alertUID);
+        row.push(alertTitle, alertUid);
       }
 
       frame.appendRow(row);

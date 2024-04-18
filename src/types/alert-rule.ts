@@ -21,6 +21,7 @@ export interface AlertRule {
    *
    * @type {number}
    */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   orgID: number;
 
   /**
@@ -49,6 +50,7 @@ export interface AlertRule {
    *
    * @type {string}
    */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   folderUID: string;
 
   /**

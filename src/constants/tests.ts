@@ -1,7 +1,7 @@
 /**
  * Tests Identifiers
  */
-export const TestIds = {
+export const TEST_IDS = {
   configEditor: {
     fieldToken: 'data-testid config-editor field-token',
     fieldUrl: 'data-testid config-editor field-url',

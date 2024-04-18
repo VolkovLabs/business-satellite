@@ -1,15 +1,16 @@
-import { Observable } from 'rxjs';
 import { DataFrame, dateTime, OrgProps } from '@grafana/data';
+import { Observable } from 'rxjs';
+
 import { Api } from '../api';
 import { Health } from '../api/health';
-import { DataSourceTestStatus, Messages, RequestMode, RequestType } from '../constants';
-import { Health as HealthType } from '../types';
+import { MESSAGES } from '../constants';
+import { DataSourceTestStatus, Health as HealthType, RequestMode, RequestType } from '../types';
 import { DataSource } from './datasource';
 
 /**
  * Response
  */
-let frames: DataFrame = [] as any;
+const frames: DataFrame = [] as any;
 const response: any = {};
 let getHealthResult: HealthType = { version: '1.0.0', commit: '', database: 'ok' };
 let getOrgResult: OrgProps = { id: 1, name: 'Test' };
@@ -55,6 +56,7 @@ const createApiMock = () => {
 };
 
 jest.mock('../api', () => ({
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   Api: jest.fn().mockImplementation(() => {
     return createApiMock();
   }),
@@ -63,7 +65,7 @@ jest.mock('../api', () => ({
 /**
  * Fetch request Mock
  */
-let fetchRequestMock = jest.fn().mockImplementation(() => getResponse({}));
+const fetchRequestMock = jest.fn().mockImplementation(() => getResponse({}));
 
 /**
  * Mock @grafana/runtime
@@ -199,7 +201,7 @@ describe('DataSource', () => {
 
       expect(result).toEqual({
         status: DataSourceTestStatus.SUCCESS,
-        message: `${Messages.connectedToOrg} ${getOrgResult.name}. ${Messages.version} ${getHealthResult.version}`,
+        message: `${MESSAGES.connectedToOrg} ${getOrgResult.name}. ${MESSAGES.version} ${getHealthResult.version}`,
       });
     });
 
@@ -210,7 +212,7 @@ describe('DataSource', () => {
       const result = await dataSource.testDatasource();
       expect(result).toEqual({
         status: DataSourceTestStatus.ERROR,
-        message: Messages.connectionError,
+        message: MESSAGES.connectionError,
       });
     });
 

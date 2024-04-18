@@ -1,52 +1,42 @@
 import { SelectableValue } from '@grafana/data';
-import { Messages } from './messages';
 
-/**
- * Request Type Values
- */
-export enum RequestType {
-  ALERT_RULES = 'alertRules',
-  ANNOTATIONS = 'annotations',
-  DATASOURCES = 'datasources',
-  HEALTH = 'health',
-  NONE = 'none',
-  ORG_USERS = 'orgUsers',
-}
+import { RequestType } from '../types';
+import { MESSAGES } from './messages';
 
 /**
  * Request Type
  *
  * @type {SelectableValue[]}
  */
-export const RequestTypeOptions: Array<SelectableValue<RequestType>> = [
+export const REQUEST_TYPE_OPTIONS: Array<SelectableValue<RequestType>> = [
   {
     label: 'Alert Rules',
-    description: Messages.requestAlertRules,
+    description: MESSAGES.requestAlertRules,
     value: RequestType.ALERT_RULES,
   },
   {
     label: 'Annotations',
-    description: Messages.requestAnnotations,
+    description: MESSAGES.requestAnnotations,
     value: RequestType.ANNOTATIONS,
   },
   {
     label: 'Data Sources',
-    description: Messages.requestDataSources,
+    description: MESSAGES.requestDataSources,
     value: RequestType.DATASOURCES,
   },
   {
     label: 'Health information',
-    description: Messages.requestHealth,
+    description: MESSAGES.requestHealth,
     value: RequestType.HEALTH,
   },
   {
     label: 'Organization Users',
-    description: Messages.requestOrgUsers,
+    description: MESSAGES.requestOrgUsers,
     value: RequestType.ORG_USERS,
   },
   {
     label: 'None',
-    description: Messages.requestNone,
+    description: MESSAGES.requestNone,
     value: RequestType.NONE,
   },
 ];
