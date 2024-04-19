@@ -2,7 +2,7 @@
 
 ![Datasource](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/raw/main/src/img/datasource.png)
 
-![Grafana 10](https://img.shields.io/badge/Grafana-10.0.2-orange)
+![Grafana 10](https://img.shields.io/badge/Grafana-10.3-orange)
 ![CI](https://github.com/volkovlabs/volkovlabs-grapi-datasource/workflows/CI/badge.svg)
 ![E2E](https://github.com/volkovlabs/volkovlabs-grapi-datasource/workflows/E2E/badge.svg)
 [![codecov](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource/branch/main/graph/badge.svg)](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource)
@@ -41,14 +41,15 @@ The Grafana HTTP API Data source requires a Grafana URL and a Token or API key t
 
 ## Documentation
 
-| Section                      | Description                                                  |
-| ---------------------------- | ------------------------------------------------------------ |
+| Section                                                                                   | Description                                                  |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | [Configuration](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/configuration/) | Explains configuration settings for the Data Source.         |
-| [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning/) | Demonstrates how to automatically provision the Data Source. |
+| [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning/)   | Demonstrates how to automatically provision the Data Source. |
 | [Features](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/features/)           | Demonstrates panel features.                                 |
-| [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release/)     | Stay up to date with the latest features and updates.        |
+| [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release/)       | Stay up to date with the latest features and updates.        |
 
 ## Tutorial
+
 This is a step-by-step tutorial to demonstrate how to use the data source for Alerts and Annotations.
 
 [![Annotations and Alerts tutorial for Grafana with Timescale | How to and Demo to reveal the basics](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/tutorial.png)](https://youtu.be/bmOkirtC65w)
