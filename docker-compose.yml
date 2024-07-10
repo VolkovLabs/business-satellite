@@ -10,6 +10,8 @@ services:
     volumes:
       - ./dist:/var/lib/grafana/plugins/volkovlabs-grapi-datasource
       - ./provisioning:/etc/grafana/provisioning
+    profiles:
+      - dev
 
   timescale:
     container_name: timescale
