@@ -10,4 +10,4 @@ timescale/
 
 # Playwright tests
 playwright.config.ts
-test/panel.spec.ts
+test/
