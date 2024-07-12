@@ -1,8 +1,8 @@
-# Grafana HTTP API Data Source for Grafana
+# Business Satellite Data Source for Grafana
 
 ![Datasource](https://github.com/VolkovLabs/volkovlabs-grapi-datasource/raw/main/src/img/datasource.png)
 
-![Grafana 10](https://img.shields.io/badge/Grafana-10.3-orange)
+![Grafana 10](https://img.shields.io/badge/Grafana-11.1-orange)
 ![CI](https://github.com/volkovlabs/volkovlabs-grapi-datasource/workflows/CI/badge.svg)
 ![E2E](https://github.com/volkovlabs/volkovlabs-grapi-datasource/workflows/E2E/badge.svg)
 [![codecov](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource/branch/main/graph/badge.svg)](https://codecov.io/gh/VolkovLabs/volkovlabs-grapi-datasource)
@@ -10,18 +10,19 @@
 
 ## Introduction
 
-The Grafana HTTP API Data Source for Grafana allows retrieving data from local and remote Grafana instances via HTTP API.
+The Business Satellite Data Source for Grafana allows retrieving data from local and remote Grafana instances via HTTP API.
 
-[![Grafana HTTP API data source | Easy access to Grafana backend | Includes Annotations tutorial](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/overview.png)](https://youtu.be/0zibOEGqTJ8)
+[![Business Satellite data source | Easy access to Grafana backend | Includes Annotations tutorial](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/overview.png)](https://youtu.be/0zibOEGqTJ8)
 
 ## Requirements
 
-- **Grafana 9** and **Grafana 10** are required for major version 2.
-- **Grafana 8.5** and **Grafana 9** are required for major version 1.
+- Business Satellite Data Source 3.X requires **Grafana 10** or **Grafana 11**.
+- Grafana HTTP API Data Source 2.X requires **Grafana 9** and **Grafana 10**.
+- Grafana HTTP API Data Source 1.X requires **Grafana 8.5** and **Grafana 9**.
 
 ## Getting Started
 
-The Grafana HTTP API Data Source can be installed from the [Grafana Catalog](https://grafana.com/grafana/plugins/volkovlabs-grapi-datasource/) or utilizing the Grafana command line tool.
+The Business Satellite Data Source can be installed from the [Grafana Catalog](https://grafana.com/grafana/plugins/volkovlabs-grapi-datasource/) or utilizing the Grafana command line tool.
 
 For the latter, use the following command.
 
@@ -31,7 +32,7 @@ grafana-cli plugins install volkovlabs-grapi-datasource
 
 ### Authentication
 
-The Grafana HTTP API Data source requires a Grafana URL and a Token or API key to establish the connection to the organization and get relevant data.
+The Business Satellite Data Source requires a Grafana URL and a Token or API key to establish the connection to the organization and get relevant data.
 
 ## Highlights
 
@@ -48,11 +49,13 @@ The Grafana HTTP API Data source requires a Grafana URL and a Token or API key t
 | [Features](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/features/)           | Demonstrates panel features.                                 |
 | [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release/)       | Stay up to date with the latest features and updates.        |
 
-## Tutorial
+## Business Suite for Grafana
 
-This is a step-by-step tutorial to demonstrate how to use the data source for Alerts and Annotations.
+The Business Suite is a collection of open source plugins created and actively maintained by Volkov Labs.
 
-[![Annotations and Alerts tutorial for Grafana with Timescale | How to and Demo to reveal the basics](https://raw.githubusercontent.com/volkovlabs/volkovlabs-grapi-datasource/main/img/tutorial.png)](https://youtu.be/bmOkirtC65w)
+The collection aims to solve the most frequent business tasks by providing an intuitive interface with detailed written documentation, examples, and video tutorials.
+
+[![Business Suite for Grafana](https://raw.githubusercontent.com/VolkovLabs/.github/main/business.png)](https://volkovlabs.io/plugins/)
 
 ## Feedback
 
