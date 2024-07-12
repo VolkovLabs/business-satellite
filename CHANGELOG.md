@@ -2,15 +2,18 @@
 
 ## 3.0.0 (2024-07-11)
 
+### Breaking changes
+
+- Requires Grafana 10 and Grafana 11
+
 ### Features / Enhancements
 
 - Update Tutorial in README (#57)
-- Update dependencies (#60)
 - Update ESLint configuration and refactoring (#61)
 - Add plugin e2e tests and remove cypress (#64)
 - Prepared for Grafana 11 (#66)
 - Updated E2E tests to use Docker (#68)
-- Updated to Grafana 11.1.0 dependencies (#69)
+- Updated to Grafana 11.1.0 dependencies (#60, #69)
 
 ## 2.2.0 (2023-09-19)
 
