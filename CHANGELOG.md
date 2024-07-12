@@ -1,10 +1,16 @@
 # Change Log
 
+## 3.1.0 (IN PROGRESS)
+
+### Features / Enhancements
+
+- Update minimum Grafana version to 10.1.0
+
 ## 3.0.0 (2024-07-11)
 
 ### Breaking changes
 
-- Requires Grafana 10 and Grafana 11
+- Requires Grafana 10.1 and Grafana 11
 
 ### Features / Enhancements
 
