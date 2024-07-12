@@ -20,6 +20,11 @@ export const REQUEST_TYPE_OPTIONS: Array<SelectableValue<RequestType>> = [
     value: RequestType.ANNOTATIONS,
   },
   {
+    label: 'Dashboards Metadata',
+    description: MESSAGES.dashboardsMeta,
+    value: RequestType.DASHBOARDS_META,
+  },
+  {
     label: 'Data Sources',
     description: MESSAGES.requestDataSources,
     value: RequestType.DATASOURCES,

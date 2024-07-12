@@ -132,6 +132,9 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
           case RequestType.ORG_USERS:
             frames = await this.api.features.org.getUsersFrame(target);
             break;
+          case RequestType.DASHBOARDS_META:
+            frames = await this.api.features.dashboards.getAllMetaFrame(target);
+            break;
         }
 
         if (!frames || !frames.length) {

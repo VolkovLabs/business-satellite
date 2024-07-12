@@ -4,7 +4,8 @@
 
 ### Features / Enhancements
 
-- Update minimum Grafana version to 10.1.0
+- Updated minimum Grafana version to 10.1.0 (#72)
+- Added get dashboards meta request (#70)
 
 ## 3.0.0 (2024-07-11)
 
