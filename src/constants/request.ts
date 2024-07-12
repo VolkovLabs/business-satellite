@@ -35,7 +35,7 @@ export const REQUEST_TYPE_OPTIONS: Array<SelectableValue<RequestType>> = [
     value: RequestType.ORG_USERS,
   },
   {
-    label: 'Dashboards Meta',
+    label: 'Dashboards Metadata',
     description: MESSAGES.dashboardsMeta,
     value: RequestType.DASHBOARDS_META,
   },

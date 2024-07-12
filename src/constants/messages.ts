@@ -25,6 +25,6 @@ export const MESSAGES = {
   requestHealth: 'Returns health information',
   requestNone: 'For internal API calls',
   requestOrgUsers: 'Returns all users within the current organization',
-  dashboardsMeta: 'Returns dashboards meta',
+  dashboardsMeta: 'Returns dashboards metadata',
   version: 'Version',
 };
