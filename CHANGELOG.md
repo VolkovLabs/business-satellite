@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.0.0 (IN PROGRESS)
+## 3.0.0 (2024-07-11)
 
 ### Features / Enhancements
 
