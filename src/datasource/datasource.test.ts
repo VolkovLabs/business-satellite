@@ -47,6 +47,9 @@ const createApiMock = () => {
     users: {
       getFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
     },
+    dashboards: {
+      getAllMetaFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
   };
 
   return {
@@ -180,6 +183,14 @@ describe('DataSource', () => {
 
     it('Should return correct data for Org Users frame', async () => {
       const targets = [{ refId: 'A', requestType: RequestType.ORG_USERS }];
+
+      const response = (await dataSource.query({ targets, range } as any)) as any;
+      const frames = response.data;
+      expect(frames.length).toEqual(0);
+    });
+
+    it('Should return correct data for Dashboards Meta frame', async () => {
+      const targets = [{ refId: 'A', requestType: RequestType.DASHBOARDS_META }];
 
       const response = (await dataSource.query({ targets, range } as any)) as any;
       const frames = response.data;

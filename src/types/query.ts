@@ -9,6 +9,7 @@ export enum RequestType {
   ALERT_RULES = 'alertRules',
   ANNOTATIONS = 'annotations',
   DATASOURCES = 'datasources',
+  DASHBOARDS_META = 'dashboardsMeta',
   HEALTH = 'health',
   NONE = 'none',
   ORG_USERS = 'orgUsers',
