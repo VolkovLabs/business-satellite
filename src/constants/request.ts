@@ -35,6 +35,11 @@ export const REQUEST_TYPE_OPTIONS: Array<SelectableValue<RequestType>> = [
     value: RequestType.ORG_USERS,
   },
   {
+    label: 'Dashboards Meta',
+    description: MESSAGES.dashboardsMeta,
+    value: RequestType.DASHBOARDS_META,
+  },
+  {
     label: 'None',
     description: MESSAGES.requestNone,
     value: RequestType.NONE,

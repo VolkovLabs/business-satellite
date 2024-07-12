@@ -4,6 +4,7 @@ import { satisfies } from 'compare-versions';
 import { DataSourceOptions, FeatureApi, RequestType } from '../types';
 import { createFeatureMethod } from '../utils';
 import { Annotations } from './annotations';
+import { Dashboards } from './dashboards';
 import { DataSources } from './datasources';
 import { Health } from './health';
 import { Org } from './org';
@@ -42,6 +43,11 @@ export class Api {
      * Org Api
      */
     org: new Org(this),
+
+    /**
+     * Dashboards Api
+     */
+    dashboards: new Dashboards(this),
   };
 
   features: {
@@ -50,6 +56,7 @@ export class Api {
     datasources: FeatureApi<DataSources>;
     health: FeatureApi<Health>;
     org: FeatureApi<Org>;
+    dashboards: FeatureApi<Dashboards>;
   };
 
   availableRequestTypes: RequestType[];
@@ -64,7 +71,13 @@ export class Api {
     /**
      * Available Request Types
      */
-    const requestTypes = [RequestType.HEALTH, RequestType.DATASOURCES, RequestType.ANNOTATIONS, RequestType.ORG_USERS];
+    const requestTypes = [
+      RequestType.HEALTH,
+      RequestType.DATASOURCES,
+      RequestType.ANNOTATIONS,
+      RequestType.ORG_USERS,
+      RequestType.DASHBOARDS_META,
+    ];
 
     /**
      * Target Grafana Version
@@ -119,6 +132,10 @@ export class Api {
         get: createFeatureMethod(this.all.org.get),
         getUsers: createFeatureMethod(this.all.org.getUsers),
         getUsersFrame: createFeatureMethod(this.all.org.getUsersFrame),
+      },
+      dashboards: {
+        getAllMeta: createFeatureMethod(this.all.dashboards.getAllMeta),
+        getAllMetaFrame: createFeatureMethod(this.all.dashboards.getAllMetaFrame),
       },
     };
   }
