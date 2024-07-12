@@ -10,6 +10,7 @@
 - Add plugin e2e tests and remove cypress (#64)
 - Prepared for Grafana 11 (#66)
 - Updated E2E tests to use Docker (#68)
+- Updated to Grafana 11.1.0 dependencies (#69)
 
 ## 2.2.0 (2023-09-19)
 
