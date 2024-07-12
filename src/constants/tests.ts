@@ -9,6 +9,7 @@ export const TEST_IDS = {
     fieldRequestModelOption: (name: string) => `config-editor field-request-mode-option-${name}`,
   },
   queryEditor: {
+    option: (name: unknown) => `query-editor option-${name}`,
     fieldAnnotationDashboardContainer: 'data-testid query-editor field-annotation-dashboard-container',
     fieldAnnotationDashboardOption: (name: string) => `query-editor field-annotation-dashboard-option-${name}`,
     fieldAnnotationRulesContainer: 'data-testid query-editor field-annotation-rules-container',
@@ -23,5 +24,6 @@ export const TEST_IDS = {
     fieldAnnotationTypeContainer: 'data-testid query-editor field-annotation-type-container',
     fieldAnnotationTypeOption: (name: string) => `query-editor field-annotation-type-option-${name}`,
     fieldRequest: 'query-editor field-request',
+    fieldDatasourcesCheckHealth: 'data-testid query-editor field-datasources-check-health',
   },
 };

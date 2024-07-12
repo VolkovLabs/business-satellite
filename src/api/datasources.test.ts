@@ -147,6 +147,31 @@ describe('Data Sources Api', () => {
       expect(result[0].fields[0].values).toEqual([1, 2]);
     });
 
+    it('Should check health', async () => {
+      fetchRequestMock = jest
+        .fn()
+        .mockImplementationOnce(() => getResponse(response))
+        /**
+         * First health
+         */
+        .mockImplementationOnce(() =>
+          getResponse({
+            status: 200,
+          })
+        )
+        /**
+         * Second health
+         */
+        .mockImplementationOnce(() => getErrorResponse());
+      const result = await api.features.datasources.getFrame({
+        ...query,
+        datasourceHealth: true,
+      });
+      expect(result?.length).toEqual(1);
+      expect(result[0].fields.length).toEqual(12);
+      expect(result[0].fields[11].values).toEqual([200, 500]);
+    });
+
     it('Should handle getDataSourcesFrame request with no data', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() =>
         getResponse({

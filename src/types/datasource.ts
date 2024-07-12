@@ -44,3 +44,17 @@ export interface SecureJsonData {
    */
   token?: string;
 }
+
+/**
+ * Data Source Health Message
+ */
+export type DataSourceHealthMessage =
+  | {
+      message: string;
+      status: string;
+    }
+  | {
+      message: string;
+      error: string;
+      status: string;
+    };

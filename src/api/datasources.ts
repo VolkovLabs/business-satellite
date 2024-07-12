@@ -3,7 +3,7 @@ import { getBackendSrv } from '@grafana/runtime';
 import { lastValueFrom } from 'rxjs';
 
 import { MESSAGES } from '../constants';
-import { Query, RequestType } from '../types';
+import { DataSourceHealthMessage, FieldMapper, Query, RequestType } from '../types';
 import { convertToFrame, notifyError } from '../utils';
 import { BaseApi } from './base';
 
@@ -37,78 +37,117 @@ export class DataSources extends BaseApi {
   };
 
   /**
+   * Get Health Status
+   */
+  private getHealthStatus = async (id: string): Promise<number> => {
+    /**
+     * Fetch
+     */
+    const response = await lastValueFrom(
+      getBackendSrv().fetch<DataSourceHealthMessage>({
+        method: 'GET',
+        url: `${this.api.instanceSettings.url}/api/datasources/uid/${id}/health`,
+      })
+    ).catch((reason) => reason?.status);
+
+    return response?.status || 500;
+  };
+
+  /**
    * Get Data Sources Frame
    */
   getFrame = async (query: Query): Promise<DataFrame[]> => {
     const datasources = await this.getAll();
+
     if (!datasources.length) {
       return [];
+    }
+
+    const datasourcesHealth: number[] = [];
+
+    if (query.datasourceHealth) {
+      for (const datasource of datasources) {
+        datasourcesHealth.push(await this.getHealthStatus(datasource.uid));
+      }
+    }
+
+    const fields: Array<FieldMapper<{ ds: DataSourceSettings; health: number }>> = [
+      {
+        name: 'Id',
+        type: FieldType.number,
+        getValue: (item) => item.ds.id,
+      },
+      {
+        name: 'Org Id',
+        type: FieldType.number,
+        getValue: (item) => item.ds.orgId,
+      },
+      {
+        name: 'UID',
+        type: FieldType.string,
+        getValue: (item) => item.ds.uid,
+      },
+      {
+        name: 'Name',
+        type: FieldType.string,
+        getValue: (item) => item.ds.name,
+      },
+      {
+        name: 'Type',
+        type: FieldType.string,
+        getValue: (item) => item.ds.type,
+      },
+      {
+        name: 'Type Logo URL',
+        type: FieldType.string,
+        getValue: (item) => item.ds.typeLogoUrl,
+      },
+      {
+        name: 'Type Name',
+        type: FieldType.string,
+        getValue: (item) => item.ds.typeName,
+      },
+      {
+        name: 'Is Default',
+        type: FieldType.boolean,
+        getValue: (item) => item.ds.isDefault,
+      },
+      {
+        name: 'Read Only',
+        type: FieldType.boolean,
+        getValue: (item) => item.ds.readOnly,
+      },
+      {
+        name: 'URL',
+        type: FieldType.string,
+        getValue: (item) => item.ds.url,
+      },
+      {
+        name: 'User',
+        type: FieldType.string,
+        getValue: (item) => item.ds.user,
+      },
+    ];
+
+    if (query.datasourceHealth) {
+      fields.push({
+        name: 'Health Status',
+        type: FieldType.number,
+        getValue: (item) => item.health,
+      });
     }
 
     /**
      * Create Frame
      */
-    const frame = convertToFrame<DataSourceSettings>({
+    const frame = convertToFrame<{ ds: DataSourceSettings; health: number }>({
       name: RequestType.DATASOURCES,
       refId: query.refId,
-      fields: [
-        {
-          name: 'Id',
-          type: FieldType.number,
-          getValue: (item) => item.id,
-        },
-        {
-          name: 'Org Id',
-          type: FieldType.number,
-          getValue: (item) => item.orgId,
-        },
-        {
-          name: 'UID',
-          type: FieldType.string,
-          getValue: (item) => item.uid,
-        },
-        {
-          name: 'Name',
-          type: FieldType.string,
-          getValue: (item) => item.name,
-        },
-        {
-          name: 'Type',
-          type: FieldType.string,
-          getValue: (item) => item.type,
-        },
-        {
-          name: 'Type Logo URL',
-          type: FieldType.string,
-          getValue: (item) => item.typeLogoUrl,
-        },
-        {
-          name: 'Type Name',
-          type: FieldType.string,
-          getValue: (item) => item.typeName,
-        },
-        {
-          name: 'Is Default',
-          type: FieldType.boolean,
-          getValue: (item) => item.isDefault,
-        },
-        {
-          name: 'Read Only',
-          type: FieldType.boolean,
-          getValue: (item) => item.readOnly,
-        },
-        {
-          name: 'URL',
-          type: FieldType.string,
-          getValue: (item) => item.url,
-        },
-        {
-          name: 'User',
-          type: FieldType.string,
-          getValue: (item) => item.user,
-        },
-      ],
-      items: datasources,
+      fields,
+      items: datasources.map((ds, index) => ({
+        ds,
+        health: datasourcesHealth[index],
+      })),
     });
 
     return [frame];

@@ -9,6 +9,7 @@ import {
   ANNOTATION_RULES_OPTIONS,
   ANNOTATION_STATES_OPTIONS,
   ANNOTATION_TYPE_OPTIONS,
+  BOOLEAN_OPTIONS,
   DEFAULT_QUERY,
   REQUEST_TYPE_OPTIONS,
   TEST_IDS,
@@ -23,6 +24,7 @@ import {
   Query,
   RequestType,
 } from '../../types';
+import { getOptionsWithTestId } from '../../utils';
 
 /**
  * Editor Properties
@@ -164,6 +166,17 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   }, [datasource.api.availableRequestTypes]);
 
   /**
+   * Change Query Field
+   */
+  const onChangeQueryField = useCallback(
+    (name: keyof Query, value: Query[typeof name]) => {
+      onChange({ ...rawQuery, [name]: value });
+      onRunQuery();
+    },
+    [onChange, onRunQuery, rawQuery]
+  );
+
+  /**
    * Render
    */
   return (
@@ -277,6 +290,19 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
             </InlineFieldRow>
           )}
         </>
+      )}
+      {query.requestType === RequestType.DATASOURCES && (
+        <InlineFieldRow>
+          <InlineField label="Check Health" data-testid={TEST_IDS.queryEditor.fieldDatasourcesCheckHealth}>
+            <RadioButtonGroup
+              options={getOptionsWithTestId(BOOLEAN_OPTIONS, TEST_IDS.queryEditor.option)}
+              value={query.datasourceHealth}
+              onChange={(value) => {
+                onChangeQueryField('datasourceHealth', value);
+              }}
+            />
+          </InlineField>
+        </InlineFieldRow>
       )}
     </>
   );
