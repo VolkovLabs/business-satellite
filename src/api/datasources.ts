@@ -48,7 +48,7 @@ export class DataSources extends BaseApi {
         method: 'GET',
         url: `${this.api.instanceSettings.url}/api/datasources/uid/${id}/health`,
       })
-    ).catch((reason) => reason?.status);
+    ).catch((reason) => reason);
 
     return response?.status || 500;
   };
@@ -63,13 +63,9 @@ export class DataSources extends BaseApi {
       return [];
     }
 
-    const datasourcesHealth: number[] = [];
-
-    if (query.datasourceHealth) {
-      for (const datasource of datasources) {
-        datasourcesHealth.push(await this.getHealthStatus(datasource.uid));
-      }
-    }
+    const datasourcesHealth = query.datasourceHealth
+      ? await Promise.all(datasources.map((datasource) => this.getHealthStatus(datasource.uid)))
+      : [];
 
     const fields: Array<FieldMapper<{ ds: DataSourceSettings; health: number }>> = [
       {
