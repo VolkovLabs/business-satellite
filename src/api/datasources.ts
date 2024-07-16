@@ -47,6 +47,7 @@ export class DataSources extends BaseApi {
       getBackendSrv().fetch<DataSourceHealthMessage>({
         method: 'GET',
         url: `${this.api.instanceSettings.url}/api/datasources/uid/${id}/health`,
+        showErrorAlert: false,
       })
     ).catch((reason) => reason);
 
