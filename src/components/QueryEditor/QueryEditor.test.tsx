@@ -340,4 +340,40 @@ describe('QueryEditor', () => {
       });
     });
   });
+
+  /**
+   * Data Sources
+   */
+  describe('Data Sources', () => {
+    const onChange = jest.fn();
+
+    it('Should allow to update check health', () => {
+      render(
+        <QueryEditor
+          datasource={datasource as any}
+          query={
+            {
+              requestType: RequestType.DATASOURCES,
+              datasourceHealth: false,
+            } as any
+          }
+          onRunQuery={onRunQuery}
+          onChange={onChange}
+        />
+      );
+
+      expect(selectors.fieldDatasourcesCheckHealth()).toBeInTheDocument();
+
+      const enabledOption = getSelectors(within(selectors.fieldDatasourcesCheckHealth())).option(false, 'true');
+      expect(enabledOption).toBeInTheDocument();
+
+      fireEvent.click(enabledOption);
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          datasourceHealth: true,
+        })
+      );
+    });
+  });
 });

@@ -1,13 +1,6 @@
-import { createDataFrame, DataFrame, FieldType, getFieldTypeFromValue, toDataFrame } from '@grafana/data';
+import { createDataFrame, DataFrame, getFieldTypeFromValue, toDataFrame } from '@grafana/data';
 
-/**
- * Field Mapper
- */
-type FieldMapper<TItem> = {
-  name: string;
-  type: FieldType;
-  getValue: (item: TItem) => unknown;
-};
+import { FieldMapper } from '../types';
 
 /**
  * Convert To Frame

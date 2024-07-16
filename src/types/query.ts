@@ -81,4 +81,9 @@ export interface Query extends DataQuery {
    * @type {boolean}
    */
   annotationRules?: boolean;
+
+  /**
+   * Data Source Health
+   */
+  datasourceHealth?: boolean;
 }

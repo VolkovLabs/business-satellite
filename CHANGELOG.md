@@ -6,6 +6,7 @@
 
 - Updated minimum Grafana version to 10.1.0 (#72)
 - Added get dashboards meta request (#70)
+- Added data source health check (#71)
 
 ## 3.0.0 (2024-07-11)
 

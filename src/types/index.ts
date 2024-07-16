@@ -4,6 +4,7 @@ export * from './api';
 export * from './auth-key';
 export * from './dashboard';
 export * from './datasource';
+export * from './frame';
 export * from './health';
 export * from './query';
 export * from './user';

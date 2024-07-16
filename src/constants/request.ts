@@ -45,3 +45,17 @@ export const REQUEST_TYPE_OPTIONS: Array<SelectableValue<RequestType>> = [
     value: RequestType.NONE,
   },
 ];
+
+/**
+ * Boolean Options
+ */
+export const BOOLEAN_OPTIONS: Array<SelectableValue<boolean>> = [
+  {
+    value: true,
+    label: 'Enabled',
+  },
+  {
+    value: false,
+    label: 'Disabled',
+  },
+];
