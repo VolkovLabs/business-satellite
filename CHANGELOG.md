@@ -1,12 +1,12 @@
 # Change Log
 
-## 3.1.0 (IN PROGRESS)
+## 3.1.0 (2024-07-16)
 
 ### Features / Enhancements
 
 - Updated minimum Grafana version to 10.1.0 (#72)
 - Added get dashboards meta request (#70)
-- Added data source health check (#71)
+- Added data source health check (#71, #73)
 
 ## 3.0.0 (2024-07-11)
 
