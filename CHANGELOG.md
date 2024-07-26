@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.2.0 (IN PROGRESS)
+
+### Features / Enhancements
+
+- Added variables support in Dashboard Scene (#75)
+
 ## 3.1.0 (2024-07-16)
 
 ### Features / Enhancements
