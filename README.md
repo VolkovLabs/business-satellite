@@ -16,7 +16,7 @@ The Business Satellite Data Source for Grafana allows retrieving data from local
 
 ## Requirements
 
-- Business Satellite Data Source 3.X requires **Grafana 10** or **Grafana 11**.
+- Business Satellite Data Source 3.X requires **Grafana 10.2** or **Grafana 11**.
 - Grafana HTTP API Data Source 2.X requires **Grafana 9** and **Grafana 10**.
 - Grafana HTTP API Data Source 1.X requires **Grafana 8.5** and **Grafana 9**.
 

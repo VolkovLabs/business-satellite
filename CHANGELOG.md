@@ -2,6 +2,10 @@
 
 ## 3.2.0 (IN PROGRESS)
 
+### Breaking changes
+
+- Requires Grafana 10.2 and Grafana 11
+
 ### Features / Enhancements
 
 - Added variables support in Dashboard Scene (#75)
