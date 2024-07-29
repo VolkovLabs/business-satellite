@@ -1,4 +1,5 @@
 export * from './alert-rule';
+export * from './alerting';
 export * from './annotation';
 export * from './api';
 export * from './auth-key';

@@ -25,12 +25,12 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
   /**
    * Target Info
    */
-  private targetInfo: { version: string } | undefined;
+  private targetInfo: { version: string; alertingEnabled: boolean } | undefined;
 
   /**
    * Get Target Promise
    */
-  private getTargetPromise: Promise<[Health | undefined]> | null = null;
+  private getTargetPromise: Promise<[Health | undefined, boolean]> | null = null;
 
   /**
    * Constructor
@@ -53,12 +53,12 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     /**
      * Get All Info for Initialization
      */
-    this.getTargetPromise = Promise.all([this.api.features.health.get()]);
+    this.getTargetPromise = Promise.all([this.api.features.health.get(), this.api.features.alerting.hasSupport()]);
 
     /**
      * Get Health
      */
-    const [health] = await this.getTargetPromise;
+    const [health, alertingEnabled] = await this.getTargetPromise;
     if (!health) {
       throw new Error('Unable to get Health data.');
     }
@@ -68,6 +68,7 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
      */
     this.targetInfo = {
       version: health.version,
+      alertingEnabled,
     };
 
     /**
@@ -134,6 +135,9 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
             break;
           case RequestType.DASHBOARDS_META:
             frames = await this.api.features.dashboards.getAllMetaFrame(target);
+            break;
+          case RequestType.ALERTING_ALERTS:
+            frames = await this.api.features.alerting.getAlertsFrame(target);
             break;
         }
 

@@ -50,6 +50,10 @@ const createApiMock = () => {
     dashboards: {
       getAllMetaFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
     },
+    alerting: {
+      hasSupport: jest.fn().mockImplementation(() => Promise.resolve(true)),
+      getAlertsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
+    },
   };
 
   return {
@@ -191,6 +195,14 @@ describe('DataSource', () => {
 
     it('Should return correct data for Dashboards Meta frame', async () => {
       const targets = [{ refId: 'A', requestType: RequestType.DASHBOARDS_META }];
+
+      const response = (await dataSource.query({ targets, range } as any)) as any;
+      const frames = response.data;
+      expect(frames.length).toEqual(0);
+    });
+
+    it('Should return correct data for Alerting alerts frame', async () => {
+      const targets = [{ refId: 'A', requestType: RequestType.ALERTING_ALERTS }];
 
       const response = (await dataSource.query({ targets, range } as any)) as any;
       const frames = response.data;

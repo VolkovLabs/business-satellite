@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { RequestType } from '../types';
+import { Query, RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -99,7 +99,7 @@ describe('Dashboards Api', () => {
       },
     };
 
-    const query = { refId: 'A', requestType: RequestType.DASHBOARDS_META };
+    const query: Query = { refId: 'A', requestType: RequestType.DASHBOARDS_META };
 
     it('Should make request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));

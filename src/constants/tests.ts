@@ -25,5 +25,7 @@ export const TEST_IDS = {
     fieldAnnotationTypeOption: (name: string) => `query-editor field-annotation-type-option-${name}`,
     fieldRequest: 'query-editor field-request',
     fieldDatasourcesCheckHealth: 'data-testid query-editor field-datasources-check-health',
+    fieldAlertingState: 'data-testid query-editor field-alerting-state',
+    fieldAlertingLimit: 'data-testid query-editor field-alerting-limit',
   },
 };

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { RequestType } from '../types';
+import { Query, RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -114,7 +114,7 @@ describe('Data Sources Api', () => {
       },
     };
 
-    const query = { refId: 'A', requestType: RequestType.DATASOURCES };
+    const query: Query = { refId: 'A', requestType: RequestType.DATASOURCES };
 
     it('Should make getDataSources request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));

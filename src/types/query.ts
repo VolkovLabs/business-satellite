@@ -1,6 +1,12 @@
 import { DataQuery } from '@grafana/schema';
 
-import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType } from '../types';
+import {
+  AlertInstanceTotalState,
+  AnnotationDashboard,
+  AnnotationRange,
+  AnnotationState,
+  AnnotationType,
+} from '../types';
 
 /**
  * Request Type Values
@@ -13,6 +19,26 @@ export enum RequestType {
   HEALTH = 'health',
   NONE = 'none',
   ORG_USERS = 'orgUsers',
+  ALERTING_ALERTS = 'alertingAlerts',
+}
+
+/**
+ * Alerting Query
+ */
+export interface AlertingQuery {
+  /**
+   * State
+   *
+   * @type {AlertInstanceTotalState[]}
+   */
+  state: AlertInstanceTotalState[];
+
+  /**
+   * Limit
+   *
+   * @type {number}
+   */
+  limit?: number;
 }
 
 /**
@@ -86,4 +112,11 @@ export interface Query extends DataQuery {
    * Data Source Health
    */
   datasourceHealth?: boolean;
+
+  /**
+   * Alerting
+   *
+   * @type {AlertingQuery}
+   */
+  alerting?: AlertingQuery;
 }

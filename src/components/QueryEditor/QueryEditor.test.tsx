@@ -3,7 +3,15 @@ import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
 import { DEFAULT_QUERY, TEST_IDS } from '../../constants';
-import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType, Query, RequestType } from '../../types';
+import {
+  AlertInstanceTotalState,
+  AnnotationDashboard,
+  AnnotationRange,
+  AnnotationState,
+  AnnotationType,
+  Query,
+  RequestType,
+} from '../../types';
 import { QueryEditor } from './QueryEditor';
 
 /**
@@ -14,6 +22,9 @@ import { QueryEditor } from './QueryEditor';
 export const getQuery = (overrideQuery: Partial<Query> = {}): Query => ({
   requestType: DEFAULT_QUERY.requestType,
   refId: 'A',
+  alerting: {
+    state: [],
+  },
   ...overrideQuery,
 });
 
@@ -372,6 +383,73 @@ describe('QueryEditor', () => {
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
           datasourceHealth: true,
+        })
+      );
+    });
+  });
+
+  describe('Alerting', () => {
+    it('Should allow to change state', () => {
+      const onChange = jest.fn();
+
+      render(
+        <QueryEditor
+          datasource={datasource as any}
+          query={
+            {
+              requestType: RequestType.ALERTING_ALERTS,
+            } as any
+          }
+          onRunQuery={onRunQuery}
+          onChange={onChange}
+        />
+      );
+
+      expect(selectors.fieldAlertingState()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldAlertingState(), {
+        target: { values: [AlertInstanceTotalState.ALERTING, AlertInstanceTotalState.PENDING] },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          alerting: expect.objectContaining({
+            state: [AlertInstanceTotalState.ALERTING, AlertInstanceTotalState.PENDING],
+          }),
+        })
+      );
+    });
+
+    it('Should allow to change limit', () => {
+      const onChange = jest.fn();
+
+      render(
+        <QueryEditor
+          datasource={datasource as any}
+          query={
+            {
+              requestType: RequestType.ALERTING_ALERTS,
+              alerting: {
+                limit: 5,
+              },
+            } as any
+          }
+          onRunQuery={onRunQuery}
+          onChange={onChange}
+        />
+      );
+
+      expect(selectors.fieldAlertingLimit()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldAlertingLimit(), {
+        target: { value: '10' },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          alerting: expect.objectContaining({
+            limit: 10,
+          }),
         })
       );
     });
