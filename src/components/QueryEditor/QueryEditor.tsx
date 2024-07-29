@@ -361,6 +361,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               value={query.alerting?.state}
               isMulti={true}
               isClearable={true}
+              data-testid={TEST_IDS.queryEditor.fieldAlertingState}
             />
           </InlineField>
           <InlineField label="Max Limit" labelWidth={10}>
@@ -368,6 +369,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               value={query.alerting?.limit ?? 0}
               step={1}
               onChange={(value) => onChangeAlertingQueryField('limit', value)}
+              data-testid={TEST_IDS.queryEditor.fieldAlertingLimit}
             />
           </InlineField>
         </InlineFieldRow>

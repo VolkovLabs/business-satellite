@@ -67,7 +67,7 @@ export class Alerting extends BaseApi {
    * Get Alerts Frame
    */
   getAlertsFrame = async (query: Query): Promise<DataFrame[]> => {
-    const alerts = await this.getAlerts(query.alerting || { state: [], limit: 100 });
+    const alerts = await this.api.features.alerting.getAlerts(query.alerting || { state: [], limit: 100 });
     if (!alerts.length) {
       return [];
     }
