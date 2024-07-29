@@ -126,6 +126,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -140,6 +141,7 @@
             "mode": "continuous-GrYlRd"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -153,6 +155,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -372,6 +375,7 @@
       },
       "id": 6,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -381,7 +385,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "annotationDashboard": "any",
@@ -432,16 +436,15 @@
   ],
   "refresh": "5s",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "test",
-          "value": "test"
+          "selected": false,
+          "text": "device1",
+          "value": "device1"
         },
         "datasource": {
           "type": "postgres",

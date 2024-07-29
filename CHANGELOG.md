@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.2.0 (IN PROGRESS)
+## 3.2.0 (2024-07-29)
 
 ### Breaking changes
 
