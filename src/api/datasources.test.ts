@@ -37,9 +37,6 @@ jest.mock('@grafana/runtime', () => ({
   getAppEvents: () => ({
     publish: jest.fn().mockImplementation(() => {}),
   }),
-  config: {
-    unifiedAlertingEnabled: true,
-  },
 }));
 
 /**

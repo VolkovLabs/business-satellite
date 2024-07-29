@@ -51,6 +51,7 @@ const createApiMock = () => {
       getAllMetaFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
     },
     alerting: {
+      hasSupport: jest.fn().mockImplementation(() => Promise.resolve(true)),
       getAlertsFrame: jest.fn().mockImplementation(() => Promise.resolve(frames)),
     },
   };

@@ -12,6 +12,24 @@ import { BaseApi } from './base';
  */
 export class Alerting extends BaseApi {
   /**
+   * Has Support
+   */
+  hasSupport = async (): Promise<boolean> => {
+    try {
+      await lastValueFrom(
+        getBackendSrv().fetch<PromRulesResponse>({
+          method: 'GET',
+          url: `${this.api.instanceSettings.url}/api/prometheus/grafana/api/v1/rules`,
+        })
+      );
+
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  /**
    * Get Alerts
    */
   getAlerts = async ({ state, limit }: AlertingQuery): Promise<Alert[]> => {

@@ -42,9 +42,6 @@ jest.mock('@grafana/runtime', () => ({
   getTemplateSrv: () => ({
     replace: jest.fn((str) => str),
   }),
-  config: {
-    unifiedAlertingEnabled: true,
-  },
 }));
 
 /**

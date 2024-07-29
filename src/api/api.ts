@@ -1,5 +1,4 @@
 import { DataSourceInstanceSettings } from '@grafana/data';
-import { config } from '@grafana/runtime';
 import { satisfies } from 'compare-versions';
 
 import { DataSourceOptions, FeatureApi, RequestType } from '../types';
@@ -74,7 +73,7 @@ export class Api {
    */
   constructor(
     public instanceSettings: DataSourceInstanceSettings<DataSourceOptions>,
-    private targetInfo?: { version?: string }
+    private targetInfo?: { version?: string; alertingEnabled?: boolean }
   ) {
     /**
      * Available Request Types
@@ -100,7 +99,7 @@ export class Api {
       requestTypes.push(RequestType.ALERT_RULES);
     }
 
-    const isGrafanaAlertingEnabled = config.unifiedAlertingEnabled && isGrafana10AndHigher;
+    const isGrafanaAlertingEnabled = isGrafana10AndHigher && !!this.targetInfo?.alertingEnabled;
 
     if (isGrafanaAlertingEnabled) {
       requestTypes.push(RequestType.ALERTING_ALERTS);
@@ -152,6 +151,10 @@ export class Api {
         getAllMetaFrame: createFeatureMethod(this.all.dashboards.getAllMetaFrame),
       },
       alerting: {
+        /**
+         * Should be always enabled to check if alerting features supported
+         */
+        hasSupport: createFeatureMethod(this.all.alerting.hasSupport),
         getAlerts: createFeatureMethod(
           this.all.alerting.getAlerts,
           isGrafanaAlertingEnabled,

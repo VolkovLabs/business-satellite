@@ -37,9 +37,6 @@ jest.mock('@grafana/runtime', () => ({
   getAppEvents: () => ({
     publish: jest.fn().mockImplementation(() => {}),
   }),
-  config: {
-    unifiedAlertingEnabled: true,
-  },
 }));
 
 /**
@@ -51,7 +48,24 @@ describe('Alerting Api', () => {
   /**
    * Api
    */
-  const api = new Api(instanceSettings, { version: '11.1.0' });
+  const api = new Api(instanceSettings, { version: '11.1.0', alertingEnabled: true });
+
+  /**
+   * Has support
+   */
+  describe('hasSupport', () => {
+    it('Should be enabled', async () => {
+      fetchRequestMock = jest.fn().mockImplementation(() => getResponse({}));
+      const result = await api.features.alerting.hasSupport();
+      expect(result).toBeTruthy();
+    });
+
+    it('Should be disabled', async () => {
+      fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse());
+      const result = await api.features.alerting.hasSupport();
+      expect(result).toBeFalsy();
+    });
+  });
 
   /**
    * Get All Meta
