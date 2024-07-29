@@ -14,6 +14,9 @@ import { QueryEditor } from './QueryEditor';
 export const getQuery = (overrideQuery: Partial<Query> = {}): Query => ({
   requestType: DEFAULT_QUERY.requestType,
   refId: 'A',
+  alerting: {
+    state: [],
+  },
   ...overrideQuery,
 });
 

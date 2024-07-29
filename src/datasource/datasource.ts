@@ -135,6 +135,9 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
           case RequestType.DASHBOARDS_META:
             frames = await this.api.features.dashboards.getAllMetaFrame(target);
             break;
+          case RequestType.ALERTING_ALERTS:
+            frames = await this.api.features.alerting.getAlertsFrame(target);
+            break;
         }
 
         if (!frames || !frames.length) {

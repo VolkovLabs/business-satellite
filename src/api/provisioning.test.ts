@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { RequestType } from '../types';
+import { Query, RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -37,6 +37,9 @@ jest.mock('@grafana/runtime', () => ({
   getAppEvents: () => ({
     publish: jest.fn().mockImplementation(() => {}),
   }),
+  config: {
+    unifiedAlertingEnabled: true,
+  },
 }));
 
 /**
@@ -240,7 +243,7 @@ describe('Provisioning Api', () => {
       },
     };
 
-    const query = { refId: 'A', requestType: RequestType.ALERT_RULES };
+    const query: Query = { refId: 'A', requestType: RequestType.ALERT_RULES };
 
     it('Should make getAlertRules request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));

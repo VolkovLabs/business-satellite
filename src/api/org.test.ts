@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { RequestType } from '../types';
+import { Query, RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -37,6 +37,9 @@ jest.mock('@grafana/runtime', () => ({
   getAppEvents: () => ({
     publish: jest.fn().mockImplementation(() => {}),
   }),
+  config: {
+    unifiedAlertingEnabled: true,
+  },
 }));
 
 /**
@@ -146,7 +149,10 @@ describe('Org Api', () => {
       },
     };
 
-    const query = { refId: 'A', requestType: RequestType.ORG_USERS };
+    const query: Query = {
+      refId: 'A',
+      requestType: RequestType.ORG_USERS,
+    };
 
     it('Should make getUsers request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));

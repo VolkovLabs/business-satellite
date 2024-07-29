@@ -1,5 +1,6 @@
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
+import { NumberInput } from '@volkovlabs/components';
 import { defaults } from 'lodash';
 import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -16,6 +17,8 @@ import {
 } from '../../constants';
 import { DataSource } from '../../datasource';
 import {
+  AlertingQuery,
+  AlertInstanceTotalState,
   AnnotationDashboard,
   AnnotationRange,
   AnnotationState,
@@ -177,6 +180,23 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   );
 
   /**
+   * Change Alerting Query Field
+   */
+  const onChangeAlertingQueryField = useCallback(
+    (name: keyof AlertingQuery, value: AlertingQuery[typeof name]) => {
+      onChange({
+        ...rawQuery,
+        alerting: {
+          ...(rawQuery.alerting || { state: [] }),
+          [name]: value,
+        },
+      });
+      onRunQuery();
+    },
+    [onChange, onRunQuery, rawQuery]
+  );
+
+  /**
    * Render
    */
   return (
@@ -300,6 +320,54 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               onChange={(value) => {
                 onChangeQueryField('datasourceHealth', value);
               }}
+            />
+          </InlineField>
+        </InlineFieldRow>
+      )}
+
+      {query.requestType === RequestType.ALERTING_ALERTS && (
+        <InlineFieldRow>
+          <InlineField label="State" labelWidth={10} grow={true}>
+            <Select
+              onChange={(event) => {
+                const array = Array.isArray(event) ? event : [event];
+                onChangeAlertingQueryField(
+                  'state',
+                  array.map((option) => option.value)
+                );
+              }}
+              options={[
+                {
+                  value: AlertInstanceTotalState.ALERTING,
+                  label: 'Alerting',
+                },
+                {
+                  value: AlertInstanceTotalState.PENDING,
+                  label: 'Pending',
+                },
+                {
+                  value: AlertInstanceTotalState.NORMAL,
+                  label: 'Normal',
+                },
+                {
+                  value: AlertInstanceTotalState.ERROR,
+                  label: 'Error',
+                },
+                {
+                  value: AlertInstanceTotalState.NO_DATA,
+                  label: 'NoData',
+                },
+              ]}
+              value={query.alerting?.state}
+              isMulti={true}
+              isClearable={true}
+            />
+          </InlineField>
+          <InlineField label="Max Limit" labelWidth={10}>
+            <NumberInput
+              value={query.alerting?.limit ?? 0}
+              step={1}
+              onChange={(value) => onChangeAlertingQueryField('limit', value)}
             />
           </InlineField>
         </InlineFieldRow>

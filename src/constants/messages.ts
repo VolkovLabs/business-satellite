@@ -9,6 +9,7 @@ export const API = {
   getHealthFailed: 'Get Health: API Request failed. See Console for details.',
   getOrgFailed: 'Get Org: API Request failed. See Console for details.',
   getUsersFailed: 'Get Users: API Request failed. See Console for details.',
+  alertingGetAlertsFailed: 'Get Grafana Alerts: API Request failed. See Console for details.',
 };
 
 /**
@@ -20,6 +21,7 @@ export const MESSAGES = {
   connectionError: 'Error. Not able connect.',
   error: 'Error',
   requestAlertRules: 'Returns alert rules',
+  requestAlertingAlerts: 'Returns Grafana alerts',
   requestAnnotations: 'Returns annotations',
   requestDataSources: 'Returns data sources',
   requestHealth: 'Returns health information',

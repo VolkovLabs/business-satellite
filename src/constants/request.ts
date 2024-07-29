@@ -15,6 +15,11 @@ export const REQUEST_TYPE_OPTIONS: Array<SelectableValue<RequestType>> = [
     value: RequestType.ALERT_RULES,
   },
   {
+    label: 'Grafana Alerts',
+    description: MESSAGES.requestAlertingAlerts,
+    value: RequestType.ALERTING_ALERTS,
+  },
+  {
     label: 'Annotations',
     description: MESSAGES.requestAnnotations,
     value: RequestType.ANNOTATIONS,

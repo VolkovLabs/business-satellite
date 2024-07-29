@@ -1,8 +1,10 @@
 import { DataSourceInstanceSettings } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { satisfies } from 'compare-versions';
 
 import { DataSourceOptions, FeatureApi, RequestType } from '../types';
 import { createFeatureMethod } from '../utils';
+import { Alerting } from './alerting';
 import { Annotations } from './annotations';
 import { Dashboards } from './dashboards';
 import { DataSources } from './datasources';
@@ -48,6 +50,11 @@ export class Api {
      * Dashboards Api
      */
     dashboards: new Dashboards(this),
+
+    /**
+     * Alerting Api
+     */
+    alerting: new Alerting(this),
   };
 
   features: {
@@ -57,6 +64,7 @@ export class Api {
     health: FeatureApi<Health>;
     org: FeatureApi<Org>;
     dashboards: FeatureApi<Dashboards>;
+    alerting: FeatureApi<Alerting>;
   };
 
   availableRequestTypes: RequestType[];
@@ -90,6 +98,12 @@ export class Api {
     const isGrafana10AndHigher = satisfies(version, '>=10.*');
     if (isGrafana10AndHigher) {
       requestTypes.push(RequestType.ALERT_RULES);
+    }
+
+    const isGrafanaAlertingEnabled = config.unifiedAlertingEnabled && isGrafana10AndHigher;
+
+    if (isGrafanaAlertingEnabled) {
+      requestTypes.push(RequestType.ALERTING_ALERTS);
     }
 
     /**
@@ -136,6 +150,18 @@ export class Api {
       dashboards: {
         getAllMeta: createFeatureMethod(this.all.dashboards.getAllMeta),
         getAllMetaFrame: createFeatureMethod(this.all.dashboards.getAllMetaFrame),
+      },
+      alerting: {
+        getAlerts: createFeatureMethod(
+          this.all.alerting.getAlerts,
+          isGrafanaAlertingEnabled,
+          'Alerts are supported since Grafana 10 and Alerting should be enabled.'
+        ),
+        getAlertsFrame: createFeatureMethod(
+          this.all.alerting.getAlertsFrame,
+          isGrafanaAlertingEnabled,
+          'Alerts are supported since Grafana 10 and Alerting should be enabled.'
+        ),
       },
     };
   }
