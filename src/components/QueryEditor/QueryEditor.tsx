@@ -366,7 +366,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
           </InlineField>
           <InlineField label="Max Limit" labelWidth={10}>
             <NumberInput
-              value={query.alerting?.limit ?? 0}
+              value={query.alerting?.limit ?? 100}
               step={1}
               onChange={(value) => onChangeAlertingQueryField('limit', value)}
               data-testid={TEST_IDS.queryEditor.fieldAlertingLimit}

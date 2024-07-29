@@ -9,6 +9,7 @@
 ### Features / Enhancements
 
 - Added variables support in Dashboard Scene (#75)
+- Added grafana alerts with states (#76)
 
 ## 3.1.0 (2024-07-16)
 
