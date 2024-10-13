@@ -10,15 +10,15 @@
 
 ## Introduction
 
-The Business Satellite Data Source for Grafana allows retrieving data from local and remote Grafana instances via HTTP API.
+The Business Satellite data source for Grafana allows retrieving data from local and remote Grafana instances via HTTP API.
 
 [![Business Satellite data source | Easy access to Grafana backend | Includes Annotations tutorial](https://raw.githubusercontent.com/volkovlabs/business-satellite/main/img/overview.png)](https://youtu.be/0zibOEGqTJ8)
 
 ## Requirements
 
-- Business Satellite Data Source 3.X requires **Grafana 10.2** or **Grafana 11**.
-- Grafana HTTP API Data Source 2.X requires **Grafana 9** and **Grafana 10**.
-- Grafana HTTP API Data Source 1.X requires **Grafana 8.5** and **Grafana 9**.
+- Business Satellite data source 3.X requires **Grafana 10.2** or **Grafana 11**.
+- Grafana HTTP API data source 2.X requires **Grafana 9** and **Grafana 10**.
+- Grafana HTTP API data source 1.X requires **Grafana 8.5** and **Grafana 9**.
 
 ## Getting Started
 
@@ -37,17 +37,17 @@ The Business Satellite Data Source requires a Grafana URL and a Token or API key
 ## Highlights
 
 - Connects to Local and Remote Grafana instances via HTTP API using API Keys and Tokens.
-- Allows to get Health information.
-- Allows to retrieve Annotations, Alerts, and Data Sources.
+- Allows getting Health information.
+- Allows retrieving Annotations, Alerts, and Data Sources.
 
 ## Documentation
 
-| Section                                                                                   | Description                                                  |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| [Configuration](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/configuration/) | Explains configuration settings for the Data Source.         |
-| [Provisioning](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/provisioning/)   | Demonstrates how to automatically provision the Data Source. |
-| [Features](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/features/)           | Demonstrates panel features.                                 |
-| [Release Notes](https://volkovlabs.io/plugins/volkovlabs-grapi-datasource/release/)       | Stay up to date with the latest features and updates.        |
+| Section                                                                          | Description                                                  |
+| -------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| [Configuration](https://volkovlabs.io/plugins/business-satellite/configuration/) | Explains configuration settings for the Data Source.         |
+| [Provisioning](https://volkovlabs.io/plugins/business-satellite/provisioning/)   | Demonstrates how to automatically provision the Data Source. |
+| [Features](https://volkovlabs.io/plugins/business-satellite/features/)           | Demonstrates panel features.                                 |
+| [Release Notes](https://volkovlabs.io/plugins/business-satellitee/release/)      | Stay up to date with the latest features and updates.        |
 
 ## Business Suite for Grafana
 
@@ -57,14 +57,17 @@ The collection aims to solve the most frequent business tasks by providing an in
 
 [![Business Suite for Grafana](https://raw.githubusercontent.com/VolkovLabs/.github/main/business.png)](https://volkovlabs.io/plugins/)
 
-## Feedback
+### Enterprise Support
 
-We're looking forward to hearing from you. You can use different ways to get in touch with us.
+With the [Business Suite Enterprise](https://volkovlabs.io/pricing/), you're not just getting a product, you're getting a complete support system. You'll have a designated support team ready to tackle any issues.
 
-- Ask a question, request a new feature, and file a bug with [GitHub issues](https://github.com/volkovlabs/business-satellite/issues/new/choose).
-- Subscribe to our [YouTube Channel](https://www.youtube.com/@volkovlabs) and add a comment.
-- Sponsor our open-source plugins for Grafana at [GitHub Sponsor](https://github.com/sponsors/VolkovLabs).
-- Support our project by starring the repository.
+You can contact us via Zendesk, receive priority in feature requests and bug fixes, meet with us for in-person consultation, and get access to the Business Intelligence. It's a package that's designed to make your life easier.
+
+## Always happy to hear from you
+
+- Ask a question, request a new feature, and file a bug with [GitHub issues](https://github.com/volkovlabs/business-satellite/issues).
+- Subscribe to our [YouTube Channel](https://youtube.com/@volkovlabs) and leave your comments.
+- Become a [Business Suite sponsor](https://github.com/sponsors/VolkovLabs).
 
 ## License
 
