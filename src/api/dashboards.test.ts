@@ -121,7 +121,7 @@ describe('Dashboards Api', () => {
       try {
         const result = await api.features.dashboards.getAllMeta();
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
 
     it('Should return dataFrame', async () => {

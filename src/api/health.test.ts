@@ -100,7 +100,7 @@ describe('Health Api', () => {
       try {
         const result = await api.features.health.get();
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
 
     it('Should make getHealthFrame request', async () => {

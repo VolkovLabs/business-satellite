@@ -132,7 +132,7 @@ describe('Alerting Api', () => {
       try {
         const result = await api.features.alerting.getAlerts(alertingQuery);
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
 
     it('Should return dataFrame', async () => {

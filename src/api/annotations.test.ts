@@ -210,7 +210,7 @@ describe('Annotations Api', () => {
       try {
         const result = await api.features.annotations.getAll(query, range, '', {});
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
 
     it('Should make getAnnotationsFrame request', async () => {

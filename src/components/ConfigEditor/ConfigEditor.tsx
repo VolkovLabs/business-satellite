@@ -8,7 +8,7 @@ import { DataSourceOptions, RequestMode, SecureJsonData } from '../../types';
 /**
  * Editor Properties
  */
-interface Props extends DataSourcePluginOptionsEditorProps<DataSourceOptions, SecureJsonData> {}
+type Props = DataSourcePluginOptionsEditorProps<DataSourceOptions>;
 
 /**
  * Config Editor

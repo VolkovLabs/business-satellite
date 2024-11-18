@@ -262,7 +262,7 @@ describe('Provisioning Api', () => {
       try {
         const result = await api.features.provisioning.getAlertRules();
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
 
     it('Should make getAlertRulesFrame request', async () => {
