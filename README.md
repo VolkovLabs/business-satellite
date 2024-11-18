@@ -2,7 +2,7 @@
 
 ![Datasource](https://github.com/VolkovLabs/business-satellite/raw/main/src/img/datasource.png)
 
-![Grafana](https://img.shields.io/badge/Grafana-11.1-orange)
+![Grafana](https://img.shields.io/badge/Grafana-11.3-orange)
 ![CI](https://github.com/volkovlabs/business-satellite/workflows/CI/badge.svg)
 ![E2E](https://github.com/volkovlabs/business-satellite/workflows/E2E/badge.svg)
 [![codecov](https://codecov.io/gh/VolkovLabs/business-satellite/branch/main/graph/badge.svg)](https://codecov.io/gh/VolkovLabs/business-satellite)
@@ -27,8 +27,10 @@ The Business Satellite Data Source can be installed from the [Grafana Catalog](h
 For the latter, use the following command.
 
 ```bash
-grafana-cli plugins install volkovlabs-grapi-datasource
+grafana cli plugins install volkovlabs-grapi-datasource
 ```
+
+[![Install Business Suite plugins in Cloud, OSS, Enterprise | Open source community plugins](https://raw.githubusercontent.com/volkovlabs/.github/main/started.png)](https://youtu.be/1qYzHfPXJF8)
 
 ### Authentication
 
