@@ -49,7 +49,7 @@ The Business Satellite Data Source requires a Grafana URL and a Token or API key
 | [Configuration](https://volkovlabs.io/plugins/business-satellite/configuration/) | Explains configuration settings for the Data Source.         |
 | [Provisioning](https://volkovlabs.io/plugins/business-satellite/provisioning/)   | Demonstrates how to automatically provision the Data Source. |
 | [Features](https://volkovlabs.io/plugins/business-satellite/features/)           | Demonstrates panel features.                                 |
-| [Release Notes](https://volkovlabs.io/plugins/business-satellitee/release/)      | Stay up to date with the latest features and updates.        |
+| [Release Notes](https://volkovlabs.io/plugins/business-satellite/release/)       | Stay up to date with the latest features and updates.        |
 
 ## Business Suite for Grafana
 
