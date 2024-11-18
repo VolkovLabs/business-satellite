@@ -136,7 +136,7 @@ describe('Data Sources Api', () => {
       try {
         const result = await api.features.datasources.getAll();
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
 
     it('Should make getDataSourcesFrame request', async () => {

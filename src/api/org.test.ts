@@ -105,7 +105,7 @@ describe('Org Api', () => {
       try {
         const result = await api.features.org.get();
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
   });
 
@@ -171,7 +171,7 @@ describe('Org Api', () => {
       try {
         const result = await api.features.org.getUsers();
         expect(result).toThrow(TypeError);
-      } catch (e) {}
+      } catch {}
     });
 
     it('Should make getUsersFrame request', async () => {
