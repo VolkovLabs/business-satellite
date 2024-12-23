@@ -37,7 +37,6 @@ test.describe('Grapi datasource', () => {
       const configEditor = new ConfigEditorHelper(page, configPage, selectors);
 
       await configEditor.checkPresence();
-      await configEditor.checkPresenceURLField();
       await configEditor.setMode(RequestMode.LOCAL);
       await configEditor.checkSaveSuccess();
     });
@@ -56,6 +55,7 @@ test.describe('Grapi datasource', () => {
 
       await configEditor.checkPresence();
       await configEditor.checkPresenceURLField();
+      await configEditor.setMode(RequestMode.REMOTE);
       await configEditor.setPath('https:');
       await configEditor.checkSaveFail();
     });
