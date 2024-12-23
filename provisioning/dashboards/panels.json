@@ -26,7 +26,6 @@
   "graphTooltip": 0,
   "id": 3,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -77,9 +76,9 @@
           "reducer": ["sum"],
           "show": false
         },
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": []
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "annotationDashboard": "",
@@ -145,7 +144,6 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "annotationDashboard": "",
@@ -212,7 +210,6 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
@@ -261,10 +258,81 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
+        "h": 5,
         "w": 24,
         "x": 0,
         "y": 8
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "annotationDashboard": "",
+          "annotationLimit": 100,
+          "annotationNewState": "",
+          "annotationPattern": "",
+          "annotationPrevState": "",
+          "annotationRange": "",
+          "annotationType": "",
+          "datasource": {
+            "type": "volkovlabs-grapi-datasource",
+            "uid": "grapi"
+          },
+          "refId": "A",
+          "requestType": "alertRules"
+        }
+      ],
+      "title": "Alert Rules",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "volkovlabs-grapi-datasource",
+        "uid": "grapi"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 13
       },
       "id": 3,
       "options": {
@@ -277,7 +345,6 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
@@ -339,78 +406,6 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 19
-      },
-      "id": 8,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": ["sum"],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "annotationDashboard": "",
-          "annotationLimit": 100,
-          "annotationNewState": "",
-          "annotationPattern": "",
-          "annotationPrevState": "",
-          "annotationRange": "",
-          "annotationType": "",
-          "datasource": {
-            "type": "volkovlabs-grapi-datasource",
-            "uid": "grapi"
-          },
-          "refId": "A",
-          "requestType": "alertRules"
-        }
-      ],
-      "title": "Alert Rules",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "volkovlabs-grapi-datasource",
-        "uid": "grapi"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 24,
-        "x": 0,
         "y": 24
       },
       "id": 12,
@@ -424,7 +419,6 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "alerting": {
@@ -502,7 +496,6 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "alerting": {
@@ -580,7 +573,6 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "annotationDashboard": "",
@@ -623,8 +615,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -652,7 +643,6 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.1.0",
       "targets": [
         {
           "annotationDashboard": "",
@@ -675,9 +665,9 @@
       "type": "table"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "revision": 1,
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": []
