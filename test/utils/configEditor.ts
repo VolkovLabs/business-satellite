@@ -2,6 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { DataSourceConfigPage, E2ESelectorGroups, expect } from '@grafana/plugin-e2e';
 import { getLocatorSelectors, LocatorSelectors } from './selectors';
 import { TEST_IDS } from '../../src/constants/tests';
+import { RequestMode } from '../../src/types';
 
 /**
  * Config Editor Helper
@@ -47,6 +48,11 @@ export class ConfigEditorHelper {
 
   public async setPath(path: string) {
     return await this.selectors.fieldUrl().fill(path);
+  }
+
+  public async setMode(option: RequestMode) {
+    const modeOption = this.selectors.fieldRequestModelOption(option);
+    return await modeOption.click();
   }
 
   public async checkSaveSuccess() {

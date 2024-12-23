@@ -1,6 +1,6 @@
 import { test, expect } from '@grafana/plugin-e2e';
 import { ConfigEditorHelper, QueryEditorHelper, PanelHelper } from './utils';
-import { DataSourceOptions } from '../src/types';
+import { DataSourceOptions, RequestMode } from '../src/types';
 test.describe('Grapi datasource', () => {
   test('Check grafana version', async ({ grafanaVersion }) => {
     console.log('Grafana version: ', grafanaVersion);
@@ -38,10 +38,7 @@ test.describe('Grapi datasource', () => {
 
       await configEditor.checkPresence();
       await configEditor.checkPresenceURLField();
-      /**
-       * https://volkovlabs.io/blog/rss.xml
-       */
-      await configEditor.setPath(datasource.jsonData.url);
+      await configEditor.setMode(RequestMode.LOCAL);
       await configEditor.checkSaveSuccess();
     });
 
