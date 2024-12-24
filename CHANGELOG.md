@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.4.0 (2024-12-24)
+
+### Features / Enhancements
+
+- Updated E2E tests (#83)
+
 ## 3.3.0 (2024-11-17)
 
 ### Features / Enhancements

@@ -77,7 +77,7 @@ export const ConfigEditor: React.FC<Props> = ({ onOptionsChange, options }) => {
   }, [jsonData.requestMode, onRequestModeChange]);
 
   return (
-    <FieldSet>
+    <FieldSet data-testid={TEST_IDS.configEditor.root}>
       <InlineFieldRow>
         <InlineField label="Request Mode" labelWidth={14} grow data-testid={TEST_IDS.configEditor.fieldRequestMode}>
           <RadioButtonGroup

@@ -10,6 +10,7 @@ datasources:
     editable: true
     jsonData:
       url: http://localhost:3000
+      requestMode: 'local'
   - name: Timescale
     type: postgres
     access: proxy

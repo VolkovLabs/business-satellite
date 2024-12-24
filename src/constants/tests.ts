@@ -3,12 +3,14 @@
  */
 export const TEST_IDS = {
   configEditor: {
+    root: 'data-testid config-editor root',
     fieldToken: 'data-testid config-editor field-token',
     fieldUrl: 'data-testid config-editor field-url',
     fieldRequestMode: 'data-testid config-editor field-request-mode',
     fieldRequestModelOption: (name: string) => `config-editor field-request-mode-option-${name}`,
   },
   queryEditor: {
+    root: 'data-testid query-editor root',
     option: (name: unknown) => `query-editor option-${name}`,
     fieldAnnotationDashboardContainer: 'data-testid query-editor field-annotation-dashboard-container',
     fieldAnnotationDashboardOption: (name: string) => `query-editor field-annotation-dashboard-option-${name}`,

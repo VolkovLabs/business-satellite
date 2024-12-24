@@ -200,7 +200,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
    * Render
    */
   return (
-    <>
+    <div data-testid={TEST_IDS.queryEditor.root}>
       <InlineFieldRow>
         <InlineField grow label="Request" labelWidth={10}>
           <Select
@@ -374,6 +374,6 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
           </InlineField>
         </InlineFieldRow>
       )}
-    </>
+    </div>
   );
 };
