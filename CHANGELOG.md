@@ -1,10 +1,11 @@
 # Change Log
 
-## 3.4.0 (2024-12-24)
+## 3.4.0 (2024-12-25)
 
 ### Features / Enhancements
 
 - Updated E2E tests (#83)
+- Updated to Grafana 11.4 and dependencies (#84)
 
 ## 3.3.0 (2024-11-17)
 
