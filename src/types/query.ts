@@ -23,6 +23,15 @@ export enum RequestType {
 }
 
 /**
+ * Favorites Type
+ */
+export enum FavoritesType {
+  FAVORITES_ONLY = 'favoritesOnly',
+  DISABLED = 'disabled',
+  FAVORITES_WITH_DEFAULT = 'favoritesWithDefault',
+}
+
+/**
  * Alerting Query
  */
 export interface AlertingQuery {
@@ -119,4 +128,45 @@ export interface Query extends DataQuery {
    * @type {AlertingQuery}
    */
   alerting?: AlertingQuery;
+
+  /**
+   * Dashboard favorites (starred) query type
+   *
+   * @type {FavoritesType}
+   */
+  dashboardFavorites?: FavoritesType;
+
+  /**
+   * Return dashboards tags
+   *
+   * @type {string[]}
+   */
+  dashboardTags?: string[];
+}
+
+/**
+ * Tag Select Option
+ *
+ */
+export interface TagSelectOption {
+  /**
+   * Value
+   *
+   * @type {string}
+   */
+  value: string;
+
+  /**
+   * Label
+   *
+   * @type {string}
+   */
+  label: string;
+
+  /**
+   * Count
+   *
+   * @type {number}
+   */
+  count: number;
 }

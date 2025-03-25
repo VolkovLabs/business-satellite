@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
+import { getAllDashboardsTags } from 'utils/dashboards';
 
 import { DEFAULT_QUERY, TEST_IDS } from '../../constants';
 import {
@@ -9,10 +10,15 @@ import {
   AnnotationRange,
   AnnotationState,
   AnnotationType,
+  FavoritesType,
   Query,
   RequestType,
 } from '../../types';
 import { QueryEditor } from './QueryEditor';
+
+jest.mock('utils/dashboards', () => ({
+  getAllDashboardsTags: jest.fn(),
+}));
 
 /**
  * Get Query with default values and ability to override
@@ -38,12 +44,24 @@ describe('QueryEditor', () => {
   const getSelectors = getJestSelectors(TEST_IDS.queryEditor);
   const selectors = getSelectors(screen);
 
+  const mockTags = [
+    {
+      term: 'metric',
+      count: 1,
+    },
+    {
+      term: 'live',
+      count: 2,
+    },
+  ];
+
   const onRunQuery = jest.fn();
   const onChange = jest.fn();
 
   beforeEach(() => {
     onRunQuery.mockReset();
     onChange.mockReset();
+    jest.mocked(getAllDashboardsTags).mockResolvedValue(mockTags);
   });
 
   const datasource = {
@@ -90,7 +108,7 @@ describe('QueryEditor', () => {
       /**
        * OnChange
        */
-      await act(() => fireEvent.change(fieldRequest, { target: { value: RequestType.NONE } }));
+      await act(async () => fireEvent.change(fieldRequest, { target: { value: RequestType.NONE } }));
 
       expect(onChange).toHaveBeenCalledWith({
         ...query,
@@ -100,22 +118,85 @@ describe('QueryEditor', () => {
   });
 
   /**
+   * Dashboards
+   */
+  describe('Dashboards params', () => {
+    const onChange = jest.fn();
+
+    beforeEach(async () => {
+      onChange.mockClear();
+
+      const query = getQuery({
+        requestType: RequestType.DASHBOARDS_META,
+      });
+
+      await act(async () => {
+        render(
+          <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
+        );
+      });
+    });
+
+    it('Should allow change Favorites type', () => {
+      expect(selectors.fieldDashboardsFavorites()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldDashboardsFavorites(), {
+        target: { value: FavoritesType.FAVORITES_WITH_DEFAULT },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dashboardFavorites: FavoritesType.FAVORITES_WITH_DEFAULT,
+        })
+      );
+    });
+
+    it('Should allow change tags for dashboards if one value', () => {
+      expect(selectors.fieldDashboardsTags()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldDashboardsTags(), {
+        target: { values: 'label' },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dashboardTags: ['label'],
+        })
+      );
+    });
+
+    it('Should allow change tags for dashboards if more than one value', () => {
+      expect(selectors.fieldDashboardsTags()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldDashboardsTags(), {
+        target: { values: ['label', 'metric'] },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dashboardTags: ['label', 'metric'],
+        })
+      );
+    });
+  });
+  /**
    * Annotations
    */
   describe('Annotations', () => {
     const onChange = jest.fn();
 
     describe('Non Alert annotations', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         onChange.mockClear();
 
         const query = getQuery({
           requestType: RequestType.ANNOTATIONS,
         });
-
-        render(
-          <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
-        );
+        await act(async () => {
+          render(
+            <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
+          );
+        });
       });
 
       it('Should render and update annotation type', () => {
@@ -207,7 +288,7 @@ describe('QueryEditor', () => {
     });
 
     describe('Alert annotations', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         onChange.mockClear();
 
         const query = getQuery({
@@ -215,9 +296,11 @@ describe('QueryEditor', () => {
           annotationType: AnnotationType.ALERT,
         });
 
-        render(
-          <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
-        );
+        await act(async () => {
+          render(
+            <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
+          );
+        });
       });
 
       it('Should render and update annotation prev state', () => {
@@ -254,73 +337,80 @@ describe('QueryEditor', () => {
     });
 
     describe('Default values', () => {
-      it('Should not apply value if not mapped for annotation type', () => {
-        render(
-          <QueryEditor
-            datasource={datasource as any}
-            query={getQuery({
-              requestType: RequestType.ANNOTATIONS,
-              annotationType: '123' as any,
-            })}
-            onRunQuery={onRunQuery}
-            onChange={onChange}
-          />
-        );
-
+      it('Should not apply value if not mapped for annotation type', async () => {
+        await act(async () => {
+          render(
+            <QueryEditor
+              datasource={datasource as any}
+              query={getQuery({
+                requestType: RequestType.ANNOTATIONS,
+                annotationType: '123' as any,
+              })}
+              onRunQuery={onRunQuery}
+              onChange={onChange}
+            />
+          );
+        });
         Object.values(AnnotationType).forEach((value) => {
           expect(selectors.fieldAnnotationTypeOption(false, value)).not.toBeChecked();
         });
       });
 
-      it('Should not apply value if not mapped for annotation dashboard', () => {
-        render(
-          <QueryEditor
-            datasource={datasource as any}
-            query={getQuery({
-              requestType: RequestType.ANNOTATIONS,
-              annotationDashboard: '123' as any,
-            })}
-            onRunQuery={onRunQuery}
-            onChange={onChange}
-          />
-        );
+      it('Should not apply value if not mapped for annotation dashboard', async () => {
+        await act(async () => {
+          render(
+            <QueryEditor
+              datasource={datasource as any}
+              query={getQuery({
+                requestType: RequestType.ANNOTATIONS,
+                annotationDashboard: '123' as any,
+              })}
+              onRunQuery={onRunQuery}
+              onChange={onChange}
+            />
+          );
+        });
 
         Object.values(AnnotationDashboard).forEach((value) => {
           expect(selectors.fieldAnnotationDashboardOption(false, value)).not.toBeChecked();
         });
       });
 
-      it('Should not apply value if not mapped for annotation time range', () => {
-        render(
-          <QueryEditor
-            datasource={datasource as any}
-            query={getQuery({
-              requestType: RequestType.ANNOTATIONS,
-              annotationRange: '123' as any,
-            })}
-            onRunQuery={onRunQuery}
-            onChange={onChange}
-          />
-        );
+      it('Should not apply value if not mapped for annotation time range', async () => {
+        await act(async () => {
+          render(
+            <QueryEditor
+              datasource={datasource as any}
+              query={getQuery({
+                requestType: RequestType.ANNOTATIONS,
+                annotationRange: '123' as any,
+              })}
+              onRunQuery={onRunQuery}
+              onChange={onChange}
+            />
+          );
+        });
 
         Object.values(AnnotationRange).forEach((value) => {
           expect(selectors.fieldAnnotationTimeRangeOption(false, value)).not.toBeChecked();
         });
       });
 
-      it('Should not apply value if not mapped for annotation prev state', () => {
-        render(
-          <QueryEditor
-            datasource={datasource as any}
-            query={getQuery({
-              requestType: RequestType.ANNOTATIONS,
-              annotationType: AnnotationType.ALERT,
-              annotationPrevState: '123' as any,
-            })}
-            onRunQuery={onRunQuery}
-            onChange={onChange}
-          />
-        );
+      it('Should not apply value if not mapped for annotation prev state', async () => {
+        await act(async () => {
+          render(
+            <QueryEditor
+              datasource={datasource as any}
+              query={getQuery({
+                requestType: RequestType.ANNOTATIONS,
+                annotationType: AnnotationType.ALERT,
+                annotationPrevState: '123' as any,
+              })}
+              onRunQuery={onRunQuery}
+              onChange={onChange}
+            />
+          );
+        });
 
         const elementSelectors = getSelectors(within(selectors.fieldAnnotationPrevStateContainer()));
 
@@ -329,19 +419,21 @@ describe('QueryEditor', () => {
         });
       });
 
-      it('Should not apply value if not mapped for annotation new state', () => {
-        render(
-          <QueryEditor
-            datasource={datasource as any}
-            query={getQuery({
-              requestType: RequestType.ANNOTATIONS,
-              annotationType: AnnotationType.ALERT,
-              annotationNewState: '123' as any,
-            })}
-            onRunQuery={onRunQuery}
-            onChange={onChange}
-          />
-        );
+      it('Should not apply value if not mapped for annotation new state', async () => {
+        await act(async () => {
+          render(
+            <QueryEditor
+              datasource={datasource as any}
+              query={getQuery({
+                requestType: RequestType.ANNOTATIONS,
+                annotationType: AnnotationType.ALERT,
+                annotationNewState: '123' as any,
+              })}
+              onRunQuery={onRunQuery}
+              onChange={onChange}
+            />
+          );
+        });
 
         const elementSelectors = getSelectors(within(selectors.fieldAnnotationNewStateContainer()));
 
@@ -358,20 +450,22 @@ describe('QueryEditor', () => {
   describe('Data Sources', () => {
     const onChange = jest.fn();
 
-    it('Should allow to update check health', () => {
-      render(
-        <QueryEditor
-          datasource={datasource as any}
-          query={
-            {
-              requestType: RequestType.DATASOURCES,
-              datasourceHealth: false,
-            } as any
-          }
-          onRunQuery={onRunQuery}
-          onChange={onChange}
-        />
-      );
+    it('Should allow to update check health', async () => {
+      await act(async () => {
+        render(
+          <QueryEditor
+            datasource={datasource as any}
+            query={
+              {
+                requestType: RequestType.DATASOURCES,
+                datasourceHealth: false,
+              } as any
+            }
+            onRunQuery={onRunQuery}
+            onChange={onChange}
+          />
+        );
+      });
 
       expect(selectors.fieldDatasourcesCheckHealth()).toBeInTheDocument();
 
@@ -389,21 +483,23 @@ describe('QueryEditor', () => {
   });
 
   describe('Alerting', () => {
-    it('Should allow to change state', () => {
+    it('Should allow to change state', async () => {
       const onChange = jest.fn();
 
-      render(
-        <QueryEditor
-          datasource={datasource as any}
-          query={
-            {
-              requestType: RequestType.ALERTING_ALERTS,
-            } as any
-          }
-          onRunQuery={onRunQuery}
-          onChange={onChange}
-        />
-      );
+      await act(async () => {
+        render(
+          <QueryEditor
+            datasource={datasource as any}
+            query={
+              {
+                requestType: RequestType.ALERTING_ALERTS,
+              } as any
+            }
+            onRunQuery={onRunQuery}
+            onChange={onChange}
+          />
+        );
+      });
 
       expect(selectors.fieldAlertingState()).toBeInTheDocument();
 
@@ -420,24 +516,25 @@ describe('QueryEditor', () => {
       );
     });
 
-    it('Should allow to change limit', () => {
+    it('Should allow to change limit', async () => {
       const onChange = jest.fn();
-
-      render(
-        <QueryEditor
-          datasource={datasource as any}
-          query={
-            {
-              requestType: RequestType.ALERTING_ALERTS,
-              alerting: {
-                limit: 5,
-              },
-            } as any
-          }
-          onRunQuery={onRunQuery}
-          onChange={onChange}
-        />
-      );
+      await act(async () => {
+        render(
+          <QueryEditor
+            datasource={datasource as any}
+            query={
+              {
+                requestType: RequestType.ALERTING_ALERTS,
+                alerting: {
+                  limit: 5,
+                },
+              } as any
+            }
+            onRunQuery={onRunQuery}
+            onChange={onChange}
+          />
+        );
+      });
 
       expect(selectors.fieldAlertingLimit()).toBeInTheDocument();
 

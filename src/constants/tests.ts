@@ -9,6 +9,14 @@ export const TEST_IDS = {
     fieldRequestMode: 'data-testid config-editor field-request-mode',
     fieldRequestModelOption: (name: string) => `config-editor field-request-mode-option-${name}`,
   },
+  tagBadge: {
+    root: 'data-testid tag-badge root',
+    removeIcon: 'data-testid tag-badge remove-icon',
+  },
+  tagOption: {
+    root: 'data-testid tag-option root',
+    removeIcon: 'data-testid tag-badge remove-icon',
+  },
   queryEditor: {
     root: 'data-testid query-editor root',
     option: (name: unknown) => `query-editor option-${name}`,
@@ -27,6 +35,8 @@ export const TEST_IDS = {
     fieldAnnotationTypeOption: (name: string) => `query-editor field-annotation-type-option-${name}`,
     fieldRequest: 'query-editor field-request',
     fieldDatasourcesCheckHealth: 'data-testid query-editor field-datasources-check-health',
+    fieldDashboardsFavorites: 'data-testid query-editor field-dashboards-favorites',
+    fieldDashboardsTags: 'data-testid query-editor field-dashboards-tags',
     fieldAlertingState: 'data-testid query-editor field-alerting-state',
     fieldAlertingLimit: 'data-testid query-editor field-alerting-limit',
   },
