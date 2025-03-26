@@ -46,3 +46,22 @@ export enum AnnotationState {
   PENDING = 'Pending',
   ALERTING = 'Alerting',
 }
+
+/**
+ * Annotation Tag Item
+ */
+export interface AnnotationTagItem {
+  /**
+   * Tag
+   *
+   * @type {string}
+   */
+  tag: string;
+
+  /**
+   * Count
+   *
+   * @type {number}
+   */
+  count: number;
+}

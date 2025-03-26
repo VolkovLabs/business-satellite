@@ -14,4 +14,5 @@ export const DEFAULT_QUERY: Partial<Query> = {
   annotationType: AnnotationType.ALL,
   datasourceHealth: false,
   requestType: RequestType.NONE,
+  annotationTags: [],
 };

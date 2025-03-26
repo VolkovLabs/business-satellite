@@ -138,6 +138,67 @@ describe('Annotations Api', () => {
       expect(result).toBeTruthy();
     });
 
+    it('Should not include annotationTags in request params when undefined', async () => {
+      fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
+
+      const result = await api.features.annotations.getAll(query, range, '123', {});
+
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: expect.not.objectContaining({
+            tags: expect.anything(),
+          }),
+        })
+      );
+      expect(result).toBeTruthy();
+    });
+
+    it('Should include annotationTags in request params when present', async () => {
+      fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
+
+      const result = await api.features.annotations.getAll(
+        {
+          ...query,
+          annotationTags: ['tag1', 'tag2'],
+        },
+        range,
+        '123',
+        {}
+      );
+
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: expect.objectContaining({
+            tags: ['tag1', 'tag2'],
+          }),
+        })
+      );
+      expect(result).toBeTruthy();
+    });
+
+    it('Should not include annotationTags in request params when empty', async () => {
+      fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
+
+      const result = await api.features.annotations.getAll(
+        {
+          ...query,
+          annotationTags: [],
+        },
+        range,
+        '123',
+        {}
+      );
+
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: expect.not.objectContaining({
+            tags: expect.anything(),
+          }),
+        })
+      );
+      expect(result).toBeTruthy();
+    });
+
     it('Should make getAnnotations request for alerts', async () => {
       fetchRequestMock = jest.fn().mockImplementationOnce(() => getResponse(response));
       const result = await api.features.annotations.getAll(

@@ -9,6 +9,14 @@ export const TEST_IDS = {
     fieldRequestMode: 'data-testid config-editor field-request-mode',
     fieldRequestModelOption: (name: string) => `config-editor field-request-mode-option-${name}`,
   },
+  tagBadge: {
+    root: 'data-testid tag-badge root',
+    removeIcon: 'data-testid tag-badge remove-icon',
+  },
+  tagOption: {
+    root: 'data-testid tag-option root',
+    removeIcon: 'data-testid tag-badge remove-icon',
+  },
   queryEditor: {
     root: 'data-testid query-editor root',
     option: (name: unknown) => `query-editor option-${name}`,
@@ -21,6 +29,7 @@ export const TEST_IDS = {
     fieldAnnotationPattern: 'data-testid query-editor field-annotation-pattern',
     fieldAnnotationPrevStateContainer: 'data-testid query-editor field-annotation-prev-state-container',
     fieldAnnotationStateOption: (name: string) => `query-editor field-annotation-state-option-${name}`,
+    fieldAnnotationTags: 'data-testid query-editor field-annotation-tags',
     fieldAnnotationTimeRangeContainer: 'data-testid query-editor field-annotation-time-range-container',
     fieldAnnotationTimeRangeOption: (name: string) => `query-editor field-annotation-time-range-option-${name}`,
     fieldAnnotationTypeContainer: 'data-testid query-editor field-annotation-type-container',

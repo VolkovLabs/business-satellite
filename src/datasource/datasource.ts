@@ -45,6 +45,10 @@ export class DataSource extends DataSourceApi<Query, DataSourceOptions> {
     this.variables = new VariableSupport(this);
   }
 
+  get urlInstance(): string | undefined {
+    return this.instanceSettings.url;
+  }
+
   /**
    * Api Initialization
    * @private

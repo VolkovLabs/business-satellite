@@ -119,4 +119,38 @@ export interface Query extends DataQuery {
    * @type {AlertingQuery}
    */
   alerting?: AlertingQuery;
+
+  /**
+   * Annotation tags
+   *
+   * @type {string[]}
+   */
+  annotationTags?: string[];
+}
+
+/**
+ * Tag Select Option
+ *
+ */
+export interface TagSelectOption {
+  /**
+   * Value
+   *
+   * @type {string}
+   */
+  value: string;
+
+  /**
+   * Label
+   *
+   * @type {string}
+   */
+  label: string;
+
+  /**
+   * Count
+   *
+   * @type {number}
+   */
+  count: number;
 }
