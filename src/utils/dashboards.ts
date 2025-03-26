@@ -1,6 +1,7 @@
 import { getBackendSrv } from '@grafana/runtime';
 import { lastValueFrom } from 'rxjs';
-import { DashboardTagItem } from 'types';
+
+import { DashboardTagItem } from '../types';
 
 /**
  * Get Dashboards Tags
