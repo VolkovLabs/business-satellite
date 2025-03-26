@@ -432,7 +432,6 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
           <InlineField label="Tags" labelWidth={10} grow={true}>
             <Select
               prefix={<Icon name="tag-alt" />}
-              allowCustomValue={true}
               onChange={(event) => {
                 const tags = Array.isArray(event)
                   ? event.map((eventItem: TagSelectOption) => eventItem.value)
