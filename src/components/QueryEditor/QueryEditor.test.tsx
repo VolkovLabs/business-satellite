@@ -165,16 +165,16 @@ describe('QueryEditor', () => {
       );
     });
 
-    it('Should allow change tags for dashboards if more than one value', () => {
+    it('Should allow change tags for dashboards if array value', () => {
       expect(selectors.fieldDashboardsTags()).toBeInTheDocument();
 
       fireEvent.change(selectors.fieldDashboardsTags(), {
-        target: { values: ['label', 'metric'] },
+        target: { values: ['metric', 'live'] },
       });
 
       expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({
-          dashboardTags: ['label', 'metric'],
+          dashboardTags: ['metric', 'live'],
         })
       );
     });
