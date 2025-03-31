@@ -29,6 +29,7 @@ jest.mock('../../utils', () => {
   return {
     ...actualUtils,
     getAllAnnotationsTags: jest.fn(),
+    getAllDashboardsTags: jest.fn(),
   };
 });
 
