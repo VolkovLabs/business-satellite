@@ -411,12 +411,12 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
                 {
                   value: FavoritesType.DISABLED,
                   label: 'Disabled',
-                  description: 'Do not include starred dashboards in the search.',
+                  description: 'Returns any dashboards.',
                 },
                 {
                   value: FavoritesType.FAVORITES_ONLY,
                   label: 'Favorites Only',
-                  description: 'Return starred dashboards only. Includes tags if they exist.',
+                  description: 'Returns starred dashboards only. Includes tags if they exist.',
                 },
                 {
                   value: FavoritesType.FAVORITES_WITH_DEFAULT,
