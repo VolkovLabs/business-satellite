@@ -1,8 +1,9 @@
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
-import { InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
+import { Icon, InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } from '@grafana/ui';
 import { NumberInput } from '@volkovlabs/components';
 import { defaults } from 'lodash';
 import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { getAllDashboardsTags } from 'utils/dashboards';
 
 import {
   ANNOTATION_DASHBOARD_OPTIONS,
@@ -23,11 +24,15 @@ import {
   AnnotationRange,
   AnnotationState,
   AnnotationType,
+  DashboardTagItem,
   DataSourceOptions,
+  FavoritesType,
   Query,
   RequestType,
+  TagSelectOption,
 } from '../../types';
 import { getOptionsWithTestId } from '../../utils';
+import { TagOption } from './components';
 
 /**
  * Editor Properties
@@ -42,6 +47,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
    * Initialized
    */
   const [isInitialized, setInitialized] = useState(false);
+  const [dashboardsTags, setDashboardsTags] = useState<DashboardTagItem[]>([]);
 
   /**
    * Initialize Data Source
@@ -195,6 +201,26 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
     },
     [onChange, onRunQuery, rawQuery]
   );
+
+  useEffect(() => {
+    const getTags = async () => {
+      const url = datasource.urlInstance;
+      const tagsResponse = await getAllDashboardsTags(url);
+      setDashboardsTags(tagsResponse);
+    };
+
+    getTags();
+  }, [datasource]);
+
+  const tagsOptions = useMemo(() => {
+    return dashboardsTags.map((tag) => {
+      return {
+        value: tag.term,
+        label: tag.term,
+        count: tag.count,
+      };
+    });
+  }, [dashboardsTags]);
 
   /**
    * Render
@@ -370,6 +396,54 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               step={1}
               onChange={(value) => onChangeAlertingQueryField('limit', value)}
               data-testid={TEST_IDS.queryEditor.fieldAlertingLimit}
+            />
+          </InlineField>
+        </InlineFieldRow>
+      )}
+      {query.requestType === RequestType.DASHBOARDS_META && (
+        <InlineFieldRow>
+          <InlineField label="Starred dashboards" labelWidth={20} grow={true}>
+            <Select
+              onChange={(event) => {
+                onChangeQueryField('dashboardFavorites', event.value);
+              }}
+              options={[
+                {
+                  value: FavoritesType.DISABLED,
+                  label: 'Disabled',
+                  description: 'Returns any dashboards.',
+                },
+                {
+                  value: FavoritesType.FAVORITES_ONLY,
+                  label: 'Favorites Only',
+                  description: 'Returns starred dashboards only. Includes tags if they exist.',
+                },
+                {
+                  value: FavoritesType.FAVORITES_WITH_DEFAULT,
+                  label: 'Favorites With default',
+                  description:
+                    'If there are no starred dashboards, it returns the default result. Includes tags if they exist.',
+                },
+              ]}
+              value={query.dashboardFavorites}
+              data-testid={TEST_IDS.queryEditor.fieldDashboardsFavorites}
+            />
+          </InlineField>
+          <InlineField label="Tags" labelWidth={10} grow={true}>
+            <Select
+              prefix={<Icon name="tag-alt" />}
+              onChange={(event) => {
+                const tags = Array.isArray(event)
+                  ? event.map((eventItem: TagSelectOption) => eventItem.value)
+                  : [event.value!];
+                onChangeQueryField('dashboardTags', tags);
+              }}
+              options={tagsOptions}
+              components={{ Option: TagOption }}
+              value={query.dashboardTags}
+              isMulti={true}
+              isClearable={true}
+              data-testid={TEST_IDS.queryEditor.fieldDashboardsTags}
             />
           </InlineField>
         </InlineFieldRow>

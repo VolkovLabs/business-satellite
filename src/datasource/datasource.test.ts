@@ -138,6 +138,15 @@ describe('DataSource', () => {
         expect(apiMock.features.health.get).toHaveBeenCalledTimes(1);
       });
 
+      it('Should return instanceSettings.url as urlInstance', () => {
+        const apiMock = createApiMock();
+        jest.mocked(Api).mockImplementationOnce(() => apiMock as any);
+
+        const datasource = new DataSource(instanceSettings);
+
+        expect(datasource.urlInstance).toEqual('/api/grapi');
+      });
+
       it('Should not make query if initialization failed', async () => {
         const apiMock = createApiMock();
         jest.mocked(Api).mockImplementationOnce(() => apiMock as any);

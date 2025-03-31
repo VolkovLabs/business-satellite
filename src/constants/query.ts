@@ -1,4 +1,12 @@
-import { AnnotationDashboard, AnnotationRange, AnnotationState, AnnotationType, Query, RequestType } from '../types';
+import {
+  AnnotationDashboard,
+  AnnotationRange,
+  AnnotationState,
+  AnnotationType,
+  FavoritesType,
+  Query,
+  RequestType,
+} from '../types';
 
 /**
  * Defaults for Query
@@ -13,5 +21,7 @@ export const DEFAULT_QUERY: Partial<Query> = {
   annotationRules: true,
   annotationType: AnnotationType.ALL,
   datasourceHealth: false,
+  dashboardFavorites: FavoritesType.DISABLED,
   requestType: RequestType.NONE,
+  dashboardTags: [],
 };

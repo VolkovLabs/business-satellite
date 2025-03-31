@@ -128,7 +128,6 @@
   "graphTooltip": 0,
   "id": 2,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -147,6 +146,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 50,
             "gradientMode": "scheme",
@@ -208,10 +208,12 @@
           "showLegend": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "datasource": {
@@ -385,7 +387,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.1.0",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "annotationDashboard": "any",
@@ -434,15 +436,14 @@
       "type": "table"
     }
   ],
+  "preload": false,
   "refresh": "5s",
-  "revision": 1,
-  "schemaVersion": 39,
-  "tags": [],
+  "schemaVersion": 40,
+  "tags": ["Metric"],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "device1",
           "value": "device1"
         },
@@ -452,16 +453,12 @@
         },
         "definition": "select distinct name from metrics",
         "description": "Metric",
-        "hide": 0,
         "includeAll": false,
-        "multi": false,
         "name": "metric",
         "options": [],
         "query": "select distinct name from metrics",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       }
     ]
@@ -474,6 +471,6 @@
   "timezone": "",
   "title": "Metrics",
   "uid": "Rcb6nob4k",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

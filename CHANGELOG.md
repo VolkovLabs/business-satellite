@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.5.0 (In Progress)
+
+### Features / Enhancements
+
+- Added Dashboard search request type starred filtering (#88)
+
 ## 3.4.0 (2024-12-25)
 
 ### Features / Enhancements

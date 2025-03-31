@@ -147,7 +147,7 @@ export class Api {
         getUsersFrame: createFeatureMethod(this.all.org.getUsersFrame),
       },
       dashboards: {
-        getAllMeta: createFeatureMethod(this.all.dashboards.getAllMeta),
+        getMeta: createFeatureMethod(this.all.dashboards.getMeta),
         getAllMetaFrame: createFeatureMethod(this.all.dashboards.getAllMetaFrame),
       },
       alerting: {
