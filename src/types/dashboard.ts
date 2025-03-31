@@ -72,3 +72,22 @@ export interface DashboardMeta {
    */
   url: string;
 }
+
+/**
+ * Dashboard Tag Item
+ */
+export interface DashboardTagItem {
+  /**
+   * Term
+   *
+   * @type {string}
+   */
+  term: string;
+
+  /**
+   * Count
+   *
+   * @type {number}
+   */
+  count: number;
+}

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Query, RequestType } from '../types';
+import { FavoritesType, Query, RequestType } from '../types';
 import { Api } from './api';
 
 /**
@@ -49,6 +49,15 @@ describe('Dashboards Api', () => {
    * Api
    */
   const api = new Api(instanceSettings);
+
+  /**
+   * Default params
+   */
+  const defaultParams = {
+    type: 'dash-db',
+    starred: false,
+    tag: [],
+  };
 
   /**
    * Get All Meta
@@ -103,14 +112,14 @@ describe('Dashboards Api', () => {
 
     it('Should make request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
-      const result = await api.features.dashboards.getAllMeta();
+      const result = await api.features.dashboards.getMeta(defaultParams);
       expect(result).toBeTruthy();
     });
 
     it('Should not make request', async () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getResponse(undefined));
 
-      const result = await api.features.dashboards.getAllMeta();
+      const result = await api.features.dashboards.getMeta(defaultParams);
       expect(result).toBeTruthy();
       expect(result.length).toBe(0);
     });
@@ -119,7 +128,7 @@ describe('Dashboards Api', () => {
       fetchRequestMock = jest.fn().mockImplementation(() => getErrorResponse());
 
       try {
-        const result = await api.features.dashboards.getAllMeta();
+        const result = await api.features.dashboards.getMeta(defaultParams);
         expect(result).toThrow(TypeError);
       } catch {}
     });
@@ -142,6 +151,73 @@ describe('Dashboards Api', () => {
 
       const result = await api.features.dashboards.getAllMetaFrame(query);
       expect(result?.length).toEqual(0);
+    });
+
+    it('Should handle query with dashboardTags', async () => {
+      fetchRequestMock = jest.fn().mockImplementation(() => getResponse(response));
+
+      const queryWithTags: Query = {
+        refId: 'A',
+        requestType: RequestType.DASHBOARDS_META,
+        dashboardTags: ['tag1', 'tag2'],
+      };
+
+      const result = await api.features.dashboards.getAllMetaFrame(queryWithTags);
+
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: expect.objectContaining({
+            tag: ['tag1', 'tag2'],
+          }),
+        })
+      );
+
+      expect(result?.length).toEqual(1);
+    });
+
+    it('Should retry request without starred dashboards if first request returns empty', async () => {
+      fetchRequestMock = jest
+        .fn()
+        /**
+         * First empty req
+         */
+        .mockImplementationOnce(() => getResponse({ ...response, data: [] }))
+        /**
+         * Second req
+         */
+        .mockImplementationOnce(() => getResponse(response));
+
+      const queryWithFavorites: Query = {
+        refId: 'A',
+        requestType: RequestType.DASHBOARDS_META,
+        dashboardFavorites: FavoritesType.FAVORITES_WITH_DEFAULT,
+      };
+
+      const result = await api.features.dashboards.getAllMetaFrame(queryWithFavorites);
+
+      /**
+       * Check request with starred:true
+       */
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: expect.objectContaining({
+            starred: true,
+          }),
+        })
+      );
+
+      /**
+       * Check request with starred:false
+       */
+      expect(fetchRequestMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: expect.objectContaining({
+            starred: false,
+          }),
+        })
+      );
+
+      expect(result?.length).toEqual(1);
     });
   });
 });

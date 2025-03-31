@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
+// import { getAllDashboardsTags } from 'utils/dashboards';
 import { DEFAULT_QUERY, TEST_IDS } from '../../constants';
 import {
   AlertInstanceTotalState,
@@ -9,11 +10,16 @@ import {
   AnnotationRange,
   AnnotationState,
   AnnotationType,
+  FavoritesType,
   Query,
   RequestType,
 } from '../../types';
-import { getAllAnnotationsTags } from '../../utils';
+import { getAllAnnotationsTags, getAllDashboardsTags } from '../../utils';
 import { QueryEditor } from './QueryEditor';
+
+// jest.mock('utils/dashboards', () => ({
+//   getAllDashboardsTags: jest.fn(),
+// }));
 
 /**
  * Mock utils
@@ -64,6 +70,17 @@ describe('QueryEditor', () => {
     },
   ];
 
+  const mockTags = [
+    {
+      term: 'metric',
+      count: 1,
+    },
+    {
+      term: 'live',
+      count: 2,
+    },
+  ];
+
   const onRunQuery = jest.fn();
   const onChange = jest.fn();
 
@@ -72,6 +89,7 @@ describe('QueryEditor', () => {
     onChange.mockReset();
 
     jest.mocked(getAllAnnotationsTags).mockResolvedValue(mockAnnotationTags);
+    jest.mocked(getAllDashboardsTags).mockResolvedValue(mockTags);
   });
 
   const datasource = {
@@ -127,6 +145,68 @@ describe('QueryEditor', () => {
     });
   });
 
+  /**
+   * Dashboards
+   */
+  describe('Dashboards params', () => {
+    const onChange = jest.fn();
+
+    beforeEach(async () => {
+      onChange.mockClear();
+
+      const query = getQuery({
+        requestType: RequestType.DASHBOARDS_META,
+      });
+
+      await act(async () => {
+        render(
+          <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
+        );
+      });
+    });
+
+    it('Should allow change Favorites type', () => {
+      expect(selectors.fieldDashboardsFavorites()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldDashboardsFavorites(), {
+        target: { value: FavoritesType.FAVORITES_WITH_DEFAULT },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dashboardFavorites: FavoritesType.FAVORITES_WITH_DEFAULT,
+        })
+      );
+    });
+
+    it('Should allow change tags for dashboards if one value', () => {
+      expect(selectors.fieldDashboardsTags()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldDashboardsTags(), {
+        target: { values: 'label' },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dashboardTags: ['label'],
+        })
+      );
+    });
+
+    it('Should allow change tags for dashboards if array value', () => {
+      expect(selectors.fieldDashboardsTags()).toBeInTheDocument();
+
+      fireEvent.change(selectors.fieldDashboardsTags(), {
+        target: { values: ['metric', 'live'] },
+      });
+
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dashboardTags: ['metric', 'live'],
+        })
+      );
+    });
+  });
   /**
    * Annotations
    */
@@ -495,7 +575,6 @@ describe('QueryEditor', () => {
 
     it('Should allow to change limit', async () => {
       const onChange = jest.fn();
-
       await act(async () => {
         render(
           <QueryEditor
