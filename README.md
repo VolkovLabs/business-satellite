@@ -36,7 +36,7 @@ Need help? Check out our installation guide:
 
 To connect, provide a Grafana URL and an API key or token. This authenticates the plugin with your Grafana organization and enables data retrieval.
 
-### Key Features
+## Key Features
 
 - Connects to local and remote Grafana instances via HTTP API.
 - Retrieves health status, annotations, alerts, and data sources.
