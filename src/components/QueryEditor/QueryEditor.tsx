@@ -3,7 +3,6 @@ import { Icon, InlineField, InlineFieldRow, Input, RadioButtonGroup, Select } fr
 import { NumberInput } from '@volkovlabs/components';
 import { defaults } from 'lodash';
 import React, { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { getAllDashboardsTags } from 'utils/dashboards';
 
 import {
   ANNOTATION_DASHBOARD_OPTIONS,
@@ -23,6 +22,7 @@ import {
   AnnotationDashboard,
   AnnotationRange,
   AnnotationState,
+  AnnotationTagItem,
   AnnotationType,
   DashboardTagItem,
   DataSourceOptions,
@@ -31,7 +31,7 @@ import {
   RequestType,
   TagSelectOption,
 } from '../../types';
-import { getOptionsWithTestId } from '../../utils';
+import { getAllAnnotationsTags, getAllDashboardsTags, getOptionsWithTestId } from '../../utils';
 import { TagOption } from './components';
 
 /**
@@ -47,6 +47,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
    * Initialized
    */
   const [isInitialized, setInitialized] = useState(false);
+  const [annotationsTags, setAnnotationsTags] = useState<AnnotationTagItem[]>([]);
   const [dashboardsTags, setDashboardsTags] = useState<DashboardTagItem[]>([]);
 
   /**
@@ -159,6 +160,17 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   );
 
   /**
+   * Annotation New State change
+   */
+  const onAnnotationTagsChange = useCallback(
+    async (tags: string[]) => {
+      onChange({ ...rawQuery, annotationTags: tags });
+      onRunQuery();
+    },
+    [onChange, onRunQuery, rawQuery]
+  );
+
+  /**
    * Default Query
    */
   const query = defaults(rawQuery, DEFAULT_QUERY);
@@ -203,16 +215,45 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
   );
 
   useEffect(() => {
-    const getTags = async () => {
+    /**
+     * Annotations Tags
+     */
+    const getAnnotationsTags = async () => {
+      const url = datasource.urlInstance;
+      const tagsResponse = await getAllAnnotationsTags(url);
+      setAnnotationsTags(tagsResponse);
+    };
+
+    /**
+     * Dashboards Tags
+     */
+    const getDashboardsTags = async () => {
       const url = datasource.urlInstance;
       const tagsResponse = await getAllDashboardsTags(url);
       setDashboardsTags(tagsResponse);
     };
 
-    getTags();
+    getDashboardsTags();
+    getAnnotationsTags();
   }, [datasource]);
 
-  const tagsOptions = useMemo(() => {
+  /**
+   * Annotation Tags Options
+   */
+  const annotationTagsOptions = useMemo(() => {
+    return annotationsTags.map((tag) => {
+      return {
+        value: tag.tag,
+        label: tag.tag,
+        count: tag.count,
+      };
+    });
+  }, [annotationsTags]);
+
+  /**
+   * Dashboards Tags Options
+   */
+  const dashboardsTagsOptions = useMemo(() => {
     return dashboardsTags.map((tag) => {
       return {
         value: tag.term,
@@ -335,8 +376,27 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
               </InlineField>
             </InlineFieldRow>
           )}
+
+          <InlineField label="Tags" labelWidth={10} grow={true}>
+            <Select
+              prefix={<Icon name="tag-alt" />}
+              onChange={(event) => {
+                const tags = Array.isArray(event)
+                  ? event.map((eventItem: TagSelectOption) => eventItem.value)
+                  : [event.value!];
+                onAnnotationTagsChange(tags);
+              }}
+              options={annotationTagsOptions}
+              components={{ Option: TagOption }}
+              value={query.annotationTags}
+              isMulti={true}
+              isClearable={true}
+              data-testid={TEST_IDS.queryEditor.fieldAnnotationTags}
+            />
+          </InlineField>
         </>
       )}
+
       {query.requestType === RequestType.DATASOURCES && (
         <InlineFieldRow>
           <InlineField label="Check Health" data-testid={TEST_IDS.queryEditor.fieldDatasourcesCheckHealth}>
@@ -438,7 +498,7 @@ export const QueryEditor: React.FC<Props> = ({ onChange, onRunQuery, query: rawQ
                   : [event.value!];
                 onChangeQueryField('dashboardTags', tags);
               }}
-              options={tagsOptions}
+              options={dashboardsTagsOptions}
               components={{ Option: TagOption }}
               value={query.dashboardTags}
               isMulti={true}

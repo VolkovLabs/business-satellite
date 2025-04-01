@@ -8,7 +8,13 @@ import { TagSelectOption } from '../../../../types';
 import { TagBadge } from '../TagBadge';
 import { getStyles } from './TagOption.styles';
 
+/**
+ * TagOption
+ */
 export const TagOption = ({ data, className, label, innerProps }: OptionProps<TagSelectOption>) => {
+  /**
+   * Styles
+   */
   const styles = useStyles2(getStyles);
 
   return (

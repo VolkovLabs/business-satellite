@@ -142,6 +142,13 @@ export interface Query extends DataQuery {
    * @type {string[]}
    */
   dashboardTags?: string[];
+
+  /**
+   * Annotation tags
+   *
+   * @type {string[]}
+   */
+  annotationTags?: string[];
 }
 
 /**

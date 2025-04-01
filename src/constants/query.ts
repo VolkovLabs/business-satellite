@@ -23,5 +23,6 @@ export const DEFAULT_QUERY: Partial<Query> = {
   datasourceHealth: false,
   dashboardFavorites: FavoritesType.DISABLED,
   requestType: RequestType.NONE,
+  annotationTags: [],
   dashboardTags: [],
 };

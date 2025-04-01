@@ -5,6 +5,7 @@
 ### Features / Enhancements
 
 - Added Dashboard search request type starred filtering (#88)
+- Added filter results using tags for annotations (#89)
 
 ## 3.4.0 (2024-12-25)
 

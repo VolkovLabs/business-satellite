@@ -55,6 +55,13 @@ export class Annotations extends BaseApi {
     }
 
     /**
+     * Tags
+     */
+    if (query.annotationTags && query.annotationTags?.length) {
+      params.tags = query.annotationTags;
+    }
+
+    /**
      * Max Limit
      */
     if (query.annotationLimit) {
@@ -126,6 +133,7 @@ export class Annotations extends BaseApi {
     scopedVars: ScopedVars
   ): Promise<DataFrame[]> => {
     const annotations = await this.getAll(query, range, dashboardUid, scopedVars);
+
     if (!annotations.length) {
       return [];
     }

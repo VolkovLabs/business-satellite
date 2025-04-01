@@ -1,7 +1,6 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
-import { getAllDashboardsTags } from 'utils/dashboards';
 
 import { DEFAULT_QUERY, TEST_IDS } from '../../constants';
 import {
@@ -14,11 +13,20 @@ import {
   Query,
   RequestType,
 } from '../../types';
+import { getAllAnnotationsTags, getAllDashboardsTags } from '../../utils';
 import { QueryEditor } from './QueryEditor';
 
-jest.mock('utils/dashboards', () => ({
-  getAllDashboardsTags: jest.fn(),
-}));
+/**
+ * Mock utils
+ */
+jest.mock('../../utils', () => {
+  const actualUtils = jest.requireActual('../../utils');
+  return {
+    ...actualUtils,
+    getAllAnnotationsTags: jest.fn(),
+    getAllDashboardsTags: jest.fn(),
+  };
+});
 
 /**
  * Get Query with default values and ability to override
@@ -44,6 +52,20 @@ describe('QueryEditor', () => {
   const getSelectors = getJestSelectors(TEST_IDS.queryEditor);
   const selectors = getSelectors(screen);
 
+  /**
+   * Annotation tags
+   */
+  const mockAnnotationTags = [
+    {
+      tag: 'new',
+      count: 1,
+    },
+    {
+      tag: 'old',
+      count: 2,
+    },
+  ];
+
   const mockTags = [
     {
       term: 'metric',
@@ -61,6 +83,8 @@ describe('QueryEditor', () => {
   beforeEach(() => {
     onRunQuery.mockReset();
     onChange.mockReset();
+
+    jest.mocked(getAllAnnotationsTags).mockResolvedValue(mockAnnotationTags);
     jest.mocked(getAllDashboardsTags).mockResolvedValue(mockTags);
   });
 
@@ -192,6 +216,7 @@ describe('QueryEditor', () => {
         const query = getQuery({
           requestType: RequestType.ANNOTATIONS,
         });
+
         await act(async () => {
           render(
             <QueryEditor datasource={datasource as any} query={query} onRunQuery={onRunQuery} onChange={onChange} />
@@ -208,6 +233,34 @@ describe('QueryEditor', () => {
         expect(onChange).toHaveBeenCalledWith(
           expect.objectContaining({
             annotationType: newValue,
+          })
+        );
+      });
+
+      it('Should render and update annotation tags if array value', () => {
+        expect(selectors.fieldAnnotationTags()).toBeInTheDocument();
+
+        fireEvent.change(selectors.fieldAnnotationTags(), {
+          target: { values: ['new', 'old'] },
+        });
+
+        expect(onChange).toHaveBeenCalledWith(
+          expect.objectContaining({
+            annotationTags: ['new', 'old'],
+          })
+        );
+      });
+
+      it('Should render and update annotation tags if one value', () => {
+        expect(selectors.fieldAnnotationTags()).toBeInTheDocument();
+
+        fireEvent.change(selectors.fieldAnnotationTags(), {
+          target: { values: 'label' },
+        });
+
+        expect(onChange).toHaveBeenCalledWith(
+          expect.objectContaining({
+            annotationTags: ['label'],
           })
         );
       });

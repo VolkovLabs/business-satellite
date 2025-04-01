@@ -29,6 +29,7 @@ export const TEST_IDS = {
     fieldAnnotationPattern: 'data-testid query-editor field-annotation-pattern',
     fieldAnnotationPrevStateContainer: 'data-testid query-editor field-annotation-prev-state-container',
     fieldAnnotationStateOption: (name: string) => `query-editor field-annotation-state-option-${name}`,
+    fieldAnnotationTags: 'data-testid query-editor field-annotation-tags',
     fieldAnnotationTimeRangeContainer: 'data-testid query-editor field-annotation-time-range-container',
     fieldAnnotationTimeRangeOption: (name: string) => `query-editor field-annotation-time-range-option-${name}`,
     fieldAnnotationTypeContainer: 'data-testid query-editor field-annotation-type-container',
