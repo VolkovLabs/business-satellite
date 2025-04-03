@@ -4,7 +4,7 @@
 
 This change log tracks updates to the Business Satellite data source plugin for Grafana, listing features, enhancements, and breaking changes with GitHub issue references. It supports Grafana’s HTTP API for dashboards, annotations, and alerts.
 
-## 3.5.0 (2025-04-01)
+## 3.5.0 (2025-04-03)
 
 ### Features & Enhancements
 
