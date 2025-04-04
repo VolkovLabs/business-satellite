@@ -2,7 +2,7 @@
 
 ![Datasource](https://github.com/VolkovLabs/business-satellite/raw/main/src/img/datasource.png)
 
-![Grafana](https://img.shields.io/badge/Grafana-11.4-orange)
+![Grafana](https://img.shields.io/badge/Grafana-11.6-orange)
 ![CI](https://github.com/volkovlabs/business-satellite/workflows/CI/badge.svg)
 ![E2E](https://github.com/volkovlabs/business-satellite/workflows/E2E/badge.svg)
 [![Codecov](https://codecov.io/gh/VolkovLabs/business-satellite/branch/main/graph/badge.svg)](https://codecov.io/gh/VolkovLabs/business-satellite)
