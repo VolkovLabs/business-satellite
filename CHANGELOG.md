@@ -10,7 +10,7 @@ This change log tracks updates to the Business Satellite data source plugin for 
 
 - Added starred filtering to dashboard search request type (#88)
 - Enabled filtering of annotation results using tags (#89)
-- Upgraded to Grafana 11.5 and updated dependencies (#84)
+- Upgraded to Grafana 11.5 and updated dependencies (#91)
 
 ## 3.4.0 (2024-12-25)
 
