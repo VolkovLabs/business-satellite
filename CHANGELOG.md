@@ -1,8 +1,12 @@
 # Change Log
 
-## Introduction
+## 3.6.0 (2025-07-12)
 
-This change log tracks updates to the Business Satellite data source plugin for Grafana, listing features, enhancements, and breaking changes with GitHub issue references. It supports Grafana’s HTTP API for dashboards, annotations, and alerts.
+We are announcing the retirement of the Business Satellite data source, effective as of today, July 12, 2025, as part of our commitment to maintaining a modern and efficient Grafana plugin ecosystem. To ensure continued access to your data and analytics, we strongly recommend migrating to the Infinity data source, a powerful and flexible alternative designed to meet your evolving needs.
+
+### Why This Change?
+
+The retirement of the Business Satellite data source reflects our focus on consolidating resources toward scalable, future-proof solutions. The Infinity data source provides enhanced support for diverse data formats, real-time updates, and seamless integration with Grafana 11 and 12, addressing limitations in the older plugin.
 
 ## 3.5.0 (2025-04-03)
 
