@@ -8,6 +8,14 @@
 [![Codecov](https://codecov.io/gh/VolkovLabs/business-satellite/branch/main/graph/badge.svg)](https://codecov.io/gh/VolkovLabs/business-satellite)
 [![CodeQL](https://github.com/VolkovLabs/business-satellite/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/VolkovLabs/business-satellite/actions/workflows/codeql-analysis.yml)
 
+## Announcement
+
+We are announcing the retirement of the Business Satellite data source, effective as of today, July 12, 2025, as part of our commitment to maintaining a modern and efficient Grafana plugin ecosystem. To ensure continued access to your data and analytics, we strongly recommend migrating to the Infinity data source, a powerful and flexible alternative designed to meet your evolving needs.
+
+### Why This Change?
+
+The retirement of the Business Satellite data source reflects our focus on consolidating resources toward scalable, future-proof solutions. The Infinity data source provides enhanced support for diverse data formats, real-time updates, and seamless integration with Grafana 11 and 12, addressing limitations in the older plugin.
+
 ## Overview
 
 The **Business Satellite** data source plugin for Grafana enables seamless access to data from local and remote Grafana instances via the HTTP API. Designed for flexibility and ease of use, it integrates with Grafana to retrieve health information, annotations, alerts, and other data source details.
